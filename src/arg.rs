@@ -46,7 +46,11 @@ fn search(arg: &str, options: &mut Vec<Arg>) {
 pub fn parse_arguments() -> Vec<Arg> {
     let mut options = opt_set();
     let args: Vec<String> = env::args().collect();
-    for arg in args.iter() {
+    let mut index = 0;
+    while index < args.len(){
+        let arg = &args[index];
+
+    // for arg in args.iter() {
         if arg.starts_with("--") {
             search(&arg, &mut options);
         } else if arg.starts_with("-") {
@@ -54,6 +58,7 @@ pub fn parse_arguments() -> Vec<Arg> {
                 search(&arg_c, &mut options);
             }
         }
+        index += 1;
     }
     options
 }
