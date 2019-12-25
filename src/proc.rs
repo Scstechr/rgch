@@ -22,7 +22,7 @@ pub fn run() {
 //     let _config = arg::parse_defaults();
     let mut args = arg::parse_arguments();
     execute("git diff --stat");
-    println!("{:?}", args);
+    // println!("{:?}", args);
     let mut options: HashMap<String, Opt> = HashMap::new();
     for arg in args {
         options.insert(String::from(arg.long), Opt {
