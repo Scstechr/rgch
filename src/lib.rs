@@ -1,9 +1,10 @@
-pub mod proc;
 pub mod arg;
+pub mod colors;
+pub mod proc;
 
-pub struct Config {
-    commit: bool,
-    push: bool
+pub struct Opt {
+    flags: bool,
+    value: &'static str,
 }
 
 #[derive(Debug)]
