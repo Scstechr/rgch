@@ -1,5 +1,5 @@
-extern crate rustgch;
+extern crate rgch;
 
 fn main() {
-    rustgch::proc::run();
+    rgch::proc::run();
 }
