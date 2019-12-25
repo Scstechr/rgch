@@ -1,5 +1,4 @@
 use crate::Arg;
-use std::collections::HashMap;
 use std::env;
 
 fn opt_set() -> Vec<Arg> {
