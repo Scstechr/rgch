@@ -49,7 +49,6 @@ pub fn run() {
         );
     }
     execute("git reset");
-    println!("{}", status());
     if options["commit"].flag && status(){
         print!("Enter commit message: ");
         let mut s = String::new();
@@ -61,10 +60,10 @@ pub fn run() {
         if let Some('\r') = s.chars().next_back() {
             s.pop();
         }
-        let command = if s == "-a" {
-            format!("git commit {}", s)
-        } else {
+        let command = if s != "" {
             format!("git commit -a -m \"{}\"", s)
+        } else {
+            format!("git commit -a")
         };
         execute(&command);
     }
