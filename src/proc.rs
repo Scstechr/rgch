@@ -8,10 +8,10 @@ use crate::Opt;
 
 fn status() -> bool {
     let output = Command::new("sh")
-            .arg("-c")
-            .arg("git status --short")
-            .output()
-            .expect("failed to execute process");
+        .arg("-c")
+        .arg("git status --short")
+        .output()
+        .expect("failed to execute process");
     if output.stdout.len() > 0 {
         true
     } else {
@@ -19,7 +19,7 @@ fn status() -> bool {
     }
 }
 
-pub fn execute(command: &str) -> bool{
+pub fn execute(command: &str) -> bool {
     println!("{}>> execute: {}{}", CYAN, command, R);
     let mut child = Command::new("sh")
         .arg("-c")
@@ -49,7 +49,7 @@ pub fn run() {
         );
     }
     execute("git reset");
-    if options["commit"].flag && status(){
+    if options["commit"].flag && status() {
         print!("Enter commit message: ");
         let mut s = String::new();
         let _ = stdout().flush();

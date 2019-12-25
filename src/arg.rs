@@ -47,15 +47,20 @@ pub fn parse_arguments() -> Vec<Arg> {
     let mut options = opt_set();
     let args: Vec<String> = env::args().collect();
     let mut index = 0;
-    while index < args.len(){
+    while index < args.len() {
         let arg = &args[index];
-
-    // for arg in args.iter() {
         if arg.starts_with("--") {
             search(&arg, &mut options);
         } else if arg.starts_with("-") {
-            for arg_c in arg.split("").filter(|&c| c != "").filter(|&c| c != "-") {
-                search(&arg_c, &mut options);
+            let c_args: Vec<&str> = arg
+                .split("")
+                .filter(|&c| c != "")
+                .filter(|&c| c != "-")
+                .collect();
+            let mut c_index = 0;
+            while c_index < c_args.len() {
+                search(&c_args[c_index], &mut options);
+                c_index += 1;
             }
         }
         index += 1;
