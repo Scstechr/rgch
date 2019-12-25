@@ -24,18 +24,13 @@ fn opt_set() -> Vec<Arg> {
 }
 
 fn search(arg: &str, options: &mut Vec<Arg>) {
-    let mut hit = false;
+    let mut hit = true;
     for mut opt in options.iter_mut() {
-        if arg.contains(opt.long) {
+        if arg.contains(opt.long) || arg == opt.short {
             opt.flag = true;
-            //         println!("{:?}", opt);
-            hit = true;
             break;
-        } else if arg == opt.short {
-            opt.flag = true;
-            //         println!("{:?}", opt);
-            hit = true;
-            break;
+        } else {
+            hit = false;
         }
     }
     if !hit {
