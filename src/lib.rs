@@ -2,8 +2,9 @@ pub mod arg;
 pub mod colors;
 pub mod proc;
 
+#[derive(Debug)]
 pub struct Opt {
-    flags: bool,
+    flag: bool,
     value: &'static str,
 }
 
@@ -12,7 +13,7 @@ pub struct Arg {
     short: &'static str,
     long: &'static str,
     types: &'static str,
-    flags: bool,
+    flag: bool,
     value: &'static str,
     exp: &'static str,
 }

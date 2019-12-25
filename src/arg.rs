@@ -8,7 +8,7 @@ fn opt_set() -> Vec<Arg> {
         short: "c",
         long: "commit",
         types: "flag",
-        flags: false,
+        flag: false,
         value: "None",
         exp: "Commit",
     });
@@ -16,7 +16,7 @@ fn opt_set() -> Vec<Arg> {
         short: "p",
         long: "push",
         types: "flag",
-        flags: false,
+        flag: false,
         value: "None",
         exp: "Push",
     });
@@ -28,12 +28,12 @@ fn search(arg: &str, options: &mut Vec<Arg>) {
     let mut hit = false;
     for mut opt in options.iter_mut() {
         if arg.contains(opt.long) {
-            opt.flags = true;
+            opt.flag = true;
     //         println!("{:?}", opt);
             hit = true;
             break;
         } else if arg == opt.short {
-            opt.flags = true;
+            opt.flag = true;
     //         println!("{:?}", opt);
             hit = true;
             break;
