@@ -15,7 +15,7 @@ pub fn execute(command: &str) {
 
     let ecode = child.wait().expect("Failed to wait on child");
 
-    assert!(ecode.success());
+    // assert!(ecode.success());
 }
 
 pub fn run() {
