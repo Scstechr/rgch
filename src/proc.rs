@@ -34,7 +34,7 @@ pub fn run() {
     if options["commit"].flag {
         execute("git commit -a");
     }
-    // if options["push"].flag {
-    //     execute("git push");
-    // }
+    if options["push"].flag {
+        execute("git push origin master");
+    }
 }
