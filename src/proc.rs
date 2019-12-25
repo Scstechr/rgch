@@ -7,10 +7,15 @@ use crate::arg;
 use crate::colors::{CYAN, R};
 use crate::Opt;
 
-fn read<T: FromStr>() -> T {
-    let mut s = String::new();
-    stdin().read_line(&mut s).ok();
-    s.trim().parse().ok().unwrap()
+fn status() -> bool {
+    let output = Command::new("sh")
+            .arg("-c")
+            .arg("git status --short")
+            .output()
+            .expect("failed to execute process");
+    let out = output.stdout;
+    println!("{:?}, {}", out, out.len());
+    true
 }
 
 pub fn execute(command: &str) -> bool{
@@ -43,7 +48,7 @@ pub fn run() {
         );
     }
     execute("git reset");
-    println!("{}", execute("git status --short"));
+    println!("{}", status());
     // if options["commit"].flag {
     //     print!("Enter commit message: ");
     //     let mut s = String::new();
