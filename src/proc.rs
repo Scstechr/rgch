@@ -21,6 +21,8 @@ pub fn execute(command: &str) {
 pub fn run() {
 //     let _config = arg::parse_defaults();
     let args = arg::parse_arguments();
+    execute("git diff --stat");
     println!("{:?}", args);
     let mut options: HashMap<String, Opt> = HashMap::new();
+    execute("git reset");
 }
