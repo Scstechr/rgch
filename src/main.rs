@@ -1,3 +1,5 @@
+extern crate rustgch;
+
 fn main() {
-    println!("Hello, world!");
+    rustgch::proc::run();
 }
