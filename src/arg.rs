@@ -1,4 +1,4 @@
-use crate::{Arg};
+use crate::Arg;
 use std::collections::HashMap;
 use std::env;
 
@@ -29,12 +29,12 @@ fn search(arg: &str, options: &mut Vec<Arg>) {
     for mut opt in options.iter_mut() {
         if arg.contains(opt.long) {
             opt.flag = true;
-    //         println!("{:?}", opt);
+            //         println!("{:?}", opt);
             hit = true;
             break;
         } else if arg == opt.short {
             opt.flag = true;
-    //         println!("{:?}", opt);
+            //         println!("{:?}", opt);
             hit = true;
             break;
         }
