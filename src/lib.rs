@@ -12,4 +12,3 @@ pub struct Arg {
     types: String,
     exp: String,
 }
-
