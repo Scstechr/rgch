@@ -6,9 +6,12 @@ pub struct Config {
     push: bool
 }
 
+#[derive(Debug)]
 pub struct Arg {
-    short: String,
-    long: String,
-    types: String,
-    exp: String,
+    short: &'static str,
+    long: &'static str,
+    types: &'static str,
+    flags: bool,
+    value: &'static str,
+    exp: &'static str,
 }
