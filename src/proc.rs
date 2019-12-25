@@ -30,6 +30,11 @@ pub fn run() {
             value: arg.value
         });
     }
-    println!("{:?}", options);
     execute("git reset");
+    if options["commit"].flag {
+        execute("git commit -a");
+    }
+    // if options["push"].flag {
+    //     execute("git push");
+    // }
 }
