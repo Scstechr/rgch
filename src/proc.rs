@@ -3,7 +3,7 @@ use std::io::{stdin, stdout, Write};
 use std::process::Command;
 
 use crate::arg;
-use crate::colors::{C, G, R};
+use crate::colors::{C, G, X};
 use crate::Opt;
 
 fn status() -> bool {
@@ -15,13 +15,13 @@ fn status() -> bool {
     if !output.stdout.is_empty() {
         true
     } else {
-        println!("{}Status clean.{}", G, R);
+        println!("{}Status clean.{}", G, X);
         false
     }
 }
 
 pub fn execute(command: &str) -> bool {
-    println!("{}>> execute: {}{}", C, command, R);
+    println!("{}>> execute: {}{}", C, command, X);
     let mut child = Command::new("sh")
         .arg("-c")
         .arg(command)
@@ -59,7 +59,7 @@ pub fn run() {
         );
     }
     if options["commit"].flag && status() {
-        print!("Enter commit message: ");
+        print!("\nEnter commit message: ");
         let mut s = String::new();
         let _ = stdout().flush();
         stdin().read_line(&mut s).expect("-a");
