@@ -3,7 +3,7 @@ use std::io::{stdin, stdout, Write};
 use std::process::Command;
 
 use crate::arg;
-use crate::colors::{CYAN, R};
+use crate::colors::{C, G, R};
 use crate::Opt;
 
 fn status() -> bool {
@@ -15,12 +15,13 @@ fn status() -> bool {
     if output.stdout.len() > 0 {
         true
     } else {
+        println!("{}Status clean.{}", G, R);
         false
     }
 }
 
 pub fn execute(command: &str) -> bool {
-    println!("{}>> execute: {}{}", CYAN, command, R);
+    println!("{}>> execute: {}{}", C, command, R);
     let mut child = Command::new("sh")
         .arg("-c")
         .arg(command)
@@ -30,6 +31,15 @@ pub fn execute(command: &str) -> bool {
     let ecode = child.wait().expect("Failed to wait on child");
 
     ecode.success()
+    // assert!(ecode.success());
+}
+
+pub fn execute_mute(command: &str) {
+    Command::new("sh")
+        .arg("-c")
+        .arg(command)
+        .output()
+        .expect("failed to execute process");
     // assert!(ecode.success());
 }
 
@@ -48,7 +58,6 @@ pub fn run() {
             },
         );
     }
-    execute("git reset");
     if options["commit"].flag && status() {
         print!("Enter commit message: ");
         let mut s = String::new();
