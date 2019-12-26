@@ -5,6 +5,7 @@ use std::io::{stdin, stdout, Write};
 
 pub fn commit() {
     if status() {
+        execute("git add .");
         print!("\n{}>> Enter commit message: {}", G, X);
         let mut s = String::new();
         let _ = stdout().flush();
@@ -16,7 +17,7 @@ pub fn commit() {
             s.pop();
         }
         let command = if s != "" {
-            format!("git commit -a -m \"{}\"", s)
+            format!("git commit -m \"{}\"", s)
         } else {
             "git commit -a".to_string()
         };
