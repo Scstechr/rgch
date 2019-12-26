@@ -9,7 +9,7 @@ fn opt_set() -> Vec<Arg> {
         types: "flag",
         flag: false,
         value: "None",
-        exp: "Commit",
+        exp: "Commit.",
     });
     opts.push(Arg {
         short: "p",
@@ -17,8 +17,17 @@ fn opt_set() -> Vec<Arg> {
         types: "flag",
         flag: false,
         value: "None",
-        exp: "Push",
+        exp: "Push.",
     });
+    opts.push(Arg {
+        short: "h",
+        long: "help",
+        types: "flag",
+        flag: false,
+        value: "None",
+        exp: "Print help message.",
+    });
+    // println!("{:?}", opts);
     // println!("{:?}", opts);
     opts
 }

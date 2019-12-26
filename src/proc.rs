@@ -3,7 +3,7 @@ use std::process::Command;
 
 use crate::arg;
 use crate::colors::{C, X};
-use crate::git::commit::commit;
+use crate::git::{commit::commit, push::push};
 use crate::Opt;
 
 pub fn execute(command: &str) -> bool {
@@ -50,6 +50,6 @@ pub fn run() {
         commit();
     }
     if options["push"].flag {
-        execute("git push origin master");
+        push();
     }
 }
