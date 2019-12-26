@@ -19,6 +19,14 @@ pub fn help() {
 fn opt_set() -> Vec<Arg> {
     let mut opts: Vec<Arg> = Vec::new();
     opts.push(Arg {
+        short: "b",
+        long: "branch",
+        types: "string",
+        flag: false,
+        value: "None",
+        exp: "Specify branch name.",
+    });
+    opts.push(Arg {
         short: "c",
         long: "commit",
         types: "flag",
