@@ -48,13 +48,13 @@ pub fn run() {
         help();
     }
 
-    set_branch(&args["branch"].value);
+    let branch = set_branch(&args["branch"].value);
     diff(args["verbose"].flag);
 
     if args["commit"].flag {
         commit();
     }
     if args["push"].flag {
-        push(&args["branch"].value);
+        push(&branch);
     }
 }

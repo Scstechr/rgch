@@ -5,7 +5,7 @@ use std::io::{stdin, stdout, Write};
 
 pub fn commit() {
     if status() {
-        print!("\n{} Enter commit message: {}", G, X);
+        print!("\n{}>> Enter commit message: {}", G, X);
         let mut s = String::new();
         let _ = stdout().flush();
         stdin().read_line(&mut s).expect("-a");
