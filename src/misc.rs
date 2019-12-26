@@ -1,8 +1,11 @@
 extern crate termios;
 
-use std::io;
-use std::io::{Read, Write};
-use std::process::Command;
+use crate::colors::{G, X};
+use std::{
+    io,
+    io::{Read, Write},
+    process::Command,
+};
 use termios::{tcsetattr, Termios, ECHO, ICANON, TCSANOW};
 
 pub fn beep() {
@@ -21,7 +24,7 @@ pub fn confirm(question: &str) -> bool {
     let stdout = io::stdout();
     let mut reader = io::stdin();
     let mut buffer = [0; 1];
-    let string = format!("{} [y/n]: ", question);
+    let string = format!("{}>> {} [y/n]: {}", G, question, X);
     print!("{}", string);
     let mut flag = true;
     loop {

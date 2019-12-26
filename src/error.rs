@@ -10,6 +10,6 @@ pub fn invalid_argument(arg: &str) {
 
 pub fn unimplemented() {
     beep();
-    println!("{}>> Uninmplemented feature {}", R, X);
+    println!("{}>> Uninmplemented feature. {}", R, X);
     exit(1);
 }
