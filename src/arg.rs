@@ -47,7 +47,7 @@ pub fn parse_arguments() -> Vec<Arg> {
         let arg = &args[index];
         if arg.starts_with("--") {
             search(&arg, &mut options);
-        } else if arg.starts_with("-") {
+        } else if arg.starts_with('-') {
             let c_args: Vec<&str> = arg
                 .split("")
                 .filter(|&c| c != "")

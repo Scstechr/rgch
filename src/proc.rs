@@ -12,7 +12,7 @@ fn status() -> bool {
         .arg("git status --short")
         .output()
         .expect("failed to execute process");
-    if output.stdout.len() > 0 {
+    if !output.stdout.is_empty() {
         true
     } else {
         println!("{}Status clean.{}", G, R);
@@ -72,7 +72,7 @@ pub fn run() {
         let command = if s != "" {
             format!("git commit -a -m \"{}\"", s)
         } else {
-            format!("git commit -a")
+            "git commit -a".to_string()
         };
         execute(&command);
     }

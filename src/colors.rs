@@ -1,4 +1,4 @@
-pub const G: &'static str = "\x1b[31m";
-pub const B: &'static str = "\x1b[34m";
-pub const C: &'static str = "\x1b[36m";
-pub const R: &'static str = "\x1b[m";
+pub const G: &str = "\x1b[31m";
+pub const B: &str = "\x1b[34m";
+pub const C: &str = "\x1b[36m";
+pub const R: &str = "\x1b[m";

@@ -5,6 +5,6 @@ build:
 	cargo fmt --version
 	cargo fmt -- --check
 	cargo clippy --version
-	cargo clippy
+	cargo clippy --release
 	cargo clean
 	cargo build --release
