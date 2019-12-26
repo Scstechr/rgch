@@ -3,22 +3,9 @@ use std::io::{stdin, stdout, Write};
 use std::process::Command;
 
 use crate::arg;
-use crate::colors::{C, G, X};
+use crate::colors::{C, X};
+use crate::git::status::status;
 use crate::Opt;
-
-fn status() -> bool {
-    let output = Command::new("sh")
-        .arg("-c")
-        .arg("git status --short")
-        .output()
-        .expect("failed to execute process");
-    if !output.stdout.is_empty() {
-        true
-    } else {
-        println!("{}Status clean.{}", G, X);
-        false
-    }
-}
 
 pub fn execute(command: &str) -> bool {
     println!("{}>> execute: {}{}", C, command, X);
@@ -46,8 +33,9 @@ pub fn execute_mute(command: &str) {
 pub fn run() {
     //     let _config = arg::parse_defaults();
     let args = arg::parse_arguments();
-    execute_mute("git add *");
+    // execute("git add *");
     execute("git diff --stat");
+    execute_mute("git reset");
     // println!("{:?}", args);
     let mut options: HashMap<String, Opt> = HashMap::new();
     for arg in args {

@@ -3,7 +3,7 @@ main:
 
 build:
 	cargo fmt --version;
-	cargo fmt -- --check;
+	cargo fmt 
 	cargo clippy --version;
 	cargo clippy --release;
 	cargo build --release;
