@@ -1,5 +1,6 @@
 use crate::{
     colors::{G, R, X},
+    error::unimplemented,
     misc::{beep, confirm},
     proc::execute_out,
 };
@@ -43,7 +44,7 @@ pub fn set_branch(branch: &str) -> String {
         println!("{}>> Branch \"{}\" not found.{}", R, branch, X);
         let confirm_string = format!("Make branch \"{}\"?", branch);
         if confirm(&confirm_string) {
-            unimplemented!();
+            unimplemented();
         } else {
             final_branch = current;
             println!("{}>> Branch set to \"{}\".{}", G, final_branch, X);
@@ -56,7 +57,7 @@ pub fn set_branch(branch: &str) -> String {
         );
         let confirm_string = format!("Checkout to branch \"{}\"?", branch);
         if confirm(&confirm_string) {
-            unimplemented!();
+            unimplemented();
         } else {
             final_branch = current;
             println!("{}>> Branch set to \"{}\".{}", G, final_branch, X);

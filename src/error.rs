@@ -7,3 +7,9 @@ pub fn invalid_argument(arg: &str) {
     println!("{}>> Invalid argument: {}{}", R, arg, X);
     exit(1);
 }
+
+pub fn unimplemented() {
+    beep();
+    println!("{}>> Uninmplemented feature {}", R, X);
+    exit(1);
+}
