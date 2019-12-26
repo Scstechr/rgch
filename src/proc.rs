@@ -2,7 +2,7 @@ use std::process::Command;
 
 use crate::arg::{help, parse_arguments};
 use crate::colors::{C, X};
-use crate::git::{branch::get_branch, commit::commit, diff::diff, push::push};
+use crate::git::{branch::set_branch, commit::commit, diff::diff, push::push};
 
 pub fn execute(command: &str) -> bool {
     println!("{}>> execute: {}{}", C, command, X);
@@ -27,6 +27,15 @@ pub fn execute_mute(command: &str) {
     // assert!(ecode.success());
 }
 
+pub fn execute_out(command: &str) -> String {
+    let output = Command::new("sh")
+        .arg("-c")
+        .arg(command)
+        .output()
+        .expect("failed to execute process");
+    std::str::from_utf8(&output.stdout).unwrap().to_string()
+}
+
 pub fn run() {
     //     let _config = arg::parse_defaults();
     let args = parse_arguments();
@@ -39,7 +48,7 @@ pub fn run() {
         help();
     }
 
-    get_branch();
+    set_branch(&args["branch"].value);
     diff(args["verbose"].flag);
 
     if args["commit"].flag {

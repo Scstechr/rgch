@@ -2,6 +2,7 @@ pub mod arg;
 pub mod colors;
 pub mod error;
 pub mod git;
+pub mod misc;
 pub mod proc;
 
 #[derive(Debug)]
