@@ -24,7 +24,7 @@ fn opt_set() -> Vec<Arg> {
         long: "branch",
         types: "string",
         flag: false,
-        value: "None".to_string(),
+        value: "master".to_string(),
         exp: "Specify branch name.",
     });
     opts.push(Arg {

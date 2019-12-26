@@ -31,6 +31,10 @@ pub fn run() {
     //     let _config = arg::parse_defaults();
     let args = parse_arguments();
 
+    // for arg in &args {
+    //     println!("{:?}", arg);
+    // }
+
     if args["help"].flag {
         help();
     }
@@ -41,6 +45,6 @@ pub fn run() {
         commit();
     }
     if args["push"].flag {
-        push();
+        push(&args["branch"].value);
     }
 }
