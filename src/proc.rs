@@ -1,8 +1,10 @@
 use std::process::Command;
 
 use crate::arg::{help, parse_arguments};
-use crate::colors::{C, X};
+use crate::colors::{C, S, X};
 use crate::git::{branch::set_branch, commit::commit, diff::diff, push::push};
+
+const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 pub fn execute(command: &str) -> bool {
     println!("{}>> execute: {}{}", C, command, X);
@@ -37,6 +39,7 @@ pub fn execute_out(command: &str) -> String {
 }
 
 pub fn run() {
+    println!("{}rgch v{}: Rust implementation of gch{}", S, VERSION, X);
     //     let _config = arg::parse_defaults();
     let args = parse_arguments();
 

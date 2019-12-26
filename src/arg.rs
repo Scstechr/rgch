@@ -3,10 +3,7 @@ use crate::error::invalid_argument;
 use crate::{Arg, Opt};
 use std::{collections::HashMap, env, process::exit};
 
-const VERSION: &str = env!("CARGO_PKG_VERSION");
-
 pub fn help() {
-    println!("{}rgch v{}: Rust implementation of gch{}", S, VERSION, X);
     println!("{}Usage: rgch [OPTION]{}", S, X);
     println!("\n{}{}Options:{}", S, U, X);
     let options = opt_set();
