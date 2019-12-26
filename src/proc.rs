@@ -51,6 +51,7 @@ pub fn run() {
     let branch = set_branch(&args["branch"].value);
     diff(args["verbose"].flag);
 
+    execute_mute("git add .");
     if args["commit"].flag {
         commit();
     }
