@@ -49,9 +49,13 @@ pub fn run() {
     }
 
     let branch = set_branch(&args["branch"].value);
+
     diff(args["verbose"].flag);
 
     execute_mute("git add .");
+    execute("git status");
+    execute_mute("git reset");
+
     if args["commit"].flag {
         commit();
     }
