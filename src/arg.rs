@@ -43,6 +43,14 @@ fn opt_set() -> Vec<Arg> {
         exp: "Push.",
     });
     opts.push(Arg {
+        short: "v",
+        long: "verbose",
+        types: "flag",
+        flag: false,
+        value: "None",
+        exp: "Verbose option.",
+    });
+    opts.push(Arg {
         short: "h",
         long: "help",
         types: "flag",
