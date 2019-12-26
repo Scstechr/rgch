@@ -1,7 +1,4 @@
-use crate::{
-    colors::{R, X},
-    proc::execute_mute,
-};
+use crate::colors::{R, X};
 use std::process::{exit, Command};
 
 pub fn invalid_argument(arg: &str) {
