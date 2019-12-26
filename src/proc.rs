@@ -1,10 +1,9 @@
 use std::collections::HashMap;
-use std::io::{stdin, stdout, Write};
 use std::process::Command;
 
 use crate::arg;
 use crate::colors::{C, X};
-use crate::git::status::status;
+use crate::git::commit::commit;
 use crate::Opt;
 
 pub fn execute(command: &str) -> bool {
@@ -47,23 +46,8 @@ pub fn run() {
             },
         );
     }
-    if options["commit"].flag && status() {
-        print!("\nEnter commit message: ");
-        let mut s = String::new();
-        let _ = stdout().flush();
-        stdin().read_line(&mut s).expect("-a");
-        if let Some('\n') = s.chars().next_back() {
-            s.pop();
-        }
-        if let Some('\r') = s.chars().next_back() {
-            s.pop();
-        }
-        let command = if s != "" {
-            format!("git commit -a -m \"{}\"", s)
-        } else {
-            "git commit -a".to_string()
-        };
-        execute(&command);
+    if options["commit"].flag {
+        commit();
     }
     if options["push"].flag {
         execute("git push origin master");
