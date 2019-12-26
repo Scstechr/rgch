@@ -2,7 +2,7 @@ use std::process::Command;
 
 use crate::arg::{help, parse_arguments};
 use crate::colors::{C, X};
-use crate::git::{commit::commit, push::push};
+use crate::git::{commit::commit, diff::diff, push::push};
 
 pub fn execute(command: &str) -> bool {
     println!("{}>> execute: {}{}", C, command, X);
@@ -35,7 +35,7 @@ pub fn run() {
         help();
     }
 
-    execute("git diff --stat");
+    diff(args["verbose"].flag);
     execute_mute("git reset");
 
     if args["commit"].flag {
