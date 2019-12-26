@@ -1,4 +1,5 @@
 use crate::colors::{S, U, X};
+use crate::error::invalid_argument;
 use crate::{Arg, Opt};
 use std::{collections::HashMap, env, process::exit};
 
@@ -23,7 +24,7 @@ fn opt_set() -> Vec<Arg> {
         long: "branch",
         types: "string",
         flag: false,
-        value: "None",
+        value: "None".to_string(),
         exp: "Specify branch name.",
     });
     opts.push(Arg {
@@ -31,7 +32,7 @@ fn opt_set() -> Vec<Arg> {
         long: "commit",
         types: "flag",
         flag: false,
-        value: "None",
+        value: "None".to_string(),
         exp: "Commit.",
     });
     opts.push(Arg {
@@ -39,7 +40,7 @@ fn opt_set() -> Vec<Arg> {
         long: "push",
         types: "flag",
         flag: false,
-        value: "None",
+        value: "None".to_string(),
         exp: "Push.",
     });
     opts.push(Arg {
@@ -47,7 +48,7 @@ fn opt_set() -> Vec<Arg> {
         long: "verbose",
         types: "flag",
         flag: false,
-        value: "None",
+        value: "None".to_string(),
         exp: "Verbose option.",
     });
     opts.push(Arg {
@@ -55,7 +56,7 @@ fn opt_set() -> Vec<Arg> {
         long: "help",
         types: "flag",
         flag: false,
-        value: "None",
+        value: "None".to_string(),
         exp: "Show this message and exit.",
     });
     // println!("{:?}", opts);
@@ -74,30 +75,65 @@ fn search(arg: &str, options: &mut Vec<Arg>) {
         }
     }
     if !hit {
+        invalid_argument(arg);
+    };
+}
+
+fn search_and_set(arg: &str, string: String, options: &mut Vec<Arg>) {
+    let mut hit = false;
+    for mut opt in options.iter_mut() {
+        if arg.contains(opt.long) || arg == opt.short {
+            hit = true;
+            opt.flag = true;
+            opt.value = string.to_string();
+            break;
+        } else {
+            hit = false;
+        }
+    }
+    if !hit {
         panic!("Invalid argument: {}", arg);
     };
+}
+
+fn seperate_chars(arg: &str) -> Vec<&str> {
+    let c_args: Vec<&str> = arg
+        .split("")
+        .filter(|&c| c != "")
+        .filter(|&c| c != "-")
+        .collect();
+    c_args
 }
 
 pub fn parse_arguments() -> HashMap<String, Opt> {
     let env_args: Vec<String> = env::args().collect();
     let mut options = opt_set();
 
-    let mut index = 0;
+    let mut index = 1;
     while index < env_args.len() {
         let arg = &env_args[index];
         if arg.starts_with("--") {
             search(&arg, &mut options);
         } else if arg.starts_with('-') {
-            let c_args: Vec<&str> = arg
-                .split("")
-                .filter(|&c| c != "")
-                .filter(|&c| c != "-")
-                .collect();
+            let c_args = seperate_chars(arg);
             let mut c_index = 0;
             while c_index < c_args.len() {
                 search(&c_args[c_index], &mut options);
                 c_index += 1;
             }
+        } else if index > 0 {
+            let last_arg = &env_args[index - 1];
+            if last_arg.starts_with("--") {
+                search_and_set(last_arg, arg.to_string(), &mut options);
+            } else if last_arg.starts_with('-') {
+                let last_c_arg = seperate_chars(last_arg);
+                let last_c_arg = last_c_arg.last().cloned().unwrap();
+                search_and_set(last_c_arg, arg.to_string(), &mut options);
+            } else {
+                invalid_argument(arg);
+            }
+        } else {
+            invalid_argument(arg);
         }
         index += 1;
     }
