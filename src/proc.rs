@@ -36,7 +36,6 @@ pub fn run() {
     }
 
     diff(args["verbose"].flag);
-    execute_mute("git reset");
 
     if args["commit"].flag {
         commit();
