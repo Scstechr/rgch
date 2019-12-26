@@ -1,3 +1,4 @@
+pub mod git;
 pub mod arg;
 pub mod colors;
 pub mod proc;

@@ -46,6 +46,7 @@ pub fn execute_mute(command: &str) {
 pub fn run() {
     //     let _config = arg::parse_defaults();
     let args = arg::parse_arguments();
+    execute_mute("git add *");
     execute("git diff --stat");
     // println!("{:?}", args);
     let mut options: HashMap<String, Opt> = HashMap::new();
