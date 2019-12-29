@@ -15,9 +15,13 @@ fn short_status_info() {
     // );
     // print!(" |{r} M{x}: Modified, not added.{x}", r = R, x = X);
     // println!(" |{r}??{x}: Untracked.{x}", r = R, x = X);
-    print!("\n{tab}[{g}M {x}] Staged.{x}", tab = TAB, g = G, x = X);
+    print!("\n{tab}[{g}A {x}] New.{x}", tab = TAB, g = G, x = X);
+    print!("{tab}[{g}M {x}] Staged.{x}", tab = TAB, g = G, x = X);
     print!(" [{r} M{x}] Unstaged.{x}", r = R, x = X);
     println!(" [{r}??{x}] Untracked.{x}", r = R, x = X);
+    print!("{tab}[{r} D{x}] Deleted.{x}", tab = TAB, r = R, x = X);
+    print!("{tab}[{r}UU{x}] Unmerged.{x}", tab = TAB, r = R, x = X);
+    println!(" [{r}DU{x}] Deleted & Unmerged.{x}", r = R, x = X);
 }
 
 pub fn short_status() {
