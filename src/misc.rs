@@ -48,7 +48,7 @@ pub fn confirm(question: &str) -> bool {
 }
 
 pub fn input(question: &str) -> String {
-    print!("\n{}>> {}: {}", question, G, X);
+    print!("\n{}>> {}: {}", G, question, X);
     let mut s = String::new();
     let _ = stdout().flush();
     stdin().read_line(&mut s).expect("-a");
