@@ -15,13 +15,13 @@ use std::{
 
 const POS_X_SAVE: u64 = 18;
 const POS_X_HELP: u64 = 21;
+const BLNK: &str = "                                                                 "; // Blank
 
 fn set_defaults() {}
 
 pub fn help() {
     println!("{}Usage: rgch [OPTION]{}", S, X);
-    println!("{}", U);
-    print!("{s}{u}Option{x}", s = S, u = U, x = X);
+    print!("\n{s}{u}Option{b}{x}", s = S, u = U, b = BLNK, x = X);
     print!(
         "{pos}{x} {s}{u}Save{x}",
         pos = pos_x(POS_X_SAVE - 2),
@@ -123,7 +123,7 @@ fn opt_set() -> Vec<Arg> {
         save: false,
         flag: false,
         value: "None".to_string(),
-        exp: "Pull from remote repository.",
+        exp: "Pull (fetch and rebase) from remote repository.",
     });
 
     opts.push(Arg {
