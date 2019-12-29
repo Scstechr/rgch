@@ -6,7 +6,10 @@ use crate::{
         others::ARS,
     },
     arg::{help, parse_arguments},
-    git::{branch::set_branch, clone::clone, commit::commit, diff::diff, pull::pull, push::push},
+    git::{
+        branch::set_branch, clone::clone, commit::commit, diff::diff, pull::pull, push::push,
+        reset::reset,
+    },
 };
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -71,13 +74,10 @@ pub fn run() {
     let branch = set_branch(&args["branch"].value);
 
     diff(args["verbose"].flag);
-
-    execute_mute("git add .");
-    execute("git status");
-    execute_mute("git reset");
+    reset();
 
     if args["commit"].flag {
-        commit();
+        commit(&args["file"].value);
     }
     if args["push"].flag {
         push(&branch);

@@ -1,10 +1,16 @@
-use crate::git::status::status;
-use crate::misc::input;
-use crate::proc::execute;
+use crate::{
+    git::{
+        add::add,
+        status::{check_status, short_status},
+    },
+    misc::input,
+    proc::execute,
+};
 
-pub fn commit() {
-    if status() {
-        execute("git add .");
+pub fn commit(file: &str) {
+    if check_status() {
+        add(&file);
+        short_status();
         let q = "Enter commit message";
         let s = input(&q);
         let command = if s != "" {
