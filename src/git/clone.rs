@@ -81,7 +81,7 @@ fn set_clone_dir(url: &str) -> String {
 pub fn clone(given_url: &str, given_branch: &str, given_input: bool) {
     // println!("{}", given_input);
     println!(
-        "{a}{c} Cloning remote repository...{x}",
+        "\n{c}{a} Cloning remote repository...{x}",
         a = ARS,
         c = G,
         x = X
