@@ -5,6 +5,7 @@ build:
 	cargo clippy --release;
 	cargo build --release;
 	rgch -h
+	rgch
 
 c:
 	cargo fmt --version;
