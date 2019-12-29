@@ -5,6 +5,9 @@ use std::{
     // path::{Path, PathBuf},
 };
 
+#[allow(dead_code)]
+fn set_defaults() {}
+
 pub fn opt_set() -> Vec<Arg> {
     let mut opts: Vec<Arg> = Vec::new();
 

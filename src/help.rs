@@ -17,9 +17,24 @@ const POS_X_HELP: u64 = 28;
 // const BLNK: &str = "                                                                 "; // Blank
 const POS_X_SHRT: u64 = 9;
 
-#[allow(dead_code)]
-fn set_defaults() {}
-
+pub fn help() {
+    println!(
+        "\n{s}{u}Usage:{x}\n\n{t}rgch {y}[OPTION]{x}",
+        s = S,
+        u = U,
+        x = X,
+        t = TAB,
+        y = Y
+    );
+    println!("\n{u}Options:{x}\n", u = U, x = X);
+    let (hsize, _) = terminal_size().unwrap();
+    if hsize > 71 {
+        wide_help()
+    } else {
+        short_help()
+    }
+    exit(0);
+}
 fn short_match(category: &str) {
     print!(
         "{t}{u}{c}{x}",
@@ -117,23 +132,4 @@ fn wide_help() {
             f = save_flg
         );
     }
-}
-
-pub fn help() {
-    println!(
-        "\n{s}{u}Usage:{x}\n\n{t}rgch {y}[OPTION]{x}",
-        s = S,
-        u = U,
-        x = X,
-        t = TAB,
-        y = Y
-    );
-    println!("\n{u}Options:{x}\n", u = U, x = X);
-    let (hsize, _) = terminal_size().unwrap();
-    if hsize > 71 {
-        wide_help()
-    } else {
-        short_help()
-    }
-    exit(0);
 }
