@@ -113,15 +113,6 @@ pub fn help() {
 fn opt_set() -> Vec<Arg> {
     let mut opts: Vec<Arg> = Vec::new();
     opts.push(Arg {
-        short: "b",
-        long: "branch",
-        types: "string",
-        save: true,
-        flag: false,
-        value: "master".to_string(),
-        exp: "Specify branch name.",
-    });
-    opts.push(Arg {
         short: "c",
         long: "commit",
         types: "flag",
@@ -140,13 +131,13 @@ fn opt_set() -> Vec<Arg> {
         exp: "Push.",
     });
     opts.push(Arg {
-        short: "f",
-        long: "file",
-        types: "path",
-        save: true,
+        short: "l",
+        long: "log",
+        types: "flag",
+        save: false,
         flag: false,
-        value: ".".to_string(),
-        exp: "Specify path to add.",
+        value: "None".to_string(),
+        exp: "Display log.",
     });
     opts.push(Arg {
         short: "g",
@@ -156,6 +147,24 @@ fn opt_set() -> Vec<Arg> {
         flag: false,
         value: ".".to_string(),
         exp: "Specify path of `.git`.",
+    });
+    opts.push(Arg {
+        short: "a",
+        long: "add",
+        types: "path",
+        save: true,
+        flag: false,
+        value: ".".to_string(),
+        exp: "Specify path to add.",
+    });
+    opts.push(Arg {
+        short: "b",
+        long: "branch",
+        types: "string",
+        save: true,
+        flag: false,
+        value: "master".to_string(),
+        exp: "Specify branch name.",
     });
     opts.push(Arg {
         short: "r",

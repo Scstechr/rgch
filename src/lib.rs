@@ -11,8 +11,8 @@ use crate::{
     ansi::colors::{S, X},
     arg::{help, parse_arguments},
     git::{
-        add::add, branch::set_branch, clone::clone, commit::commit, diff::diff, pull::pull,
-        push::push, reset::reset, status::short_status,
+        add::add, branch::set_branch, clone::clone, commit::commit, diff::diff, log::log,
+        pull::pull, push::push, reset::reset, status::short_status,
     },
 };
 
@@ -57,6 +57,10 @@ pub fn run() {
 
     let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
 
+    if args["log"].flag {
+        log();
+    }
+
     if args["pull"].flag {
         pull(&args["remote"].value, &args["branch"].value);
     }
@@ -64,9 +68,9 @@ pub fn run() {
     diff(args["verbose"].flag);
 
     if args["commit"].flag {
-        commit(&args["file"].value, args["force"].flag);
+        commit(&args["add"].value, args["force"].flag);
     } else {
-        add(&args["file"].value, args["force"].flag);
+        add(&args["add"].value, args["force"].flag);
         short_status();
         reset();
     }
