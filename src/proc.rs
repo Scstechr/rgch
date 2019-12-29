@@ -43,9 +43,9 @@ pub fn run() {
     //     let _config = arg::parse_defaults();
     let args = parse_arguments();
 
-    // for arg in &args {
-    //     println!("{:?}", arg);
-    // }
+    for arg in &args {
+        println!("{:?}", arg);
+    }
 
     if args["help"].flag {
         help();
