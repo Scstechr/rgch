@@ -7,9 +7,9 @@ use crate::{
     proc::execute,
 };
 
-pub fn commit(file: &str) {
+pub fn commit(file: &str, force: bool) {
     if check_status() {
-        add(&file);
+        add(&file, force);
         short_status();
         let q = "Enter commit message";
         let s = input(&q);

@@ -184,6 +184,15 @@ fn opt_set() -> Vec<Arg> {
         value: "None".to_string(),
         exp: "Pull (fetch and rebase).",
     });
+    opts.push(Arg {
+        short: "",
+        long: "force",
+        types: "flag",
+        save: false,
+        flag: false,
+        value: "None".to_string(),
+        exp: "`-f/--force` option to `add`.",
+    });
 
     opts.push(Arg {
         short: "v",

@@ -64,9 +64,9 @@ pub fn run() {
     diff(args["verbose"].flag);
 
     if args["commit"].flag {
-        commit(&args["file"].value);
+        commit(&args["file"].value, args["force"].flag);
     } else {
-        add(&args["file"].value);
+        add(&args["file"].value, args["force"].flag);
         short_status();
         reset();
     }
