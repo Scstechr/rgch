@@ -65,7 +65,7 @@ fn short_match(category: &str) {
                 s = s_string,
                 l = opt.long,
                 t = if opt.types != "flag" {
-                    format!("<{}>", opt.types)
+                    format!("<{}>", opt.types.to_uppercase())
                 } else {
                     "".to_string()
                 },
@@ -117,7 +117,7 @@ fn wide_match(category: &str) {
                 p = pos_x(POS_X_NAME),
                 s = s_string,
                 l = opt.long,
-                t = types,
+                t = types.to_uppercase(),
                 x = pos_x(POS_X_HELP),
                 e = opt.exp,
                 f = save_flg,
