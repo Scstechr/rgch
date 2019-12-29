@@ -55,7 +55,7 @@ pub fn run() {
         );
     }
 
-    let branch = set_branch(&args["branch"].value);
+    let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
 
     if args["pull"].flag {
         pull(&args["remote"].value, &args["branch"].value);

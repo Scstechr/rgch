@@ -38,7 +38,7 @@ fn format_branch(branch: &str) -> String {
     format!("{u}{b}{x}", u = U, b = branch, x = X)
 }
 
-pub fn set_branch(branch: &str) -> String {
+pub fn set_branch(branch: &str, path: &str) -> String {
     let mut final_branch = branch.to_string();
     let current = get_branch();
     let branches = get_branch_list();
@@ -91,9 +91,9 @@ pub fn set_branch(branch: &str) -> String {
             }
         }
     } else {
-        beep();
         println!(
-            "{r}{a}Does not have a .git folder{x}",
+            "{r}{a}Path `{p}` does not have a `.git` directory!{x}",
+            p = path,
             a = ARS,
             r = R,
             x = X
