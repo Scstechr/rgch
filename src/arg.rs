@@ -4,6 +4,7 @@ use crate::{
         colors::{S, U, X, Y},
         moves::pos_x,
         others::TAB,
+        seg::SH,
     },
     error::invalid_argument,
     Arg, Opt,
@@ -48,7 +49,7 @@ fn short_match(category: &str) {
             };
 
             println!(
-                "{p} | {y}{s}--{l} {t} {save}{x}\n{p} | {tab}{r} {e} ",
+                "{p} {seg} {y}{s}--{l} {t} {save}{x}\n{p} {seg} {tab}{r} {e} ",
                 p = pos_x(POS_X_SHRT),
                 y = Y,
                 s = s_string,
@@ -58,6 +59,7 @@ fn short_match(category: &str) {
                 } else {
                     "".to_string()
                 },
+                seg = SH,
                 save = save,
                 tab = TAB,
                 r = RET,
