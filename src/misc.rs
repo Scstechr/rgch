@@ -2,7 +2,7 @@ extern crate termion;
 
 use crate::ansi::{
     colors::{R, U, X, Y},
-    moves::up_delete,
+    moves::{up_delete, ERASE},
     others::ARS,
 };
 use std::{
@@ -65,7 +65,7 @@ pub fn confirm(question: &str) -> bool {
 }
 
 pub fn input(question: &str) -> String {
-    print!("{}>> {}: {}", Y, question, X);
+    print!("{e}{y}>> {q}: {x}", e = ERASE, y = Y, q = question, x = X);
     let mut s = String::new();
     let _ = stdout().flush();
     stdin().read_line(&mut s).expect("-a");
