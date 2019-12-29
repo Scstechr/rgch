@@ -1,5 +1,8 @@
 use crate::{
-    ansi::colors::{G, R, X},
+    ansi::{
+        colors::{G, R, U, X},
+        others::ARS,
+    },
     error::unimplemented,
     misc::{beep, confirm},
     proc::execute_out,
@@ -31,6 +34,10 @@ fn get_branch_list() -> Vec<String> {
     branches
 }
 
+fn format_branch(branch: &str) -> String {
+    format!("{u}{b}{x}", u = U, b = branch, x = X)
+}
+
 pub fn set_branch(branch: &str) -> String {
     let mut final_branch = branch.to_string();
     let current = get_branch();
@@ -39,13 +46,25 @@ pub fn set_branch(branch: &str) -> String {
         let check = branches.iter().any(|b| b == branch);
         if !check {
             beep();
-            println!("{}>> Branch \"{}\" not found.{}", R, branch, X);
-            let confirm_string = format!("Make branch \"{}\"?", branch);
+            println!(
+                "{r}{a}Branch {b}{r} not found.{x}",
+                r = R,
+                a = ARS,
+                b = format_branch(&branch),
+                x = X
+            );
+            let confirm_string = format!("Make branch {}?", branch);
             if confirm(&confirm_string) {
                 unimplemented();
             } else {
                 final_branch = current;
-                println!("{}>> Branch set to \"{}\".{}", G, final_branch, X);
+                println!(
+                    "{g}{a}Branch set to {b}{g}.{x}",
+                    g = G,
+                    a = ARS,
+                    b = format_branch(&final_branch),
+                    x = X
+                );
             };
         } else if current != branch {
             beep();
@@ -63,7 +82,12 @@ pub fn set_branch(branch: &str) -> String {
         }
     } else {
         beep();
-        println!("Does not have a .git folder");
+        println!(
+            "{r}{a}Does not have a .git folder{x}",
+            a = ARS,
+            r = R,
+            x = X
+        );
         exit(1);
     }
     final_branch
