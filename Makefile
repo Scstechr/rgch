@@ -6,6 +6,14 @@ build:
 	cargo build --release;
 	rgch -h
 
+c:
+	cargo fmt --version;
+	cargo fmt 
+	cargo clippy --version;
+	cargo clippy --release;
+	cargo build --release;
+	rgch -c
+
 up:
 	cargo fmt --version;
 	cargo fmt 
