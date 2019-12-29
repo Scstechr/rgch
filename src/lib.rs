@@ -30,6 +30,7 @@ pub struct Arg {
     types: &'static str,
     save: bool,
     flag: bool,
+    category: &'static str,
     value: String,
     exp: &'static str,
 }

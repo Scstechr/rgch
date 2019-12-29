@@ -20,35 +20,49 @@ const POS_X_SAVE: u64 = 18;
 const POS_X_TYPE: u64 = 21;
 const POS_X_HELP: u64 = 28;
 const BLNK: &str = "                                                                 "; // Blank
+const POS_X_SHRT: u64 = 7;
 
 #[allow(dead_code)]
 fn set_defaults() {}
 
-fn short_help() {
-    println!("\n{u}Options:{x}", u = U, x = X);
+fn short_match(category: &str) {
+    print!("{}", category.to_uppercase());
     let options = opt_set();
     for opt in options {
-        let s_string = if opt.short != "" {
-            format!("-{s}, ", s = opt.short)
-        } else {
-            "".to_string()
-        };
-        println!(
-            " {y}{s}--{l} {t}{x}\n{tab}{r} {e}",
-            y = Y,
-            s = s_string,
-            l = opt.long,
-            t = if opt.types != "flag" {
-                format!("<{}>", opt.types)
+        if opt.category == category {
+            let s_string = if opt.short != "" {
+                format!("-{s}, ", s = opt.short)
             } else {
                 "".to_string()
-            },
-            tab = TAB,
-            r = RET,
-            e = opt.exp,
-            x = X,
-        );
+            };
+            println!(
+                "{p} {y}{s}--{l} {t}{x}\n{p} {tab}{r} {e}",
+                p = pos_x(POS_X_SHRT),
+                y = Y,
+                s = s_string,
+                l = opt.long,
+                t = if opt.types != "flag" {
+                    format!("<{}>", opt.types)
+                } else {
+                    "".to_string()
+                },
+                tab = TAB,
+                r = RET,
+                e = opt.exp,
+                x = X,
+            );
+        }
     }
+}
+
+fn short_help() {
+    println!("\n{u}Options:{x}", u = U, x = X);
+    short_match("create");
+    short_match("branch");
+    short_match("change");
+    short_match("remote");
+    println!();
+    short_match("extras");
 }
 
 fn wide_help() {
@@ -112,93 +126,118 @@ pub fn help() {
 
 fn opt_set() -> Vec<Arg> {
     let mut opts: Vec<Arg> = Vec::new();
-    opts.push(Arg {
-        short: "c",
-        long: "commit",
-        types: "flag",
-        save: false,
-        flag: false,
-        value: "None".to_string(),
-        exp: "Commit.",
-    });
-    opts.push(Arg {
-        short: "p",
-        long: "push",
-        types: "flag",
-        save: false,
-        flag: false,
-        value: "None".to_string(),
-        exp: "Push.",
-    });
-    opts.push(Arg {
-        short: "l",
-        long: "log",
-        types: "flag",
-        save: false,
-        flag: false,
-        value: "None".to_string(),
-        exp: "Display log.",
-    });
-    opts.push(Arg {
-        short: "g",
-        long: "gitdir",
-        types: "path",
-        save: true,
-        flag: false,
-        value: ".".to_string(),
-        exp: "Specify path of `.git`.",
-    });
-    opts.push(Arg {
-        short: "a",
-        long: "add",
-        types: "path",
-        save: true,
-        flag: false,
-        value: ".".to_string(),
-        exp: "Specify path to add.",
-    });
-    opts.push(Arg {
-        short: "b",
-        long: "branch",
-        types: "string",
-        save: true,
-        flag: false,
-        value: "master".to_string(),
-        exp: "Specify branch name.",
-    });
-    opts.push(Arg {
-        short: "r",
-        long: "remote",
-        types: "string",
-        save: false,
-        flag: false,
-        value: "origin".to_string(),
-        exp: "Specify remote repository.",
-    });
+
+    // Create
     opts.push(Arg {
         short: "",
         long: "clone",
         types: "string",
         save: false,
         flag: false,
+        category: "create",
         value: "None".to_string(),
         exp: "Clone remote repository.",
     });
+
+    // Branches
+    opts.push(Arg {
+        short: "b",
+        long: "branch",
+        types: "string",
+        save: true,
+        flag: false,
+        category: "branch",
+        value: "master".to_string(),
+        exp: "Specify branch name.",
+    });
+
+    // Changes
+    opts.push(Arg {
+        short: "a",
+        long: "add",
+        types: "path",
+        save: true,
+        flag: false,
+        category: "change",
+        value: ".".to_string(),
+        exp: "Specify path to add.",
+    });
+
+    opts.push(Arg {
+        short: "c",
+        long: "commit",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "change",
+        value: "None".to_string(),
+        exp: "Commit.",
+    });
+
+    opts.push(Arg {
+        short: "l",
+        long: "log",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "change",
+        value: "None".to_string(),
+        exp: "Display log.",
+    });
+
+    // Remote
+    opts.push(Arg {
+        short: "r",
+        long: "remote",
+        types: "string",
+        save: false,
+        flag: false,
+        category: "remote",
+        value: "origin".to_string(),
+        exp: "Specify remote repository.",
+    });
+
     opts.push(Arg {
         short: "",
         long: "pull",
         types: "flag",
         save: false,
         flag: false,
+        category: "remote",
         value: "None".to_string(),
         exp: "Pull (fetch and rebase).",
     });
+
     opts.push(Arg {
-        short: "",
+        short: "p",
+        long: "push",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "remote",
+        value: "None".to_string(),
+        exp: "Push.",
+    });
+
+    // extras
+    opts.push(Arg {
+        short: "g",
+        long: "gitdir",
+        types: "path",
+        save: true,
+        flag: false,
+        category: "extras",
+        value: ".".to_string(),
+        exp: "Specify path of `.git`.",
+    });
+
+    opts.push(Arg {
+        short: "f",
         long: "force",
         types: "flag",
         save: false,
         flag: false,
+        category: "extras",
         value: "None".to_string(),
         exp: "`-f/--force` option to `add`.",
     });
@@ -209,15 +248,18 @@ fn opt_set() -> Vec<Arg> {
         types: "flag",
         save: true,
         flag: false,
+        category: "extras",
         value: "None".to_string(),
         exp: "Verbose option.",
     });
+
     opts.push(Arg {
         short: "h",
         long: "help",
         types: "flag",
         save: false,
         flag: false,
+        category: "extras",
         value: "None".to_string(),
         exp: "Show this message and exit.",
     });
