@@ -4,6 +4,7 @@ use crate::{
     misc::{beep, confirm},
     proc::execute_out,
 };
+use std::process::exit;
 
 fn get_branch() -> String {
     let output = execute_out("git branch");
@@ -63,7 +64,7 @@ pub fn set_branch(branch: &str) -> String {
     } else {
         beep();
         println!("Does not have a .git folder");
-        unimplemented();
+        exit(1);
     }
     final_branch
 }
