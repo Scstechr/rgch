@@ -19,14 +19,20 @@ use termion::terminal_size;
 const POS_X_SAVE: u64 = 18;
 const POS_X_TYPE: u64 = 21;
 const POS_X_HELP: u64 = 28;
-const BLNK: &str = "                                                                 "; // Blank
-const POS_X_SHRT: u64 = 7;
+// const BLNK: &str = "                                                                 "; // Blank
+const POS_X_SHRT: u64 = 9;
 
 #[allow(dead_code)]
 fn set_defaults() {}
 
 fn short_match(category: &str) {
-    print!("{}", category.to_uppercase());
+    print!(
+        "{t}{u}{c}{x}",
+        t = TAB,
+        u = U,
+        c = category.to_uppercase(),
+        x = X
+    );
     let options = opt_set();
     for opt in options {
         if opt.category == category {
@@ -35,8 +41,14 @@ fn short_match(category: &str) {
             } else {
                 "".to_string()
             };
+            let save = if opt.save {
+                "\u{2398}".to_string()
+            } else {
+                "".to_string()
+            };
+
             println!(
-                "{p} {y}{s}--{l} {t}{x}\n{p} {tab}{r} {e}",
+                "{p} | {y}{s}--{l} {t} {save}{x}\n{p} | {tab}{r} {e} ",
                 p = pos_x(POS_X_SHRT),
                 y = Y,
                 s = s_string,
@@ -46,6 +58,7 @@ fn short_match(category: &str) {
                 } else {
                     "".to_string()
                 },
+                save = save,
                 tab = TAB,
                 r = RET,
                 e = opt.exp,
@@ -56,17 +69,14 @@ fn short_match(category: &str) {
 }
 
 fn short_help() {
-    println!("\n{u}Options:{x}", u = U, x = X);
     short_match("create");
     short_match("branch");
     short_match("change");
     short_match("remote");
-    println!();
     short_match("extras");
 }
 
 fn wide_help() {
-    print!("\n{s}{u}Option{b}{x}", s = Y, u = U, b = BLNK, x = X);
     print!(
         "{pos}{x} {s}{u}Save{x}",
         pos = pos_x(POS_X_SAVE - 2),
@@ -82,7 +92,7 @@ fn wide_help() {
         x = X
     );
     println!(
-        "{pos}{x} {s}{u}Usage{x}",
+        "{pos}{x} {s}{u}Explainations{x}",
         pos = pos_x(POS_X_HELP),
         s = Y,
         u = U,
@@ -114,7 +124,15 @@ fn wide_help() {
 }
 
 pub fn help() {
-    println!("{}Usage: rgch [OPTION]{}", S, X);
+    println!(
+        "\n{s}{u}Usage:{x}\n\n{t}rgch {y}[OPTION]{x}",
+        s = S,
+        u = U,
+        x = X,
+        t = TAB,
+        y = Y
+    );
+    println!("\n{u}Options:{x}\n", u = U, x = X);
     let (hsize, _) = terminal_size().unwrap();
     if hsize > 71 {
         wide_help()
@@ -153,6 +171,16 @@ fn opt_set() -> Vec<Arg> {
 
     // Changes
     opts.push(Arg {
+        short: "l",
+        long: "log",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "change",
+        value: "None".to_string(),
+        exp: "Display log.",
+    });
+    opts.push(Arg {
         short: "a",
         long: "add",
         types: "path",
@@ -162,7 +190,6 @@ fn opt_set() -> Vec<Arg> {
         value: ".".to_string(),
         exp: "Specify path to add.",
     });
-
     opts.push(Arg {
         short: "c",
         long: "commit",
@@ -172,17 +199,6 @@ fn opt_set() -> Vec<Arg> {
         category: "change",
         value: "None".to_string(),
         exp: "Commit.",
-    });
-
-    opts.push(Arg {
-        short: "l",
-        long: "log",
-        types: "flag",
-        save: false,
-        flag: false,
-        category: "change",
-        value: "None".to_string(),
-        exp: "Display log.",
     });
 
     // Remote
@@ -196,7 +212,6 @@ fn opt_set() -> Vec<Arg> {
         value: "origin".to_string(),
         exp: "Specify remote repository.",
     });
-
     opts.push(Arg {
         short: "",
         long: "pull",
@@ -207,7 +222,6 @@ fn opt_set() -> Vec<Arg> {
         value: "None".to_string(),
         exp: "Pull (fetch and rebase).",
     });
-
     opts.push(Arg {
         short: "p",
         long: "push",
@@ -230,7 +244,6 @@ fn opt_set() -> Vec<Arg> {
         value: ".".to_string(),
         exp: "Specify path of `.git`.",
     });
-
     opts.push(Arg {
         short: "f",
         long: "force",
@@ -241,7 +254,6 @@ fn opt_set() -> Vec<Arg> {
         value: "None".to_string(),
         exp: "`-f/--force` option to `add`.",
     });
-
     opts.push(Arg {
         short: "v",
         long: "verbose",
@@ -252,7 +264,6 @@ fn opt_set() -> Vec<Arg> {
         value: "None".to_string(),
         exp: "Verbose option.",
     });
-
     opts.push(Arg {
         short: "h",
         long: "help",
