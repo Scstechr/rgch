@@ -2,6 +2,7 @@ pub mod ansi;
 pub mod arg;
 pub mod error;
 pub mod git;
+pub mod help;
 pub mod misc;
 pub mod proc;
 
@@ -9,11 +10,12 @@ const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 use crate::{
     ansi::colors::{S, X},
-    arg::{help, parse_arguments},
+    arg::parse_arguments,
     git::{
         add::add, branch::set_branch, clone::clone, commit::commit, diff::diff, log::log,
         pull::pull, push::push, reset::reset, status::short_status,
     },
+    help::help,
 };
 
 #[derive(Debug)]
