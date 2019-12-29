@@ -52,7 +52,11 @@ pub fn run() {
     }
 
     if args["clone"].flag {
-        clone(&args["clone"].value, &args["branch"].value);
+        clone(
+            &args["clone"].value,
+            &args["branch"].value,
+            args["branch"].flag,
+        );
     }
 
     let branch = set_branch(&args["branch"].value);

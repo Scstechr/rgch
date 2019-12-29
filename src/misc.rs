@@ -1,13 +1,13 @@
 extern crate termion;
-extern crate termios;
 
 use crate::colors::{G, X};
 use std::{
     io::{stdin, stdout, Write},
-    process::Command,
+    process::{exit, Command},
 };
 use termion::event::{Event, Key};
 use termion::input::TermRead;
+use termion::raw::IntoRawMode;
 
 pub fn beep() {
     Command::new("sh")
@@ -22,21 +22,28 @@ pub fn confirm(question: &str) -> bool {
     println!("{}", string);
     let mut f = true;
     let mut escape = true;
+    let exit_a = Event::Key(Key::Ctrl('c'));
+    let exit_b = Event::Key(Key::Ctrl('d'));
+    let yes_a = Event::Key(Key::Char('y'));
+    let yes_b = Event::Key(Key::Char('Y'));
+    let no_a = Event::Key(Key::Char('n'));
+    let no_b = Event::Key(Key::Char('N'));
     while escape {
-        let stdin = stdin();
-        for evt in stdin.events() {
+        escape = false;
+        let _stdout = stdout().into_raw_mode().unwrap();
+        for evt in stdin().events() {
             let press = evt.unwrap();
-            if press == Event::Key(Key::Ctrl('c')) {
+            // println!("pressed: {:?}", press);
+            if press == exit_a || press == exit_b {
                 println!("Aborting");
-                escape = false;
+                exit(1);
+            } else if press == yes_a || press == yes_b {
                 break;
-            } else if press == Event::Key(Key::Char('y')) || press == Event::Key(Key::Char('Y')) {
-                escape = false;
-                break;
-            } else if press == Event::Key(Key::Char('n')) || press == Event::Key(Key::Char('N')) {
+            } else if press == no_a || press == no_b {
                 f = false;
-                escape = false;
                 break;
+            } else {
+                escape = true;
             }
         }
     }
