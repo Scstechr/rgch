@@ -1,8 +1,9 @@
 extern crate termion;
 
 use crate::ansi::{
-    colors::{U, X, Y},
+    colors::{R, U, X, Y},
     moves::up_delete,
+    others::ARS,
 };
 use std::{
     io::{stdin, stdout, Write},
@@ -22,8 +23,8 @@ pub fn beep() {
 
 pub fn confirm(question: &str) -> bool {
     let question = question.replace('`', U);
-    let string = format!("{}>> {}{}{}? (press: [y/n]) {}", Y, question, X, Y, X);
-    println!("{}", string);
+    let string = format!("{}>> {}{}{}? -> press: [y/n] {}", Y, question, X, Y, X);
+    println!("{}\x1b[A", string);
     let mut f = true;
     let mut escape = true;
     let exit_a = Event::Key(Key::Ctrl('c'));
@@ -41,7 +42,7 @@ pub fn confirm(question: &str) -> bool {
         for evt in stdin.events() {
             let press = evt.unwrap();
             if press == exit_a || press == exit_b {
-                println!("Aborting");
+                println!("\n{r}{a}Aborting!{x}", r = R, a = ARS, x = X);
                 abort = true;
                 break;
             } else if press == yes_a || press == yes_b {
@@ -56,6 +57,7 @@ pub fn confirm(question: &str) -> bool {
     }
     if abort {
         let _ = stdout().flush();
+        print!("\x1b[G");
         exit(1);
     }
     print!("{}", up_delete(1));

@@ -69,15 +69,25 @@ pub fn set_branch(branch: &str) -> String {
         } else if current != branch {
             beep();
             println!(
-                "{}>> Currently on \"{}\", but \"{}\" was chosen.{}",
-                R, current, branch, X
+                "{r}{a}Currently on {c}{r}, but {b}{r} was chosen.{x}",
+                r = R,
+                a = ARS,
+                c = format_branch(&current),
+                b = format_branch(&branch),
+                x = X
             );
-            let confirm_string = format!("Checkout to branch \"{}\"?", branch);
+            let confirm_string = format!("Checkout to branch {b}", b = format_branch(&branch));
             if confirm(&confirm_string) {
                 unimplemented();
             } else {
                 final_branch = current;
-                println!("{}>> Branch set to \"{}\".{}", G, final_branch, X);
+                println!(
+                    "{g}{a}Branch set to {b}{g}.{x}",
+                    g = G,
+                    a = ARS,
+                    b = format_branch(&final_branch),
+                    x = X
+                );
             }
         }
     } else {
