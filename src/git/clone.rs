@@ -1,6 +1,7 @@
 use crate::ansi::{
     arrows::RET,
-    colors::{F, G, X},
+    colors::{F, G, U, X},
+    others::{ARS, TAB},
 };
 use crate::misc::{confirm, input};
 use crate::proc::execute;
@@ -14,7 +15,15 @@ fn set_clone_url(given: &str) -> String {
         input("Enter URL")
     };
     let url = url.replace("@", "https://github.com/");
-    println!("{}   {} Remote repository set to: {}{}", F, RET, X, url);
+    println!(
+        "{f}{t}{r} Remote repository set to   : {x}{u}{v}{x}",
+        t = TAB,
+        f = F,
+        r = RET,
+        u = U,
+        x = X,
+        v = url
+    );
     url
 }
 
@@ -31,14 +40,22 @@ fn set_clone_branch(given: &str, flag: bool) -> String {
             "master".to_string()
         }
     };
-    println!("{}   {} Remote branch set to: {}{}", F, RET, X, branch);
+    println!(
+        "{f}{t}{r} Remote branch set to       : {x}{u}{v}{x}",
+        t = TAB,
+        f = F,
+        r = RET,
+        u = U,
+        x = X,
+        v = branch
+    );
     branch
 }
 
 fn set_clone_dir(url: &str) -> String {
     let name: Vec<&str> = url.split('/').collect();
     let name = name.last().unwrap();
-    let question = format!("Clone it to {}", name);
+    let question = format!("Clone it to `{}", name);
     let name = if confirm(&question) {
         name.to_string()
     } else {
@@ -50,15 +67,25 @@ fn set_clone_dir(url: &str) -> String {
         }
     };
     println!(
-        "{}   {} Cloning remote repository to: {}{}",
-        F, RET, X, name
+        "{f}{t}{r} Cloning remote repository to: {x}{u}{v}{x}",
+        t = TAB,
+        f = F,
+        r = RET,
+        u = U,
+        x = X,
+        v = name
     );
     name.to_string()
 }
 
 pub fn clone(given_url: &str, given_branch: &str, given_input: bool) {
     // println!("{}", given_input);
-    println!("{}>> Cloning remote repository...{}", G, X);
+    println!(
+        "{a}{c} Cloning remote repository...{x}",
+        a = ARS,
+        c = G,
+        x = X
+    );
     // println!("{}, {}", given_url, given_branch);
     let url = set_clone_url(&given_url);
     let branch = set_clone_branch(&given_branch, given_input);

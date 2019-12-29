@@ -1,7 +1,7 @@
 extern crate termion;
 
 use crate::ansi::{
-    colors::{G, X},
+    colors::{U, X, Y},
     moves::up_delete,
 };
 use std::{
@@ -21,7 +21,8 @@ pub fn beep() {
 }
 
 pub fn confirm(question: &str) -> bool {
-    let string = format!("{}>> {}? (press: [y/n]) {}", G, question, X);
+    let question = question.replace('`', U);
+    let string = format!("{}>> {}{}{}? (press: [y/n]) {}", Y, question, X, Y, X);
     println!("{}", string);
     let mut f = true;
     let mut escape = true;
@@ -62,7 +63,7 @@ pub fn confirm(question: &str) -> bool {
 }
 
 pub fn input(question: &str) -> String {
-    print!("{}>> {}: {}", G, question, X);
+    print!("{}>> {}: {}", Y, question, X);
     let mut s = String::new();
     let _ = stdout().flush();
     stdin().read_line(&mut s).expect("-a");
