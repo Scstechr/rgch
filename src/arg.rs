@@ -124,6 +124,15 @@ fn opt_set() -> Vec<Arg> {
         exp: "Push.",
     });
     opts.push(Arg {
+        short: "f",
+        long: "file",
+        types: "path",
+        save: true,
+        flag: false,
+        value: ".".to_string(),
+        exp: "Specify path to add.",
+    });
+    opts.push(Arg {
         short: "g",
         long: "gitdir",
         types: "path",
