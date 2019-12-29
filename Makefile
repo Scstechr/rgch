@@ -13,3 +13,7 @@ up:
 	cargo clippy --release;
 	cargo build --release;
 	rgch -cp
+
+update:
+	rgch --pull
+	rgch -h
