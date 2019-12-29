@@ -1,6 +1,9 @@
 extern crate termion;
 
-use crate::colors::{G, X};
+use crate::ansi::{
+    colors::{G, X},
+    moves::up_delete,
+};
 use std::{
     io::{stdin, stdout, Write},
     process::{exit, Command},
@@ -28,15 +31,18 @@ pub fn confirm(question: &str) -> bool {
     let yes_b = Event::Key(Key::Char('Y'));
     let no_a = Event::Key(Key::Char('n'));
     let no_b = Event::Key(Key::Char('N'));
+    let mut abort = false;
     while escape {
         escape = false;
-        let _stdout = stdout().into_raw_mode().unwrap();
-        for evt in stdin().events() {
+        let stdin = stdin();
+        #[allow(unused_variables)]
+        let stdout = stdout().into_raw_mode().unwrap();
+        for evt in stdin.events() {
             let press = evt.unwrap();
-            // println!("pressed: {:?}", press);
             if press == exit_a || press == exit_b {
                 println!("Aborting");
-                exit(1);
+                abort = true;
+                break;
             } else if press == yes_a || press == yes_b {
                 break;
             } else if press == no_a || press == no_b {
@@ -47,11 +53,16 @@ pub fn confirm(question: &str) -> bool {
             }
         }
     }
+    if abort {
+        let _ = stdout().flush();
+        exit(1);
+    }
+    print!("{}", up_delete(1));
     f
 }
 
 pub fn input(question: &str) -> String {
-    print!("\n{}>> {}: {}", G, question, X);
+    print!("{}>> {}: {}", G, question, X);
     let mut s = String::new();
     let _ = stdout().flush();
     stdin().read_line(&mut s).expect("-a");

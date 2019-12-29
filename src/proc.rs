@@ -1,7 +1,7 @@
 use std::process::Command;
 
+use crate::ansi::colors::{C, S, X};
 use crate::arg::{help, parse_arguments};
-use crate::colors::{C, S, X};
 use crate::git::{branch::set_branch, clone::clone, commit::commit, diff::diff, push::push};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");

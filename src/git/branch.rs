@@ -1,5 +1,5 @@
 use crate::{
-    colors::{G, R, X},
+    ansi::colors::{G, R, X},
     error::unimplemented,
     misc::{beep, confirm},
     proc::execute_out,

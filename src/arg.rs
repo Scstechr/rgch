@@ -1,4 +1,4 @@
-use crate::colors::{S, U, X};
+use crate::ansi::colors::{S, U, X};
 use crate::error::invalid_argument;
 use crate::{Arg, Opt};
 use std::{collections::HashMap, env, process::exit};

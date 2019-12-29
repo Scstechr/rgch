@@ -1,19 +1,27 @@
-use crate::colors::{G, X};
+use crate::ansi::{
+    arrows::RET,
+    colors::{F, G, X},
+};
 use crate::misc::{confirm, input};
 use crate::proc::execute;
 
 use std::process::exit;
 
-pub fn clone(given_url: &str, given_branch: &str, given_input: bool) {
-    // println!("{}", given_input);
-    println!("{}>> Cloning remote repository{}", G, X);
-    // println!("{}, {}", given_url, given_branch);
-    let url = if given_url != "None" {
-        given_url.to_string()
+fn set_clone_url(given: &str) -> String {
+    let url = if given != "None" {
+        given.to_string()
     } else {
         input("Enter URL")
     };
-    println!("{}>> Remote repository set to: {}{}", G, X, url);
+    println!("{}   {} Remote repository set to: {}{}", F, RET, X, url);
+    url.replace("@", "https://github.com/")
+}
+
+pub fn clone(given_url: &str, given_branch: &str, given_input: bool) {
+    // println!("{}", given_input);
+    println!("{}>> Cloning remote repository...{}", G, X);
+    // println!("{}, {}", given_url, given_branch);
+    let url = set_clone_url(&given_url);
     let branch = if given_input {
         given_branch.to_string()
     } else if confirm("Is it master branch") {
@@ -26,10 +34,13 @@ pub fn clone(given_url: &str, given_branch: &str, given_input: bool) {
             "master".to_string()
         }
     };
-    println!("{}\n>> Remote branch set to: {}{}", G, X, branch);
+    println!("{}   {} Remote branch set to: {}{}", F, RET, X, branch);
     let name: Vec<&str> = url.split('/').collect();
     let name = name.last().unwrap();
-    println!("{}\n>> Cloning remote repository to: {}{}", G, X, name);
+    println!(
+        "{}   {} Cloning remote repository to: {}{}",
+        F, RET, X, name
+    );
     let command = format!("git clone -b {} {} {}", branch, url, name);
     execute(&command);
     exit(0);

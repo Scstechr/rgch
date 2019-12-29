@@ -1,4 +1,4 @@
-use crate::colors::{G, X};
+use crate::ansi::colors::{G, X};
 use crate::proc::execute_out;
 
 pub fn status() -> bool {

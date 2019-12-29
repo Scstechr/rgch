@@ -1,4 +1,4 @@
-use crate::colors::{R, X};
+use crate::ansi::colors::{R, X};
 use crate::misc::beep;
 use std::process::exit;
 
