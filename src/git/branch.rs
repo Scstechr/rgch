@@ -34,34 +34,36 @@ pub fn set_branch(branch: &str) -> String {
     let mut final_branch = branch.to_string();
     let current = get_branch();
     let branches = get_branch_list();
-    let check = branches.iter().any(|b| b == branch);
-    // println!(
-    //     "current: {}, selected: {}, branches: {:?}",
-    //     current, branch, branches
-    // );
-    if !check {
-        beep();
-        println!("{}>> Branch \"{}\" not found.{}", R, branch, X);
-        let confirm_string = format!("Make branch \"{}\"?", branch);
-        if confirm(&confirm_string) {
-            unimplemented();
-        } else {
-            final_branch = current;
-            println!("{}>> Branch set to \"{}\".{}", G, final_branch, X);
-        };
-    } else if current != branch {
-        beep();
-        println!(
-            "{}>> Currently on \"{}\", but \"{}\" was chosen.{}",
-            R, current, branch, X
-        );
-        let confirm_string = format!("Checkout to branch \"{}\"?", branch);
-        if confirm(&confirm_string) {
-            unimplemented();
-        } else {
-            final_branch = current;
-            println!("{}>> Branch set to \"{}\".{}", G, final_branch, X);
+    if !branches.is_empty() {
+        let check = branches.iter().any(|b| b == branch);
+        if !check {
+            beep();
+            println!("{}>> Branch \"{}\" not found.{}", R, branch, X);
+            let confirm_string = format!("Make branch \"{}\"?", branch);
+            if confirm(&confirm_string) {
+                unimplemented();
+            } else {
+                final_branch = current;
+                println!("{}>> Branch set to \"{}\".{}", G, final_branch, X);
+            };
+        } else if current != branch {
+            beep();
+            println!(
+                "{}>> Currently on \"{}\", but \"{}\" was chosen.{}",
+                R, current, branch, X
+            );
+            let confirm_string = format!("Checkout to branch \"{}\"?", branch);
+            if confirm(&confirm_string) {
+                unimplemented();
+            } else {
+                final_branch = current;
+                println!("{}>> Branch set to \"{}\".{}", G, final_branch, X);
+            }
         }
+    } else {
+        beep();
+        println!("Does not have a .git folder");
+        unimplemented();
     }
     final_branch
 }
