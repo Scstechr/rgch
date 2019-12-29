@@ -12,7 +12,7 @@ fn set_clone_url(given: &str) -> String {
     let url = if given != "None" {
         given.to_string()
     } else {
-        input("Enter URL")
+        input("Enter URL (@ for GitHub)")
     };
     let url = url.replace("@", "https://github.com/");
     println!(
