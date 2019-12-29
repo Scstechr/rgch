@@ -1,5 +1,8 @@
 use crate::{
-    ansi::colors::{S, U, X},
+    ansi::{
+        colors::{S, U, X},
+        moves::pos_x,
+    },
     error::invalid_argument,
     Arg, Opt,
 };
@@ -10,6 +13,8 @@ use std::{
     process::exit,
 };
 
+const POS_X_HELP: u64 = 18;
+
 fn set_defaults() {}
 
 pub fn help() {
@@ -17,12 +22,18 @@ pub fn help() {
     println!("\n{}{}Options:{}", S, U, X);
     let options = opt_set();
     for opt in options {
-        let string = if opt.short != "" {
-            format!("  -{}, --{}\x1b[20G | {}", opt.short, opt.long, opt.exp)
+        let s_string = if opt.short != "" {
+            format!("-{s}, ", s = opt.short)
         } else {
-            format!("  --{}\x1b[20G | {}", opt.long, opt.exp)
+            "".to_string()
         };
-        println!("{}", string);
+        println!(
+            " {s}--{l}{x} | {e}",
+            s = s_string,
+            l = opt.long,
+            x = pos_x(POS_X_HELP),
+            e = opt.exp
+        );
     }
     exit(0);
 }
@@ -54,19 +65,11 @@ fn opt_set() -> Vec<Arg> {
         exp: "Push.",
     });
     opts.push(Arg {
-        short: "v",
-        long: "verbose",
-        types: "flag",
-        flag: false,
-        value: "None".to_string(),
-        exp: "Verbose option.",
-    });
-    opts.push(Arg {
         short: "g",
         long: "gitdir",
         types: "path",
         flag: false,
-        value: "None".to_string(),
+        value: ".".to_string(),
         exp: "Specify path of `.git`.",
     });
     opts.push(Arg {
@@ -78,6 +81,14 @@ fn opt_set() -> Vec<Arg> {
         exp: "Clone remote repository.",
     });
 
+    opts.push(Arg {
+        short: "v",
+        long: "verbose",
+        types: "flag",
+        flag: false,
+        value: "None".to_string(),
+        exp: "Verbose option.",
+    });
     opts.push(Arg {
         short: "h",
         long: "help",
