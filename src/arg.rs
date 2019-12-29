@@ -13,13 +13,29 @@ use std::{
     process::exit,
 };
 
-const POS_X_HELP: u64 = 18;
+const POS_X_SAVE: u64 = 18;
+const POS_X_HELP: u64 = 21;
 
 fn set_defaults() {}
 
 pub fn help() {
     println!("{}Usage: rgch [OPTION]{}", S, X);
-    println!("\n{}{}Options:{}", S, U, X);
+    println!("{}", U);
+    print!("{s}{u}Option{x}", s = S, u = U, x = X);
+    print!(
+        "{pos}{x} {s}{u}Save{x}",
+        pos = pos_x(POS_X_SAVE - 2),
+        s = S,
+        u = U,
+        x = X
+    );
+    println!(
+        "{pos}{x} {s}{u}Usage{x}",
+        pos = pos_x(POS_X_HELP),
+        s = S,
+        u = U,
+        x = X
+    );
     let options = opt_set();
     for opt in options {
         let s_string = if opt.short != "" {
@@ -27,12 +43,18 @@ pub fn help() {
         } else {
             "".to_string()
         };
+        let save_flg = if opt.save {
+            format!("{x} \u{2714} ", x = pos_x(POS_X_SAVE))
+        } else {
+            "".to_string()
+        };
         println!(
-            " {s}--{l}{x} | {e}",
+            " {s}--{l} {x} {e}{f}",
             s = s_string,
             l = opt.long,
             x = pos_x(POS_X_HELP),
-            e = opt.exp
+            e = opt.exp,
+            f = save_flg
         );
     }
     exit(0);
@@ -185,6 +207,7 @@ pub fn parse_arguments() -> HashMap<String, Opt> {
 
     let mut args: HashMap<String, Opt> = HashMap::new();
     for opt in options {
+        println!("{:?}", opt);
         args.insert(
             String::from(opt.long),
             Opt {
