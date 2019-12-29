@@ -3,7 +3,7 @@ extern crate termios;
 use crate::colors::{G, X};
 use std::{
     io,
-    io::{Read, Write},
+    io::{stdin, stdout, Read, Write},
     process::Command,
 };
 use termios::{tcsetattr, Termios, ECHO, ICANON, TCSANOW};
@@ -45,4 +45,18 @@ pub fn confirm(question: &str) -> bool {
         break;
     }
     flag
+}
+
+pub fn input(question: &str) -> String {
+    print!("\n{}>> {}: {}", question, G, X);
+    let mut s = String::new();
+    let _ = stdout().flush();
+    stdin().read_line(&mut s).expect("-a");
+    if let Some('\n') = s.chars().next_back() {
+        s.pop();
+    }
+    if let Some('\r') = s.chars().next_back() {
+        s.pop();
+    }
+    s
 }
