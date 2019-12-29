@@ -1,18 +1,9 @@
 use std::process::Command;
 
-use crate::{
-    ansi::{
-        colors::{C, S, X},
-        others::ARS,
-    },
-    arg::{help, parse_arguments},
-    git::{
-        branch::set_branch, clone::clone, commit::commit, diff::diff, pull::pull, push::push,
-        reset::reset,
-    },
+use crate::ansi::{
+    colors::{C, X},
+    others::ARS,
 };
-
-const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 pub fn execute(command: &str) -> bool {
     println!("{c}{a}Execute: {v}{x}", c = C, a = ARS, v = command, x = X);
@@ -44,42 +35,4 @@ pub fn execute_out(command: &str) -> String {
         .output()
         .expect("failed to execute process");
     std::str::from_utf8(&output.stdout).unwrap().to_string()
-}
-
-pub fn run() {
-    println!("{}rgch v{}: Rust implementation of gch{}", S, VERSION, X);
-    //     let _config = arg::parse_defaults();
-    let args = parse_arguments();
-
-    // for arg in &args {
-    //     println!("{:?}", arg);
-    // }
-
-    if args["help"].flag {
-        help();
-    }
-
-    if args["clone"].flag {
-        clone(
-            &args["clone"].value,
-            &args["branch"].value,
-            args["branch"].flag,
-        );
-    }
-
-    if args["pull"].flag {
-        pull(&args["remote"].value, &args["branch"].value);
-    }
-
-    let branch = set_branch(&args["branch"].value);
-
-    diff(args["verbose"].flag);
-    reset();
-
-    if args["commit"].flag {
-        commit(&args["file"].value);
-    }
-    if args["push"].flag {
-        push(&branch);
-    }
 }

@@ -5,6 +5,17 @@ pub mod git;
 pub mod misc;
 pub mod proc;
 
+const VERSION: &str = env!("CARGO_PKG_VERSION");
+
+use crate::{
+    ansi::colors::{S, X},
+    arg::{help, parse_arguments},
+    git::{
+        branch::set_branch, clone::clone, commit::commit, diff::diff, pull::pull, push::push,
+        reset::reset,
+    },
+};
+
 #[derive(Debug)]
 pub struct Opt {
     save: bool,
@@ -21,4 +32,42 @@ pub struct Arg {
     flag: bool,
     value: String,
     exp: &'static str,
+}
+
+pub fn run() {
+    println!("{}rgch v{}: Rust implementation of gch{}", S, VERSION, X);
+    //     let _config = arg::parse_defaults();
+    let args = parse_arguments();
+
+    // for arg in &args {
+    //     println!("{:?}", arg);
+    // }
+
+    if args["help"].flag {
+        help();
+    }
+
+    if args["clone"].flag {
+        clone(
+            &args["clone"].value,
+            &args["branch"].value,
+            args["branch"].flag,
+        );
+    }
+
+    if args["pull"].flag {
+        pull(&args["remote"].value, &args["branch"].value);
+    }
+
+    let branch = set_branch(&args["branch"].value);
+
+    diff(args["verbose"].flag);
+    reset();
+
+    if args["commit"].flag {
+        commit(&args["file"].value);
+    }
+    if args["push"].flag {
+        push(&branch);
+    }
 }
