@@ -10,7 +10,7 @@ use std::process::exit;
 pub fn pull(given_remote: &str, given_branch: &str) {
     // println!("{}", given_input);
     println!(
-        "\n{c}{a} Pulling from remote repository...{x}",
+        "\n{c}{a}Pull (fetch, rebase) from remote repository...{x}",
         a = ARS,
         c = G,
         x = X

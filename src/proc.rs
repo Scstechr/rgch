@@ -1,15 +1,18 @@
 use std::process::Command;
 
-use crate::ansi::colors::{C, S, X};
-use crate::arg::{help, parse_arguments};
-use crate::git::{
-    branch::set_branch, clone::clone, commit::commit, diff::diff, pull::pull, push::push,
+use crate::{
+    ansi::{
+        colors::{C, S, X},
+        others::ARS,
+    },
+    arg::{help, parse_arguments},
+    git::{branch::set_branch, clone::clone, commit::commit, diff::diff, pull::pull, push::push},
 };
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 pub fn execute(command: &str) -> bool {
-    println!("{}>> Execute: {}{}", C, command, X);
+    println!("{c}{a} Execute: {v}{x}", c = C, a = ARS, v = command, x = X);
     let mut child = Command::new("sh")
         .arg("-c")
         .arg(command)
