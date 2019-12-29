@@ -7,7 +7,7 @@ use crate::git::{branch::set_branch, clone::clone, commit::commit, diff::diff, p
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 pub fn execute(command: &str) -> bool {
-    println!("{}>> execute: {}{}", C, command, X);
+    println!("{}>> Execute: {}{}", C, command, X);
     let mut child = Command::new("sh")
         .arg("-c")
         .arg(command)
