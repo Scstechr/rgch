@@ -8,7 +8,11 @@ pub fn help() {
     println!("\n{}{}Options:{}", S, U, X);
     let options = opt_set();
     for opt in options {
-        let string = format!("  -{}, --{}\x1b[20G | {}", opt.short, opt.long, opt.exp);
+        let string = if opt.short != "" {
+            format!("  -{}, --{}\x1b[20G | {}", opt.short, opt.long, opt.exp)
+        } else {
+            format!("  --{}\x1b[20G | {}", opt.long, opt.exp)
+        };
         println!("{}", string);
     }
     exit(0);
@@ -48,6 +52,15 @@ fn opt_set() -> Vec<Arg> {
         value: "None".to_string(),
         exp: "Verbose option.",
     });
+    opts.push(Arg {
+        short: "",
+        long: "clone",
+        types: "string",
+        flag: false,
+        value: "None".to_string(),
+        exp: "Clone remote repository.",
+    });
+
     opts.push(Arg {
         short: "h",
         long: "help",
