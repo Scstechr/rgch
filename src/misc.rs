@@ -1,12 +1,13 @@
+extern crate termion;
 extern crate termios;
 
 use crate::colors::{G, X};
 use std::{
-    io,
-    io::{stdin, stdout, Read, Write},
+    io::{stdin, stdout, Write},
     process::Command,
 };
-use termios::{tcsetattr, Termios, ECHO, ICANON, TCSANOW};
+use termion::event::{Event, Key};
+use termion::input::TermRead;
 
 pub fn beep() {
     Command::new("sh")
@@ -17,34 +18,29 @@ pub fn beep() {
 }
 
 pub fn confirm(question: &str) -> bool {
-    let stdin = 0;
-    let mut termios = Termios::from_fd(stdin).unwrap();
-    termios.c_lflag &= !(ICANON | ECHO);
-    tcsetattr(stdin, TCSANOW, &termios).unwrap();
-    let stdout = io::stdout();
-    let mut reader = io::stdin();
-    let mut buffer = [0; 1];
-    let string = format!("{}>> {} [y/n]: {}", G, question, X);
-    print!("{}", string);
-    let mut flag = true;
-    loop {
-        stdout.lock().flush().unwrap();
-        reader.read_exact(&mut buffer).unwrap();
-        match buffer[0] as char {
-            'Y' | 'y' => {
-                tcsetattr(stdin, TCSANOW, &termios).unwrap();
-            }
-            'N' | 'n' => {
-                flag = false;
-                tcsetattr(stdin, TCSANOW, &termios).unwrap();
-            }
-            _ => {
-                continue;
+    let string = format!("{}>> {} (press: [y/n]) {}", G, question, X);
+    println!("{}", string);
+    let mut f = true;
+    let mut escape = true;
+    while escape {
+        let stdin = stdin();
+        for evt in stdin.events() {
+            let press = evt.unwrap();
+            if press == Event::Key(Key::Ctrl('c')) {
+                println!("Aborting");
+                escape = false;
+                break;
+            } else if press == Event::Key(Key::Char('y')) || press == Event::Key(Key::Char('Y')) {
+                escape = false;
+                break;
+            } else if press == Event::Key(Key::Char('n')) || press == Event::Key(Key::Char('N')) {
+                f = false;
+                escape = false;
+                break;
             }
         }
-        break;
     }
-    flag
+    f
 }
 
 pub fn input(question: &str) -> String {
