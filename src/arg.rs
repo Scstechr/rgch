@@ -17,7 +17,8 @@ use std::{
 use termion::terminal_size;
 
 const POS_X_SAVE: u64 = 18;
-const POS_X_HELP: u64 = 21;
+const POS_X_TYPE: u64 = 21;
+const POS_X_HELP: u64 = 28;
 const BLNK: &str = "                                                                 "; // Blank
 
 fn set_defaults() {}
@@ -32,11 +33,16 @@ fn short_help() {
             "".to_string()
         };
         println!(
-            " {y}{s}--{l} {x}\n{t}{r} {e}",
+            " {y}{s}--{l} {t}{x}\n{tab}{r} {e}",
             y = Y,
             s = s_string,
             l = opt.long,
-            t = TAB,
+            t = if opt.types != "flag" {
+                format!("<{}>", opt.types)
+            } else {
+                "".to_string()
+            },
+            tab = TAB,
             r = RET,
             e = opt.exp,
             x = X,
@@ -49,6 +55,13 @@ fn wide_help() {
     print!(
         "{pos}{x} {s}{u}Save{x}",
         pos = pos_x(POS_X_SAVE - 2),
+        s = Y,
+        u = U,
+        x = X
+    );
+    print!(
+        "{pos}{x} {s}{u}Type{x}",
+        pos = pos_x(POS_X_TYPE),
         s = Y,
         u = U,
         x = X
@@ -72,10 +85,12 @@ fn wide_help() {
         } else {
             "".to_string()
         };
+        let types = format!("{x} {t} ", x = pos_x(POS_X_TYPE), t = opt.types);
         println!(
-            " {s}--{l} {x} {e}{f}",
+            " {s}--{l}{t} {x} {e}{f}",
             s = s_string,
             l = opt.long,
+            t = types,
             x = pos_x(POS_X_HELP),
             e = opt.exp,
             f = save_flg
