@@ -1,7 +1,16 @@
-use crate::ansi::colors::{S, U, X};
-use crate::error::invalid_argument;
-use crate::{Arg, Opt};
-use std::{collections::HashMap, env, process::exit};
+use crate::{
+    ansi::colors::{S, U, X},
+    error::invalid_argument,
+    Arg, Opt,
+};
+use std::{
+    collections::HashMap,
+    env,
+    path::{Path, PathBuf},
+    process::exit,
+};
+
+fn set_defaults() {}
 
 pub fn help() {
     println!("{}Usage: rgch [OPTION]{}", S, X);
@@ -51,6 +60,14 @@ fn opt_set() -> Vec<Arg> {
         flag: false,
         value: "None".to_string(),
         exp: "Verbose option.",
+    });
+    opts.push(Arg {
+        short: "g",
+        long: "gitdir",
+        types: "path",
+        flag: false,
+        value: "None".to_string(),
+        exp: "Specify path of `.git`.",
     });
     opts.push(Arg {
         short: "",

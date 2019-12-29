@@ -24,7 +24,7 @@ fn get_branch_list() -> Vec<String> {
     let branches_strs: Vec<&str> = output.split('\n').collect();
     for branch in branches_strs {
         if !branch.is_empty() {
-            branches.push(branch.replace("* ", "").replace("  ", "").to_string());
+            branches.push(branch.replace("*", "").replace(" ", "").to_string());
         }
     }
     branches
