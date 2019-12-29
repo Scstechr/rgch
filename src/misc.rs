@@ -21,7 +21,7 @@ pub fn beep() {
 }
 
 pub fn confirm(question: &str) -> bool {
-    let string = format!("{}>> {} (press: [y/n]) {}", G, question, X);
+    let string = format!("{}>> {}? (press: [y/n]) {}", G, question, X);
     println!("{}", string);
     let mut f = true;
     let mut escape = true;

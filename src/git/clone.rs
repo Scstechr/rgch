@@ -13,8 +13,9 @@ fn set_clone_url(given: &str) -> String {
     } else {
         input("Enter URL")
     };
+    let url = url.replace("@", "https://github.com/");
     println!("{}   {} Remote repository set to: {}{}", F, RET, X, url);
-    url.replace("@", "https://github.com/")
+    url
 }
 
 fn set_clone_branch(given: &str, flag: bool) -> String {
@@ -37,6 +38,17 @@ fn set_clone_branch(given: &str, flag: bool) -> String {
 fn set_clone_dir(url: &str) -> String {
     let name: Vec<&str> = url.split('/').collect();
     let name = name.last().unwrap();
+    let question = format!("Clone it to {}", name);
+    let name = if confirm(&question) {
+        name.to_string()
+    } else {
+        let b = input("Enter directory name");
+        if !b.is_empty() {
+            b
+        } else {
+            name.to_string()
+        }
+    };
     println!(
         "{}   {} Cloning remote repository to: {}{}",
         F, RET, X, name
