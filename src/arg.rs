@@ -21,6 +21,7 @@ const POS_X_TYPE: u64 = 21;
 const POS_X_HELP: u64 = 28;
 const BLNK: &str = "                                                                 "; // Blank
 
+#[allow(dead_code)]
 fn set_defaults() {}
 
 fn short_help() {
