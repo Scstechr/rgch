@@ -9,9 +9,12 @@ use std::{
     io::{stdin, stdout, Write},
     process::{exit, Command},
 };
-use termion::event::{Event, Key};
-use termion::input::TermRead;
-use termion::raw::IntoRawMode;
+use termion::{
+    cursor::{Hide, Show},
+    event::{Event, Key},
+    input::TermRead,
+    raw::IntoRawMode,
+};
 
 pub fn beep() {
     Command::new("sh")
@@ -22,6 +25,7 @@ pub fn beep() {
 }
 
 pub fn confirm(question: &str) -> bool {
+    print!("{}", Hide);
     let question = question.replace('`', U);
     let string = format!("{}>> {}{}{}? -> press: [y/n] {}", Y, question, X, Y, X);
     println!("{}\x1b[A", string);
@@ -55,11 +59,18 @@ pub fn confirm(question: &str) -> bool {
             }
         }
     }
+
     if abort {
+        print!("{}", Show);
         let _ = stdout().flush();
         print!("\x1b[G");
         exit(1);
+    } else if f {
+        println!("{}", Show);
+    } else {
+        print!("{}", Show);
     }
+
     print!("{}", up_delete(1));
     f
 }

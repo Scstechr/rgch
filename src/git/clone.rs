@@ -1,12 +1,15 @@
 use crate::ansi::{
     arrows::RET,
     colors::{F, G, U, X},
+    moves::pos_x,
     others::{ARS, TAB},
 };
 use crate::misc::{confirm, input};
 use crate::proc::execute;
 
 use std::process::exit;
+
+const POS_X_ARG: u64 = 31;
 
 fn set_clone_url(given: &str) -> String {
     let url = if given != "None" {
@@ -16,7 +19,8 @@ fn set_clone_url(given: &str) -> String {
     };
     let url = url.replace("@", "https://github.com/");
     println!(
-        "{f}{t}{r} Remote repository set to   : {x}{u}{v}{x}",
+        "{f}{t}{r} Remote repository set to {a}: {x}{u}{v}{x}",
+        a = pos_x(POS_X_ARG),
         t = TAB,
         f = F,
         r = RET,
@@ -41,7 +45,8 @@ fn set_clone_branch(given: &str, flag: bool) -> String {
         }
     };
     println!(
-        "{f}{t}{r} Remote branch set to       : {x}{u}{v}{x}",
+        "{f}{t}{r} Remote branch set to {a}: {x}{u}{v}{x}",
+        a = pos_x(POS_X_ARG),
         t = TAB,
         f = F,
         r = RET,
@@ -67,7 +72,8 @@ fn set_clone_dir(url: &str) -> String {
         }
     };
     println!(
-        "{f}{t}{r} Cloning remote repository to: {x}{u}{v}{x}",
+        "{f}{t}{r} Cloning remote repository to {a}: {x}{u}{v}{x}",
+        a = pos_x(POS_X_ARG),
         t = TAB,
         f = F,
         r = RET,
@@ -81,7 +87,7 @@ fn set_clone_dir(url: &str) -> String {
 pub fn clone(given_url: &str, given_branch: &str, given_input: bool) {
     // println!("{}", given_input);
     println!(
-        "\n{c}{a} Cloning remote repository...{x}",
+        "\n{c}{a}Cloning remote repository...{x}",
         a = ARS,
         c = G,
         x = X
