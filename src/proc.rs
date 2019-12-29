@@ -2,7 +2,9 @@ use std::process::Command;
 
 use crate::ansi::colors::{C, S, X};
 use crate::arg::{help, parse_arguments};
-use crate::git::{branch::set_branch, clone::clone, commit::commit, diff::diff, push::push};
+use crate::git::{
+    branch::set_branch, clone::clone, commit::commit, diff::diff, pull::pull, push::push,
+};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
@@ -43,9 +45,9 @@ pub fn run() {
     //     let _config = arg::parse_defaults();
     let args = parse_arguments();
 
-    for arg in &args {
-        println!("{:?}", arg);
-    }
+    // for arg in &args {
+    //     println!("{:?}", arg);
+    // }
 
     if args["help"].flag {
         help();
@@ -57,6 +59,10 @@ pub fn run() {
             &args["branch"].value,
             args["branch"].flag,
         );
+    }
+
+    if args["pull"].flag {
+        pull(&args["remote"].value, &args["branch"].value);
     }
 
     let branch = set_branch(&args["branch"].value);

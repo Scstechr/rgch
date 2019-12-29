@@ -99,6 +99,15 @@ fn opt_set() -> Vec<Arg> {
         exp: "Specify path of `.git`.",
     });
     opts.push(Arg {
+        short: "r",
+        long: "remote",
+        types: "string",
+        save: false,
+        flag: false,
+        value: "origin".to_string(),
+        exp: "Specify remote repository.",
+    });
+    opts.push(Arg {
         short: "",
         long: "clone",
         types: "string",
@@ -106,6 +115,15 @@ fn opt_set() -> Vec<Arg> {
         flag: false,
         value: "None".to_string(),
         exp: "Clone remote repository.",
+    });
+    opts.push(Arg {
+        short: "",
+        long: "pull",
+        types: "flag",
+        save: false,
+        flag: false,
+        value: "None".to_string(),
+        exp: "Pull from remote repository.",
     });
 
     opts.push(Arg {
@@ -207,7 +225,6 @@ pub fn parse_arguments() -> HashMap<String, Opt> {
 
     let mut args: HashMap<String, Opt> = HashMap::new();
     for opt in options {
-        println!("{:?}", opt);
         args.insert(
             String::from(opt.long),
             Opt {
