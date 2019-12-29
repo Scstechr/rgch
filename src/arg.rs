@@ -1,7 +1,9 @@
 use crate::{
     ansi::{
-        colors::{S, U, X},
+        arrows::RET,
+        colors::{S, U, X, Y},
         moves::pos_x,
+        others::TAB,
     },
     error::invalid_argument,
     Arg, Opt,
@@ -9,9 +11,10 @@ use crate::{
 use std::{
     collections::HashMap,
     env,
-    path::{Path, PathBuf},
+    // path::{Path, PathBuf},
     process::exit,
 };
+use termion::terminal_size;
 
 const POS_X_SAVE: u64 = 18;
 const POS_X_HELP: u64 = 21;
@@ -19,8 +22,29 @@ const BLNK: &str = "                                                            
 
 fn set_defaults() {}
 
-pub fn help() {
-    println!("{}Usage: rgch [OPTION]{}", S, X);
+fn short_help() {
+    println!("\n{u}Options:{x}", u = U, x = X);
+    let options = opt_set();
+    for opt in options {
+        let s_string = if opt.short != "" {
+            format!("-{s}, ", s = opt.short)
+        } else {
+            "".to_string()
+        };
+        println!(
+            " {y}{s}--{l} {x}\n{t}{r} {e}",
+            y = Y,
+            s = s_string,
+            l = opt.long,
+            t = TAB,
+            r = RET,
+            e = opt.exp,
+            x = X,
+        );
+    }
+}
+
+fn wide_help() {
     print!("\n{s}{u}Option{b}{x}", s = S, u = U, b = BLNK, x = X);
     print!(
         "{pos}{x} {s}{u}Save{x}",
@@ -56,6 +80,16 @@ pub fn help() {
             e = opt.exp,
             f = save_flg
         );
+    }
+}
+
+pub fn help() {
+    println!("{}Usage: rgch [OPTION]{}", S, X);
+    let (hsize, _) = terminal_size().unwrap();
+    if hsize > 71 {
+        wide_help()
+    } else {
+        short_help()
     }
     exit(0);
 }

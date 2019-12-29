@@ -1,8 +1,7 @@
 use crate::{
     ansi::{
-        arrows::RET,
-        colors::{F, G, U, X},
-        others::{ARS, TAB},
+        colors::{G, X},
+        others::ARS,
     },
     proc::execute,
 };
