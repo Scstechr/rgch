@@ -9,7 +9,7 @@ pub mod proc;
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 use crate::{
-    ansi::colors::{S, X},
+    ansi::colors::X,
     arg::parse_arguments,
     git::{
         add::add, branch::set_branch, clone::clone, commit::commit, diff::diff, log::log,
@@ -38,7 +38,7 @@ pub struct Arg {
 }
 
 pub fn run() {
-    println!("{}rgch v{}: Rust implementation of gch{}", S, VERSION, X);
+    println!("rgch v{}: Rust implementation of gch{}", VERSION, X);
     //     let _config = arg::parse_defaults();
     let args = parse_arguments();
 
