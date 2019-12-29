@@ -45,18 +45,18 @@ fn short_help() {
 }
 
 fn wide_help() {
-    print!("\n{s}{u}Option{b}{x}", s = S, u = U, b = BLNK, x = X);
+    print!("\n{s}{u}Option{b}{x}", s = Y, u = U, b = BLNK, x = X);
     print!(
         "{pos}{x} {s}{u}Save{x}",
         pos = pos_x(POS_X_SAVE - 2),
-        s = S,
+        s = Y,
         u = U,
         x = X
     );
     println!(
         "{pos}{x} {s}{u}Usage{x}",
         pos = pos_x(POS_X_HELP),
-        s = S,
+        s = Y,
         u = U,
         x = X
     );
@@ -157,7 +157,7 @@ fn opt_set() -> Vec<Arg> {
         save: false,
         flag: false,
         value: "None".to_string(),
-        exp: "Pull (fetch and rebase) from remote repository.",
+        exp: "Pull (fetch and rebase).",
     });
 
     opts.push(Arg {
