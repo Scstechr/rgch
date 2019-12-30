@@ -29,18 +29,12 @@ pub fn short_status() {
     short_status_info();
 }
 
-pub fn status() -> bool {
-    let output = execute_out("git status -s");
-    if !output.is_empty() {
-        true
-    } else {
-        println!("{}Status clean.{}", G, X);
-        false
-    }
+pub fn status() {
+    execute("git status -s");
 }
 
 pub fn check_status() -> bool {
-    let output = execute_out("git status --short");
+    let (output, _) = execute_out("git status --short");
     if !output.is_empty() {
         true
     } else {

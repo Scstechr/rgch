@@ -10,7 +10,7 @@ use crate::{
 use std::process::exit;
 
 fn get_branch() -> String {
-    let output = execute_out("git branch");
+    let (output, _) = execute_out("git branch");
     let branches: Vec<&str> = output.split('\n').collect();
     let mut current_branch = "";
     for branch in &branches {
@@ -23,7 +23,7 @@ fn get_branch() -> String {
 }
 
 fn get_branch_list() -> Vec<String> {
-    let output = execute_out("git branch");
+    let (output, _) = execute_out("git branch");
     let mut branches: Vec<String> = Vec::new();
     let branches_strs: Vec<&str> = output.split('\n').collect();
     for branch in branches_strs {
