@@ -14,6 +14,9 @@ pub const C: &str = "\x1b[96m"; // Cyan
 pub const FR: &str = "\x1b[31m"; // Fade Red
 pub const FG: &str = "\x1b[32m"; // Fade Green
 pub const FZ: &str = "\x1b[33m"; // Brown
-                                 // pub const FB: &str = "\x1b[34m"; // Fade Blue
-                                 // pub const FC: &str = "\x1b[36m"; // Fade Cyan
-                                 // pub const FY: &str = "\x1b[33m"; // Fade Yellow
+pub const FB: &str = "\x1b[34m"; // Deep Blue
+pub const FC: &str = "\x1b[36m"; // Fade Cyan
+pub const FY: &str = "\x1b[33m"; // Fade Yellow
+
+pub const BR: &str = "\x1b[48m"; // White w/ R BG.
+pub const BW: &str = "\x1b[3m"; // White w/ R BG.

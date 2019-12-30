@@ -6,10 +6,13 @@ pub mod help;
 pub mod misc;
 pub mod proc;
 
-const VERSION: &str = env!("CARGO_PKG_VERSION");
+// const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 use crate::{
-    ansi::colors::X,
+    // ansi::{
+    //     colors::{BW, X},
+    //     others::ARS,
+    // },
     arg::parse_arguments,
     git::{
         add::{add, silence_add},
@@ -46,7 +49,13 @@ pub struct Arg {
 }
 
 pub fn run() {
-    println!("rgch v{}: Rust implementation of gch{}", VERSION, X);
+    // println!(
+    //     "{c}{a}rgch v{v}: Rust implementation of `gch`{x}",
+    //     a = ARS,
+    //     c = BW,
+    //     v = VERSION,
+    //     x = X
+    // );
     //     let _config = arg::parse_defaults();
     let args = parse_arguments();
 

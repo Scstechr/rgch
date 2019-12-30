@@ -1,12 +1,12 @@
 use std::process::Command;
 
 use crate::ansi::{
-    colors::{C, X},
+    colors::{FC, X},
     others::ARS,
 };
 
 pub fn execute(command: &str) -> bool {
-    println!("{c}{a}Execute: {v}{x}", c = C, a = ARS, v = command, x = X);
+    println!("{c}{a}Execute: {v}{x}", c = FC, a = ARS, v = command, x = X);
     let mut child = Command::new("sh")
         .arg("-c")
         .arg(command)
