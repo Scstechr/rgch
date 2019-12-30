@@ -28,22 +28,23 @@ pub fn execute_mute(command: &str) {
     // assert!(ecode.success());
 }
 
-pub fn execute_out(command: &str) -> (String, bool) {
+pub fn execute_out(command: &str) -> (String, i32) {
     let output = Command::new("sh")
         .arg("-c")
         .arg(command)
         .output()
         .expect("failed to execute process");
 
+    let ecode = output.status.code().unwrap();
     if output.status.success() {
         (
             std::str::from_utf8(&output.stdout).unwrap().to_string(),
-            true,
+            ecode,
         )
     } else {
         (
             std::str::from_utf8(&output.stderr).unwrap().to_string(),
-            false,
+            ecode,
         )
     }
     // println!("{}", output.status);

@@ -13,7 +13,6 @@ pub fn silence_add(f: &str, force: bool) {
 
 pub fn add(f: &str, force: bool) {
     let command = format!("git add {}", f);
-    execute(&command);
     let (output, flag) = execute_out(&command);
     println!("{}, {}", output, output.len());
     exit(0);
