@@ -12,8 +12,16 @@ use crate::{
     ansi::colors::X,
     arg::parse_arguments,
     git::{
-        add::add, branch::set_branch, clone::clone, commit::commit, diff::diff, log::log,
-        pull::pull, push::push, reset::reset, status::short_status,
+        add::{add, silence_add},
+        branch::set_branch,
+        clone::clone,
+        commit::commit,
+        diff::diff,
+        log::log,
+        pull::pull,
+        push::push,
+        reset::reset,
+        status::check_status,
     },
     help::help,
 };
@@ -73,8 +81,12 @@ pub fn run() {
     if args["commit"].flag {
         commit(&args["add"].value, args["force"].flag);
     } else {
-        add(&args["add"].value, args["force"].flag);
-        short_status();
+        if args["add"].flag {
+            add(&args["add"].value, args["force"].flag);
+        } else {
+            silence_add(&args["add"].value, args["force"].flag);
+        }
+        check_status();
         reset();
     }
     if args["push"].flag {
