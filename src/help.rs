@@ -1,7 +1,7 @@
 use crate::{
     ansi::{
         arrows::RET,
-        colors::{U, X, Y},
+        colors::{R, U, X, Y},
         moves::pos_x,
         others::{SAVE, TAB},
         seg::SH,
@@ -15,13 +15,13 @@ const POS_X_NAME: u64 = 9;
 const POS_X_SAVE: u64 = 29;
 const POS_X_TYPE: u64 = 32;
 const POS_X_HELP: u64 = 39;
-// const BLNK: &str = "                                                                 "; // Blank
 const POS_X_SHRT: u64 = 9;
 
 pub fn help() {
     println!(
-        "\n{u}Usage:{x}\n\n{t}rgch {y}[OPTION]{x}",
+        "\n{u}Usage:{x}\n\n{t}rgch {y}[FLAGS] [OPTIONS] {r}<INPUT>{x}",
         u = U,
+        r = R,
         x = X,
         t = TAB,
         y = Y
