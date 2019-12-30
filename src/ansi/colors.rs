@@ -10,3 +10,4 @@ pub const G: &str = "\x1b[92m"; // Green
 pub const B: &str = "\x1b[94m"; // Blue
 pub const C: &str = "\x1b[96m"; // Cyan
 pub const Y: &str = "\x1b[93m"; // Yellow
+pub const Z: &str = "\x1b[33m"; // Yellow

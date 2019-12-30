@@ -1,5 +1,5 @@
 use crate::{
-    misc::warning,
+    misc::{confirm, exit_msg, warning},
     proc::{execute, execute_mute, execute_out},
 };
 #[allow(unused_imports)]
@@ -15,7 +15,7 @@ pub fn silence_add(f: &str, force: bool) {
 }
 
 pub fn add(f: &str, force: bool) {
-    let command = if force {
+    let mut command = if force {
         format!("git add -f {}", f)
     } else {
         format!("git add {}", f)
@@ -25,21 +25,25 @@ pub fn add(f: &str, force: bool) {
 
     // sort of error handling
     if ecode > 0 {
-        println!("a");
         if ecode == 1 {
             // tried to add files ignored in `.gitignore`
             let string = format!("Path `{}` is currently ignored in `.gitignore`.", f);
             warning(&string);
-            exit(1);
+            let string = format!("Force add `{}`", f);
+            if confirm(&string) {
+                command = format!("git add -f {}", f)
+            } else {
+                exit_msg(1);
+            }
         } else if ecode == 128 {
             // tried to add files that does not exist
             let string = format!("Path `{}` not found.", f);
             warning(&string);
-            exit(128);
+            exit_msg(128);
         } else {
             let string = format!("Unknown error when adding {}.", f);
             warning(&string);
-            exit(10);
+            exit_msg(10);
         }
     }
 
