@@ -24,10 +24,28 @@ pub fn beep() {
         .expect("Failed to execute");
 }
 
+pub fn warning(statement: &str) {
+    beep();
+    let string = format!(
+        "{r}{a}WARNING!: {s}{x}",
+        r = R,
+        a = ARS,
+        s = statement,
+        x = X
+    );
+    println!("{}", string);
+}
+
 pub fn confirm(question: &str) -> bool {
     print!("{}", Hide);
     let question = question.replace('`', U);
-    let string = format!("{}>> {}{}{}? -> press: [y/n] {}", Y, question, X, Y, X);
+    let string = format!(
+        "{y}{a}{q}{x}{y}? -> press: [y/n] {x}",
+        a = ARS,
+        y = Y,
+        q = question,
+        x = X
+    );
     println!("{}\x1b[A", string);
     let mut f = true;
     let mut escape = true;
