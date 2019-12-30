@@ -1,15 +1,12 @@
-use crate::ansi::colors::{R, X};
-use crate::misc::beep;
-use std::process::exit;
+use crate::misc::{exit_msg, warning};
 
 pub fn invalid_argument(arg: &str) {
-    beep();
-    println!("{}>> Invalid argument: {}{}", R, arg, X);
-    exit(1);
+    let string = format!("Invalid argument: {}", arg);
+    warning(&string);
+    exit_msg(1);
 }
 
 pub fn unimplemented() {
-    beep();
-    println!("{}>> Uninmplemented feature. {}", R, X);
-    exit(1);
+    warning("Uninmplemented feature.");
+    exit_msg(1);
 }

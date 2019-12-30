@@ -7,7 +7,6 @@ use crate::{
     misc::{beep, confirm, exit_msg, warning},
     proc::execute_out,
 };
-use std::process::exit;
 
 fn get_branch() -> String {
     let (output, _) = execute_out("git branch");
