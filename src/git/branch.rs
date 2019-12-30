@@ -4,7 +4,7 @@ use crate::{
         others::ARS,
     },
     error::unimplemented,
-    misc::{beep, confirm},
+    misc::{beep, confirm, exit_msg, warning},
     proc::execute_out,
 };
 use std::process::exit;
@@ -91,14 +91,9 @@ pub fn set_branch(branch: &str, path: &str) -> String {
             }
         }
     } else {
-        println!(
-            "{r}{a}Path `{p}` does not have a `.git` directory!{x}",
-            p = path,
-            a = ARS,
-            r = R,
-            x = X
-        );
-        exit(1);
+        let string = format!("Path `{}` does not have a `.git` directory!", path,);
+        warning(&string);
+        exit_msg(1);
     }
     final_branch
 }
