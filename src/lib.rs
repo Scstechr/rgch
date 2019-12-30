@@ -21,7 +21,7 @@ use crate::{
         pull::pull,
         push::push,
         reset::reset,
-        status::check_status,
+        status::{check_status, short_status},
     },
     help::help,
 };
@@ -86,7 +86,9 @@ pub fn run() {
         } else {
             silence_add(&args["add"].value, args["force"].flag);
         }
-        check_status();
+        if check_status() {
+            short_status();
+        }
         reset();
     }
     if args["push"].flag {
