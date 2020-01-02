@@ -33,9 +33,18 @@ pub fn status() {
     execute("git status -s");
 }
 
-pub fn check_status() -> bool {
+pub fn is_status_clean() -> bool {
     let (output, _) = execute_out("git status --short");
     if !output.is_empty() {
+        true
+    } else {
+        println!("{}Status clean.{}", G, X);
+        false
+    }
+}
+
+pub fn check_status() -> bool {
+    if is_status_clean() {
         true
     } else {
         println!("{}Status clean.{}", G, X);
