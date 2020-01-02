@@ -73,7 +73,9 @@ pub fn run() {
             pull(&args["remote"].value, &args["branch"].value);
         }
 
-        diff(args["verbose"].flag);
+        if check_status() {
+            diff(args["verbose"].flag);
+        }
 
         if args["commit"].flag {
             commit(&args["add"].value, args["force"].flag);
