@@ -1,7 +1,7 @@
 use crate::{
     ansi::{
         colors::{FG, FR, G, X},
-        others::TAB,
+        others::{ARS, TAB},
     },
     proc::{execute, execute_out},
 };
@@ -42,7 +42,12 @@ pub fn check_status() -> bool {
     if is_status_clean() {
         true
     } else {
-        println!("{}Status clean.{}", G, X);
+        println!(
+            "{g}{a}Clean status. Nothing to commit.{x}",
+            a = ARS,
+            g = G,
+            x = X
+        );
         false
     }
 }
