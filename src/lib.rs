@@ -5,14 +5,9 @@ pub mod git;
 pub mod help;
 pub mod misc;
 pub mod proc;
-
-// const VERSION: &str = env!("CARGO_PKG_VERSION");
+pub mod version;
 
 use crate::{
-    // ansi::{
-    //     colors::{BW, X},
-    //     others::ARS,
-    // },
     arg::parse_arguments,
     git::{
         add::{add, silence_add},
@@ -27,6 +22,7 @@ use crate::{
         status::{check_status, short_status},
     },
     help::help,
+    version::{short_version, version},
 };
 
 #[derive(Debug)]
@@ -49,14 +45,7 @@ pub struct Arg {
 }
 
 pub fn run() {
-    // println!(
-    //     "{c}{a}rgch v{v}: Rust implementation of `gch`{x}",
-    //     a = ARS,
-    //     c = BW,
-    //     v = VERSION,
-    //     x = X
-    // );
-    //     let _config = arg::parse_defaults();
+    short_version();
     let args = parse_arguments();
 
     // for arg in &args {
@@ -65,42 +54,42 @@ pub fn run() {
 
     if args["help"].flag {
         help();
-    }
-
-    if args["clone"].flag {
+    } else if args["version"].flag {
+        version();
+    } else if args["clone"].flag {
         clone(
             &args["clone"].value,
             &args["branch"].value,
             args["branch"].flag,
         );
-    }
-
-    let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
-
-    if args["log"].flag {
-        log();
-    }
-
-    if args["pull"].flag {
-        pull(&args["remote"].value, &args["branch"].value);
-    }
-
-    diff(args["verbose"].flag);
-
-    if args["commit"].flag {
-        commit(&args["add"].value, args["force"].flag);
     } else {
-        if args["add"].flag {
-            add(&args["add"].value, args["force"].flag);
+        let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
+
+        if args["log"].flag {
+            log();
+        }
+
+        if args["pull"].flag {
+            pull(&args["remote"].value, &args["branch"].value);
+        }
+
+        diff(args["verbose"].flag);
+
+        if args["commit"].flag {
+            commit(&args["add"].value, args["force"].flag);
         } else {
-            silence_add(&args["add"].value, args["force"].flag);
+            if args["add"].flag {
+                add(&args["add"].value, args["force"].flag);
+            } else {
+                silence_add(&args["add"].value, args["force"].flag);
+            }
+            if check_status() {
+                short_status();
+            }
+            reset();
         }
-        if check_status() {
-            short_status();
+        if args["push"].flag {
+            push(&branch);
         }
-        reset();
-    }
-    if args["push"].flag {
-        push(&branch);
     }
 }

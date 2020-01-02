@@ -52,3 +52,13 @@ pub fn execute_out(command: &str) -> (String, i32) {
     // println!("{:?}", output.stdout);
     // std::str::from_utf8(&output.stdout).unwrap().to_string()
 }
+
+pub fn parse(text: String, from: usize, to: usize) -> String {
+    let mut str1 = "".to_string();
+    for (i, c) in text.chars().enumerate() {
+        if i >= from && i < to {
+            str1.push(c);
+        }
+    }
+    str1
+}

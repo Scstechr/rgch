@@ -9,3 +9,4 @@ description = "Rust version of gch"
 
 [dependencies]
 termion = "1.5.4"
+chrono = "0.4.10"
