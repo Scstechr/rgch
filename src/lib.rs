@@ -19,7 +19,7 @@ use crate::{
         pull::pull,
         push::push,
         reset::reset,
-        status::{check_status, short_status},
+        status::{check_status, is_status_clean, short_status},
     },
     help::help,
     version::{short_version, version},
@@ -73,7 +73,7 @@ pub fn run() {
             pull(&args["remote"].value, &args["branch"].value);
         }
 
-        if check_status() {
+        if is_status_clean() {
             diff(args["verbose"].flag);
         }
 
