@@ -48,9 +48,9 @@ pub fn run() {
     short_version();
     let args = parse_arguments();
 
-    // for arg in &args {
-    //     println!("{:?}", arg);
-    // }
+    for arg in &args {
+        println!("{:?}", arg);
+    }
 
     if args["help"].flag {
         help();
@@ -78,7 +78,11 @@ pub fn run() {
         }
 
         if args["commit"].flag {
-            commit(&args["add"].value, args["force"].flag);
+            commit(
+                &args["add"].value,
+                &args["commit"].value,
+                args["force"].flag,
+            );
         } else {
             if args["add"].flag {
                 add(&args["add"].value, args["force"].flag);

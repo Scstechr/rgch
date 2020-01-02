@@ -7,16 +7,20 @@ use crate::{
     proc::execute,
 };
 
-pub fn commit(file: &str, force: bool) {
+pub fn commit(file: &str, msg: &str, force: bool) {
     if check_status() {
         add(&file, force);
         short_status();
-        let q = "Enter commit message";
-        let s = input(&q);
-        let command = if s != "" {
-            format!("git commit -m \"{}\"", s)
+        let command = if !msg.is_empty() {
+            format!("git commit -m \"{}\"", msg)
         } else {
-            "git commit -a".to_string()
+            let q = "Enter commit message";
+            let s = input(&q);
+            if s != "" {
+                format!("git commit -m \"{}\"", s)
+            } else {
+                "git commit -a".to_string()
+            }
         };
         execute(&command);
     }
