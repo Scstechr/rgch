@@ -48,9 +48,9 @@ pub fn run() {
     short_version();
     let args = parse_arguments();
 
-    for arg in &args {
-        println!("{:?}", arg);
-    }
+    //     for arg in &args {
+    //         println!("{:?}", arg);
+    //     }
 
     if args["help"].flag {
         help();
