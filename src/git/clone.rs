@@ -62,13 +62,13 @@ fn set_clone_dir(url: &str) -> String {
     let name = name.last().unwrap();
     let question = format!("Clone it to `{}", name);
     let name = if confirm(&question) {
-        name.to_string()
+        (*name).to_string()
     } else {
         let b = input("Enter directory name");
         if !b.is_empty() {
             b
         } else {
-            name.to_string()
+            (*name).to_string()
         }
     };
     println!(
@@ -81,7 +81,7 @@ fn set_clone_dir(url: &str) -> String {
         x = X,
         v = name
     );
-    name.to_string()
+    name
 }
 
 pub fn clone(given_url: &str, given_branch: &str, given_input: bool) {

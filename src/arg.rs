@@ -131,6 +131,16 @@ pub fn opt_set() -> Vec<Arg> {
         exp: "Verbose option.",
     });
     opts.push(Arg {
+        short: "",
+        long: "version",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "extras",
+        value: "None".to_string(),
+        exp: "Display version and compiler info.",
+    });
+    opts.push(Arg {
         short: "h",
         long: "help",
         types: "flag",
@@ -166,7 +176,7 @@ fn search_and_set(arg: &str, string: String, options: &mut Vec<Arg>) {
         if arg.contains(opt.long) || arg == opt.short {
             hit = true;
             opt.flag = true;
-            opt.value = string.to_string();
+            opt.value = string;
             break;
         } else {
             hit = false;
