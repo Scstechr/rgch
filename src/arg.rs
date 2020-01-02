@@ -19,7 +19,7 @@ pub fn opt_set() -> Vec<Arg> {
         save: false,
         flag: false,
         category: "create",
-        value: "None".to_string(),
+        value: "".to_string(),
         exp: "Clone remote repository.",
     });
 
@@ -43,7 +43,7 @@ pub fn opt_set() -> Vec<Arg> {
         save: false,
         flag: false,
         category: "change",
-        value: "None".to_string(),
+        value: "".to_string(),
         exp: "Display log.",
     });
     opts.push(Arg {
@@ -63,7 +63,7 @@ pub fn opt_set() -> Vec<Arg> {
         save: false,
         flag: false,
         category: "change",
-        value: "None".to_string(),
+        value: "".to_string(),
         exp: "Commit.",
     });
 
@@ -85,7 +85,7 @@ pub fn opt_set() -> Vec<Arg> {
         save: false,
         flag: false,
         category: "remote",
-        value: "None".to_string(),
+        value: "".to_string(),
         exp: "Pull (fetch and rebase).",
     });
     opts.push(Arg {
@@ -95,7 +95,7 @@ pub fn opt_set() -> Vec<Arg> {
         save: false,
         flag: false,
         category: "remote",
-        value: "None".to_string(),
+        value: "".to_string(),
         exp: "Push.",
     });
 
@@ -117,7 +117,7 @@ pub fn opt_set() -> Vec<Arg> {
         save: false,
         flag: false,
         category: "extras",
-        value: "None".to_string(),
+        value: "".to_string(),
         exp: "`-f/--force` option to `add`.",
     });
     opts.push(Arg {
@@ -127,7 +127,7 @@ pub fn opt_set() -> Vec<Arg> {
         save: true,
         flag: false,
         category: "extras",
-        value: "None".to_string(),
+        value: "".to_string(),
         exp: "Verbose option.",
     });
     opts.push(Arg {
@@ -137,7 +137,7 @@ pub fn opt_set() -> Vec<Arg> {
         save: false,
         flag: false,
         category: "extras",
-        value: "None".to_string(),
+        value: "".to_string(),
         exp: "Display version and compiler info.",
     });
     opts.push(Arg {
@@ -147,7 +147,7 @@ pub fn opt_set() -> Vec<Arg> {
         save: false,
         flag: false,
         category: "extras",
-        value: "None".to_string(),
+        value: "".to_string(),
         exp: "Show this message and exit.",
     });
     // println!("{:?}", opts);
