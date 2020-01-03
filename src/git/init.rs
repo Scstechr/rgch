@@ -9,7 +9,7 @@ pub fn init(path: &str) {
     if Path::new(&git_dir_path).exists() {
         let string = format!("Path `{}` already has a `.git` directory!", path);
         warning(&string);
-        if confirm("Reinitialize?") {
+        if confirm("Reinitialize") {
             execute("git init");
         } else {
             exit_msg(1);
