@@ -12,7 +12,7 @@ use std::process::exit;
 const POS_X_ARG: u64 = 31;
 
 fn set_clone_url(given: &str) -> String {
-    let url = if given != "None" {
+    let url = if given != "" {
         given.to_string()
     } else {
         input("Enter URL (@ for GitHub)")
