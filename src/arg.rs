@@ -22,6 +22,16 @@ pub fn opt_set() -> Vec<Arg> {
         value: "".to_string(),
         exp: "Clone remote repository.",
     });
+    opts.push(Arg {
+        short: "i",
+        long: "init",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "create",
+        value: "".to_string(),
+        exp: "Initialize repository.",
+    });
 
     // Branches
     opts.push(Arg {
@@ -129,6 +139,16 @@ pub fn opt_set() -> Vec<Arg> {
         category: "extras",
         value: "".to_string(),
         exp: "Verbose option.",
+    });
+    opts.push(Arg {
+        short: "s",
+        long: "save",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "extras",
+        value: "".to_string(),
+        exp: "Save current setting to TOML file.",
     });
     opts.push(Arg {
         short: "",
