@@ -1,19 +1,3 @@
-// use crate::ansi::{
-//     colors::{R, U, X, Y},
-//     moves::{up_delete, ERASE},
-//     others::ARS,
-// };
-// use std::{
-//     io::{stdin, stdout, Write},
-//     process::{exit, Command},
-// };
-// use termion::{
-//     cursor::{Hide, Show},
-//     event::{Event, Key},
-//     input::TermRead,
-//     raw::IntoRawMode,
-// };
-
 use crate::{
     misc::{confirm, exit_msg, warning},
     proc::execute,
