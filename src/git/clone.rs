@@ -1,13 +1,15 @@
-use crate::ansi::{
-    arrows::RET,
-    colors::{F, G, U, X},
-    moves::pos_x,
-    others::{ARS, TAB},
+use crate::{
+    ansi::{
+        arrows::RET,
+        colors::{F, G, U, X},
+        moves::pos_x,
+        others::{ARS, TAB},
+    },
+    misc::{confirm, input, warning},
+    proc::execute,
 };
-use crate::misc::{confirm, input};
-use crate::proc::execute;
 
-use std::process::exit;
+use std::{path::Path, process::exit};
 
 const POS_X_ARG: u64 = 31;
 
@@ -61,7 +63,7 @@ fn set_clone_dir(url: &str) -> String {
     let name: Vec<&str> = url.split('/').collect();
     let name = name.last().unwrap();
     let question = format!("Clone it to `{}", name);
-    let name = if confirm(&question) {
+    let mut name = if confirm(&question) {
         (*name).to_string()
     } else {
         let b = input("Enter directory name");
@@ -71,6 +73,20 @@ fn set_clone_dir(url: &str) -> String {
             (*name).to_string()
         }
     };
+
+    loop {
+        if Path::new(&name).exists() {
+            let string = format!("Path `{}` already exists", name);
+            warning(&string);
+        } else {
+            break;
+        }
+        let b = input("Enter directory name");
+        if !b.is_empty() {
+            name = b
+        }
+    }
+
     println!(
         "{f}{t}{r} Cloning remote repository to {a}: {x}{u}{v}{x}",
         a = pos_x(POS_X_ARG),
