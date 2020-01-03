@@ -15,7 +15,7 @@ use rgch::{
         status::{check_status, is_status_clean, short_status},
     },
     help::help,
-    set::{set_default, set_git_dir},
+    set::{save, set_default, set_git_dir},
     version::{short_version, version},
 };
 #[allow(unused_imports)]
@@ -23,8 +23,12 @@ use std::process::exit;
 
 fn main() {
     short_version();
+
     let args = parse_arguments();
-    set_default(&args);
+    let args = set_default(&args);
+    if args["save"].flag {
+        save(&args);
+    }
 
     exit(0);
     if args["gitdir"].flag {

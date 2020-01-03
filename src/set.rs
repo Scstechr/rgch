@@ -20,13 +20,52 @@ pub fn set_git_dir(path: &str) -> bool {
     }
 }
 
-pub fn set_default<S: ::std::hash::BuildHasher>(args: &HashMap<String, Opt, S>) {
-    for arg in args {
-        println!("{:?}", arg);
+pub fn set_default<S: ::std::hash::BuildHasher + Default>(
+    args: &HashMap<String, Opt, S>,
+) -> HashMap<String, Opt> {
+    // pub fn set_default(args: &HashMap<String, Opt>) -> HashMap<String, Opt> {
+    let f = fs::read_to_string(".config.toml");
+    let config = match f {
+        Ok(file) => file,
+        Err(_e) => "".to_string(),
+    };
+
+    let mut set_args: HashMap<String, Opt> = HashMap::new();
+    // let options = opt_set();
+    for (key, val) in args.iter() {
+        if !config.is_empty() {
+            let default: Result<HashMap<String, Opt>, toml::de::Error> = toml::from_str(&config);
+            let default = match default {
+                Ok(p) => p,
+                Err(e) => panic!("Filed to parse TOML: {}", e),
+            };
+            println!("{:#?}", default);
+            set_args.insert(
+                key.to_string(),
+                Opt {
+                    save: val.save,
+                    flag: val.flag,
+                    value: val.value.to_string(),
+                },
+            );
+        } else {
+            set_args.insert(
+                key.to_string(),
+                Opt {
+                    save: val.save,
+                    flag: val.flag,
+                    value: val.value.to_string(),
+                },
+            );
+        }
     }
-    let mut file = File::create(".config.toml").unwrap();
-    let toml = toml::to_string(&args).unwrap();
-    write!(file, "{}", toml).unwrap();
-    file.flush().unwrap();
-    println!("\n#TOML:\n{}", toml);
+    set_args
+}
+
+#[allow(dead_code)]
+pub fn save<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+    let mut file =
+        File::create(".config.toml").unwrap_or_else(|_| panic!("Failed to create .config.toml"));
+    let toml = toml::to_string(args).unwrap();
+    write!(file, "{}", toml).unwrap_or_else(|_| panic!("failed to write .config.toml"));
 }
