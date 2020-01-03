@@ -16,6 +16,7 @@ c:
 	rgch -c
 
 up:
+	python update.py >| src/version.rs
 	cargo fmt --version;
 	cargo fmt 
 	cargo clippy --version;
