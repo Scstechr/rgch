@@ -1,7 +1,7 @@
 extern crate rgch;
 
 use rgch::{
-    arg::parse_arguments,
+    arg::{parse_arguments, save, set_default, set_git_dir},
     git::{
         add::{add, silence_add},
         branch::set_branch,
@@ -15,7 +15,6 @@ use rgch::{
         status::{check_status, is_status_clean, short_status},
     },
     help::help,
-    set::{save, set_default, set_git_dir},
     version::{short_version, version},
 };
 #[allow(unused_imports)]
