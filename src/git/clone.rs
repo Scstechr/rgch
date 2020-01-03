@@ -1,7 +1,7 @@
 use crate::{
     ansi::{
         arrows::RET,
-        colors::{F, G, U, X},
+        colors::{G, U, X},
         moves::pos_x,
         others::{ARS, TAB},
     },
@@ -12,6 +12,7 @@ use crate::{
 use std::{path::Path, process::exit};
 
 const POS_X_ARG: u64 = 31;
+const MOVE_DEL: &str = "\x1b[1F\x1b[K";
 
 fn set_clone_url(given: &str) -> String {
     let url = if given != "" {
@@ -20,11 +21,11 @@ fn set_clone_url(given: &str) -> String {
         input("Enter URL (@ for GitHub)")
     };
     let url = url.replace("@", "https://github.com/");
+    print!("{x}", x = MOVE_DEL);
     println!(
-        "{f}{t}{r} Remote repository set to {a}: {x}{u}{v}{x}",
+        "{t}{r} Remote repository set to {a}: {x}{u}{v}{x}",
         a = pos_x(POS_X_ARG),
         t = TAB,
-        f = F,
         r = RET,
         u = U,
         x = X,
@@ -46,11 +47,11 @@ fn set_clone_branch(given: &str, flag: bool) -> String {
             "master".to_string()
         }
     };
+    print!("{x}", x = MOVE_DEL);
     println!(
-        "{f}{t}{r} Remote branch set to {a}: {x}{u}{v}{x}",
+        "{t}{r} Remote branch set to {a}: {x}{u}{v}{x}",
         a = pos_x(POS_X_ARG),
         t = TAB,
-        f = F,
         r = RET,
         u = U,
         x = X,
@@ -85,13 +86,14 @@ fn set_clone_dir(url: &str) -> String {
         if !b.is_empty() {
             name = b
         }
+        print!("{x}{x}{x}", x = MOVE_DEL);
     }
+    print!("{x}", x = MOVE_DEL);
 
     println!(
-        "{f}{t}{r} Cloning remote repository to {a}: {x}{u}{v}{x}",
+        "{t}{r} Cloning remote repository to {a}: {x}{u}{v}{x}",
         a = pos_x(POS_X_ARG),
         t = TAB,
-        f = F,
         r = RET,
         u = U,
         x = X,
