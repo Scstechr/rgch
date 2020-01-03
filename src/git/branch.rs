@@ -7,6 +7,7 @@ use crate::{
     misc::{beep, confirm, exit_msg, warning},
     proc::execute_out,
 };
+use std::path::Path;
 
 fn get_branch() -> String {
     let (output, _) = execute_out("git branch");
@@ -39,6 +40,12 @@ fn format_branch(branch: &str) -> String {
 
 pub fn set_branch(branch: &str, path: &str) -> String {
     let mut final_branch = branch.to_string();
+    let git_path = format!("{}/.git", path);
+    if !Path::new(&git_path).exists() {
+        let string = format!("Path `{}` does not have a `.git` directory!", path,);
+        warning(&string);
+        exit_msg(1);
+    }
     let current = get_branch();
     let branches = get_branch_list();
     if !branches.is_empty() {
@@ -89,10 +96,6 @@ pub fn set_branch(branch: &str, path: &str) -> String {
                 );
             }
         }
-    } else {
-        let string = format!("Path `{}` does not have a `.git` directory!", path,);
-        warning(&string);
-        exit_msg(1);
     }
     final_branch
 }
