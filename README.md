@@ -3,7 +3,7 @@
 
 [license]: https://github.com/Scstechr/rgch/blob/master/LICENSE
 
-A tool to handle git related commands such as: `git init`, `git commit`, `git diff`, `git add`, `git push`. 
+A tool to handle git related commands such as: `git init`, `git commit`, `git diff`, `git add`, `git push`.  
 This is a Rust implementation of [gch](https://github.com/Scstechr/gch), which we aim to replace it.
 
 ## Overview
