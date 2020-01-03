@@ -10,3 +10,5 @@ description = "Rust version of gch"
 [dependencies]
 termion = "1.5.4"
 chrono = "0.4.10"
+serde = { version = "1.0.104", features = ["derive"] }
+toml = "0.5.5"

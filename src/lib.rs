@@ -1,3 +1,6 @@
+extern crate serde;
+use serde::{Deserialize, Serialize};
+
 pub mod ansi;
 pub mod arg;
 pub mod error;
@@ -8,7 +11,7 @@ pub mod proc;
 pub mod set;
 pub mod version;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Opt {
     pub save: bool,
     pub flag: bool,
