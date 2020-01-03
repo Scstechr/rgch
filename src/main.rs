@@ -15,20 +15,21 @@ use rgch::{
         status::{check_status, is_status_clean, short_status},
     },
     help::help,
-    set::set_git_dir,
+    set::{set_default, set_git_dir},
     version::{short_version, version},
 };
+#[allow(unused_imports)]
+use std::process::exit;
 
 fn main() {
     short_version();
     let args = parse_arguments();
+    set_default(&args);
+
+    exit(0);
     if args["gitdir"].flag {
         set_git_dir(&args["gitdir"].value);
     }
-
-    //     for arg in &args {
-    //         println!("{:?}", arg);
-    //     }
 
     if args["help"].flag {
         help();
