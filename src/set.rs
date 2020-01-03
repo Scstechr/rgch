@@ -50,7 +50,13 @@ pub fn set_default<S: ::std::hash::BuildHasher + Default>(
                             val.flag
                         }
                     },
-                    value: { val.value.to_string() },
+                    value: {
+                        if !val.flag && val.save {
+                            default[key].value.to_string()
+                        } else {
+                            val.value.to_string()
+                        }
+                    },
                 },
             );
         } else {
