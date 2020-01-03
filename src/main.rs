@@ -30,7 +30,7 @@ fn main() {
         save(&args);
     }
 
-    exit(0);
+    // exit(0);
     if args["gitdir"].flag {
         set_git_dir(&args["gitdir"].value);
     }

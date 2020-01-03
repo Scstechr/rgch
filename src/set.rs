@@ -39,13 +39,18 @@ pub fn set_default<S: ::std::hash::BuildHasher + Default>(
                 Ok(p) => p,
                 Err(e) => panic!("Filed to parse TOML: {}", e),
             };
-            println!("{:#?}", default);
             set_args.insert(
                 key.to_string(),
                 Opt {
                     save: val.save,
-                    flag: val.flag,
-                    value: val.value.to_string(),
+                    flag: {
+                        if !val.flag && val.save {
+                            default[key].flag
+                        } else {
+                            val.flag
+                        }
+                    },
+                    value: { val.value.to_string() },
                 },
             );
         } else {
