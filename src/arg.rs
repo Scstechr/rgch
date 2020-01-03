@@ -223,7 +223,7 @@ pub fn opt_set() -> Vec<Arg> {
         flag: false,
         category: "extras",
         value: "".to_string(),
-        exp: "Save current setting to TOML file.",
+        exp: "Save setting to TOML file.",
     });
     opts.push(Arg {
         short: "",
