@@ -233,7 +233,7 @@ pub fn opt_set() -> Vec<Arg> {
         flag: false,
         category: "extras",
         value: "".to_string(),
-        exp: "Display version and compiler info.",
+        exp: "Version and compiler info.",
     });
     opts.push(Arg {
         short: "h",
