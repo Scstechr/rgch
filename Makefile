@@ -1,28 +1,28 @@
 build:
 	cargo fmt --version;
-	cargo fmt 
+	cargo fmt;
 	cargo clippy --version;
 	cargo clippy --release;
 	cargo build --release;
-	rgch -h
-	rgch
+	rgch -h;
 
 c:
 	cargo fmt --version;
-	cargo fmt 
+	cargo fmt;
 	cargo clippy --version;
 	cargo clippy --release;
 	cargo build --release;
-	rgch -c
+	rgch -c;
 
 up:
+	rgch -c;
 	python update.py >| src/version.rs
 	cargo fmt --version;
-	cargo fmt 
+	cargo fmt;
 	cargo clippy --version;
 	cargo clippy --release;
 	cargo build --release;
-	rgch -cp
+	rgch -p
 
 update:
 	rgch --pull
