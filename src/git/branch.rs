@@ -4,6 +4,7 @@ use crate::{
         others::ARS,
     },
     error::unimplemented,
+    git::init::init,
     misc::{beep, confirm, exit_msg, warning},
     proc::execute_out,
 };
@@ -40,11 +41,16 @@ fn format_branch(branch: &str) -> String {
 
 pub fn set_branch(branch: &str, path: &str) -> String {
     let mut final_branch = branch.to_string();
-    let git_path = format!("{}/.git", path);
-    if !Path::new(&git_path).exists() {
+    let git_dir_path = format!("{}/.git", path);
+    if !Path::new(&git_dir_path).exists() {
         let string = format!("Path `{}` does not have a `.git` directory!", path,);
         warning(&string);
-        exit_msg(1);
+        let question = "Initialize".to_string();
+        if confirm(&question) {
+            init(path);
+        } else {
+            exit_msg(1);
+        }
     }
     let current = get_branch();
     let branches = get_branch_list();
@@ -59,7 +65,7 @@ pub fn set_branch(branch: &str, path: &str) -> String {
                 b = format_branch(&branch),
                 x = X
             );
-            let confirm_string = format!("Make branch {}?", branch);
+            let confirm_string = format!("Make branch {}", branch);
             if confirm(&confirm_string) {
                 unimplemented();
             } else {

@@ -8,6 +8,7 @@ use rgch::{
         clone::clone,
         commit::commit,
         diff::diff,
+        init::init,
         log::log,
         pull::pull,
         push::push,
@@ -44,6 +45,8 @@ fn main() {
             &args["branch"].value,
             args["branch"].flag,
         );
+    } else if args["init"].flag {
+        init(&args["gitdir"].value);
     } else {
         let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
 

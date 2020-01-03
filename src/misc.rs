@@ -1,7 +1,7 @@
 extern crate termion;
 
 use crate::ansi::{
-    colors::{FZ, R, U, X, Y},
+    colors::{R, U, X, Y},
     moves::{up_delete, ERASE},
     others::ARS,
 };
@@ -25,7 +25,7 @@ pub fn beep() {
 }
 
 pub fn exit_msg(code: i32) {
-    let string = format!("{z}{a}Exit from rgch... {x}", z = FZ, a = ARS, x = X);
+    let string = format!("{z}{a}Exit from rgch... {x}", z = R, a = ARS, x = X);
     println!("{}", string);
     exit(code);
 }
