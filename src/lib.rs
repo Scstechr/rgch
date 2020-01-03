@@ -5,6 +5,7 @@ pub mod git;
 pub mod help;
 pub mod misc;
 pub mod proc;
+pub mod set;
 pub mod version;
 
 #[derive(Debug)]

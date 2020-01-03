@@ -15,12 +15,16 @@ use rgch::{
         status::{check_status, is_status_clean, short_status},
     },
     help::help,
+    set::set_git_dir,
     version::{short_version, version},
 };
 
 fn main() {
     short_version();
     let args = parse_arguments();
+    if args["gitdir"].flag {
+        set_git_dir(&args["gitdir"].value);
+    }
 
     //     for arg in &args {
     //         println!("{:?}", arg);
