@@ -22,7 +22,7 @@ up:
 	cargo clippy --version;
 	cargo clippy --release;
 	cargo build --release;
-	rgch -p
+	rgch -vp
 
 update:
 	rgch --pull
