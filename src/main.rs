@@ -62,18 +62,15 @@ fn main() {
             diff(args["verbose"].flag);
         }
 
-        if args["commit"].flag {
-            commit(
-                &args["add"].value,
-                &args["commit"].value,
-                args["force"].flag,
-            );
+        if args["add"].flag {
+            add(&args["add"].value, args["force"].flag);
         } else {
-            if args["add"].flag {
-                add(&args["add"].value, args["force"].flag);
-            } else {
-                silence_add(&args["add"].value, args["force"].flag);
-            }
+            silence_add(&args["add"].value, args["force"].flag);
+        }
+
+        if args["commit"].flag {
+            commit(&args["commit"].value);
+        } else {
             if check_status() {
                 short_status();
             }
