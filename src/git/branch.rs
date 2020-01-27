@@ -41,9 +41,9 @@ fn format_branch(branch: &str) -> String {
 
 pub fn set_branch(branch: &str, path: &str) -> String {
     let mut final_branch = branch.to_string();
-    let git_dir_path = format!("{}/.git", path);
-    if !Path::new(&git_dir_path).exists() {
-        let string = format!("Path `{}` does not have a `.git` directory!", path,);
+    // let git_dir_path = format!(".git");
+    if !Path::new(&".git").exists() {
+        let string = format!("Path `{}` does not have a `.git` directory!", path);
         warning(&string);
         let question = "Initialize".to_string();
         if confirm(&question) {
