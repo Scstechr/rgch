@@ -26,13 +26,19 @@ pub fn help() {
         t = TAB,
         y = Y
     );
-    println!("\n{u}Options:{x}\n", u = U, x = X);
+    println!("\n{u}Options:{x}", u = U, x = X);
+    println!(
+        "{t}# Options with {s} will be saved with `-s/--save`.\n",
+        t = TAB,
+        s = SAVE,
+    );
     let (hsize, _) = terminal_size().unwrap();
     if hsize > 71 {
         wide_help()
     } else {
         short_help()
     }
+    println!();
     exit(0);
 }
 

@@ -186,6 +186,16 @@ pub fn opt_set() -> Vec<Arg> {
 
     // extras
     opts.push(Arg {
+        short: "",
+        long: "amd",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "extras",
+        value: "".to_string(),
+        exp: "Change the last commit message.",
+    });
+    opts.push(Arg {
         short: "g",
         long: "gitdir",
         types: "path",
@@ -223,7 +233,7 @@ pub fn opt_set() -> Vec<Arg> {
         flag: false,
         category: "extras",
         value: "".to_string(),
-        exp: "Save setting to TOML file.",
+        exp: "Save settings to TOML file.",
     });
     opts.push(Arg {
         short: "",
