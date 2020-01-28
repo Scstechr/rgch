@@ -4,6 +4,10 @@ use crate::{
     proc::execute,
 };
 
+pub fn amend() {
+    execute(&"git commit --amend");
+}
+
 pub fn commit(msg: &str) {
     if check_status() {
         short_status();

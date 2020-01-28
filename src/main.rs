@@ -6,7 +6,7 @@ use rgch::{
         add::{add, silence_add},
         branch::set_branch,
         clone::clone,
-        commit::commit,
+        commit::{amend, commit},
         diff::diff,
         init::init,
         log::log,
@@ -50,6 +50,8 @@ fn main() {
         );
     } else if args["init"].flag {
         init(&args["gitdir"].value);
+    } else if args["amd"].flag {
+        amend();
     } else {
         let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
 
