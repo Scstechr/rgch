@@ -7,18 +7,18 @@ use std::process::exit;
 
 pub fn silence_add(f: &str, force: bool) {
     let command = if force {
-        format!("git add -f {}", f)
+        format!("git add -f \"{}\"", f)
     } else {
-        format!("git add {}", f)
+        format!("git add \"{}\"", f)
     };
     execute_mute(&command);
 }
 
 pub fn add(f: &str, force: bool) {
     let mut command = if force {
-        format!("git add -f {}", f)
+        format!("git add -f \"{}\"", f)
     } else {
-        format!("git add {}", f)
+        format!("git add \"{}\"", f)
     };
     let (_, ecode) = execute_out(&command);
     execute_mute("git reset");
