@@ -3,8 +3,8 @@ use std::process::exit;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 const BLANK: &str = "            ";
-const GITREV: &str = "6827be9d";
-const DATE: &str = "2020-01-28";
+const GITREV: &str = "351ed491";
+const DATE: &str = "2020-01-29";
 const RUSTC: &str = "rustc 1.40.0 (73528e339 2019-12-16)\n";
 const FMT: &str = "clippy 0.0.212 (c8e3cfbd 2019-10-28)\n";
 const CLIPPY: &str = "rustfmt 1.4.9-stable (33e36670 2019-10-07)\n";
