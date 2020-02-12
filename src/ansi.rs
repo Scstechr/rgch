@@ -86,4 +86,8 @@ pub mod others {
     pub const SQRE: &str = "\u{25AA}";
     /// Gear-like symbol
     pub const GEAR: &str = "\u{2699}";
+    /// To
+    pub const TO: &str = "\u{251C}\u{2500}\u{2500}";
+    /// End
+    pub const END: &str = "\u{2514}\u{2500}\u{2500}";
 }

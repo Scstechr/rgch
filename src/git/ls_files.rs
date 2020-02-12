@@ -7,12 +7,17 @@ use crate::ansi::{
     colors::{G, R, X},
     others::ARS,
 };
+use crate::ansi::{
+    others::{END, TAB, TO},
+    seg::SH,
+};
 use crate::git::{format, git_path_check, set_url};
 use crate::misc::{beep, confirm};
 use crate::proc::{execute, execute_out};
 use std::collections::HashMap;
 
 const LAYER: usize = 5;
+const LEVEL: [usize; LAYER] = [0, 1, 2, 3, 4];
 
 fn parse(output: Vec<&str>) -> HashMap<&str, HashMap<&str, HashMap<&str, HashMap<&str, &str>>>> {
     let mut d: HashMap<&str, HashMap<&str, HashMap<&str, HashMap<&str, &str>>>> = HashMap::new();
