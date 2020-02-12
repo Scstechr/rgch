@@ -257,6 +257,16 @@ pub fn opt_set() -> Vec<Arg> {
         exp: "Show this message and exit.",
     });
     // println!("{:?}", opts);
+    opts.push(Arg {
+        short: "",
+        long: "show-args",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "debug",
+        value: "".to_string(),
+        exp: "[DEBUG]Show this message and exit.",
+    });
     opts
 }
 
