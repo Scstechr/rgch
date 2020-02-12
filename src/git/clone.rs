@@ -5,34 +5,12 @@ use crate::{
         moves::pos_x,
         others::{ARS, TAB},
     },
+    git::{set_url, MOVE_DEL, POS_X_ARG},
     misc::{confirm, input, warning},
     proc::execute,
 };
 
 use std::{path::Path, process::exit};
-
-const POS_X_ARG: u64 = 31;
-const MOVE_DEL: &str = "\x1b[1F\x1b[K";
-
-fn set_clone_url(given: &str) -> String {
-    let url = if given != "" {
-        given.to_string()
-    } else {
-        input("Enter URL (@ for GitHub)")
-    };
-    let url = url.replace("@", "https://github.com/");
-    print!("{x}", x = MOVE_DEL);
-    println!(
-        "{t}{r} Remote repository set to {a}: {x}{u}{v}{x}",
-        a = pos_x(POS_X_ARG),
-        t = TAB,
-        r = RET,
-        u = U,
-        x = X,
-        v = url
-    );
-    url
-}
 
 fn set_clone_branch(given: &str, flag: bool) -> String {
     let branch = if flag {
@@ -111,7 +89,7 @@ pub fn clone(given_url: &str, given_branch: &str, given_input: bool) {
         x = X
     );
     // println!("{}, {}", given_url, given_branch);
-    let url = set_clone_url(&given_url);
+    let url = set_url(&given_url);
     let branch = set_clone_branch(&given_branch, given_input);
     let name = set_clone_dir(&url);
     let command = format!("git clone -b {} {} {}", branch, url, name);

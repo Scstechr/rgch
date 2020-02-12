@@ -1,10 +1,10 @@
 use crate::{
     ansi::{
-        colors::{G, R, U, X},
+        colors::{G, R, X},
         others::ARS,
     },
     error::unimplemented,
-    git::{checkout::checkout_new_branch, git_path_check},
+    git::{checkout::checkout_new_branch, format, git_path_check},
     misc::{beep, confirm},
     proc::execute_out,
 };
@@ -34,10 +34,6 @@ fn get_branch_list() -> Vec<String> {
     branches
 }
 
-fn format_branch(branch: &str) -> String {
-    format!("{u}{b}{x}", u = U, b = branch, x = X)
-}
-
 fn make_branch(branch: &str) {
     checkout_new_branch(&branch);
 }
@@ -48,53 +44,51 @@ pub fn set_branch(branch: &str, path: &str) -> String {
     git_path_check(&path);
     let current = get_branch();
     let branches = get_branch_list();
-    if !branches.is_empty() {
-        if !branches.iter().any(|b| b == branch) {
-            beep();
+    if !branches.iter().any(|b| b == branch) {
+        beep();
+        println!(
+            "{r}{a}Branch {b}{r} not found.{x}",
+            r = R,
+            a = ARS,
+            b = format(&branch),
+            x = X
+        );
+        let confirm_string = format!("Make branch {}", branch);
+        if confirm(&confirm_string) {
+            make_branch(&branch);
+        // unimplemented();
+        } else {
+            final_branch = current;
             println!(
-                "{r}{a}Branch {b}{r} not found.{x}",
-                r = R,
+                "{g}{a}Branch set to {b}{g}.{x}",
+                g = G,
                 a = ARS,
-                b = format_branch(&branch),
+                b = format(&final_branch),
                 x = X
             );
-            let confirm_string = format!("Make branch {}", branch);
-            if confirm(&confirm_string) {
-                make_branch(&branch);
-            // unimplemented();
-            } else {
-                final_branch = current;
-                println!(
-                    "{g}{a}Branch set to {b}{g}.{x}",
-                    g = G,
-                    a = ARS,
-                    b = format_branch(&final_branch),
-                    x = X
-                );
-            };
-        } else if current != branch {
-            beep();
+        };
+    } else if current != branch {
+        beep();
+        println!(
+            "{r}{a}Currently on {c}{r}, but {b}{r} was chosen.{x}",
+            r = R,
+            a = ARS,
+            c = format(&current),
+            b = format(&branch),
+            x = X
+        );
+        let confirm_string = format!("Checkout to branch {b}", b = format(&branch));
+        if confirm(&confirm_string) {
+            unimplemented();
+        } else {
+            final_branch = current;
             println!(
-                "{r}{a}Currently on {c}{r}, but {b}{r} was chosen.{x}",
-                r = R,
+                "{g}{a}Branch set to {b}{g}.{x}",
+                g = G,
                 a = ARS,
-                c = format_branch(&current),
-                b = format_branch(&branch),
+                b = format(&final_branch),
                 x = X
             );
-            let confirm_string = format!("Checkout to branch {b}", b = format_branch(&branch));
-            if confirm(&confirm_string) {
-                unimplemented();
-            } else {
-                final_branch = current;
-                println!(
-                    "{g}{a}Branch set to {b}{g}.{x}",
-                    g = G,
-                    a = ARS,
-                    b = format_branch(&final_branch),
-                    x = X
-                );
-            }
         }
     }
     final_branch
