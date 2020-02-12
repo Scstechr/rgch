@@ -29,7 +29,10 @@ fn main() {
     let args = parse_arguments();
     let args = set_default(&args);
     if args["show-args"].flag {
-        println!("{:?}", args);
+        match args["show-args"].value.len() {
+            0 => println!("{:?}", args),
+            _ => println!("{:#?}", args[&args["show-args"].value]),
+        };
     }
     if args["save"].flag {
         save(&args);
