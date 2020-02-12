@@ -1,11 +1,11 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 use crate::ansi::{
-    colors::{R, X},
+    colors::{G, R, X},
     others::ARS,
 };
 use crate::git::{format, git_path_check, set_url};
-use crate::misc::beep;
+use crate::misc::{beep, confirm};
 use crate::proc::{execute, execute_out};
 
 fn get_remote_list() -> Vec<String> {
@@ -28,17 +28,31 @@ fn add_remote(remote: &str) {
 
 pub fn set_remote(remote: &str, path: &str) -> String {
     git_path_check(&path);
+    let mut final_remote = remote.to_string();
     let remotes = get_remote_list();
     if !remotes.iter().any(|r| r == remote) {
         beep();
         println!(
-            "{r}{a}Remote branch {b}{r} not found.{x}",
+            "{r}{a}Remote repository {b}{r} not found.{x}",
             r = R,
             a = ARS,
             b = format(&remote),
             x = X
         );
+        let confirm_string = format!("Add remote repository {}", remote);
+        if confirm(&confirm_string) {
+            add_remote(&remote);
+        // unimplemented();
+        } else {
+            final_remote = "origin".to_string();
+            println!(
+                "{g}{a}Remote repository set to {b}{g}.{x}",
+                g = G,
+                a = ARS,
+                b = format(&remote),
+                x = X
+            );
+        };
     }
-    println!("{:#?}", get_remote_list());
-    "origin".to_string()
+    final_remote
 }
