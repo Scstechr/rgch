@@ -1,6 +1,6 @@
 [package]
 name = "rgch"
-version = "0.1.22"
+version = "0.1.23"
 authors = ["Scstechr <teufelkonig@gmail.com>"]
 edition = "2018"
 description = "Rust version of gch"
