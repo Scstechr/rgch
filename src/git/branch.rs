@@ -10,7 +10,7 @@ use crate::{
 };
 use std::path::Path;
 
-fn get_branch() -> String {
+pub fn get_branch() -> String {
     let (output, _) = execute_out("git branch");
     let branches: Vec<&str> = output.split('\n').collect();
     let mut current_branch = "";

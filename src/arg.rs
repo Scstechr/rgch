@@ -3,6 +3,7 @@ extern crate toml;
 
 use crate::{
     error::{invalid_argument, invalid_path},
+    git::branch::get_branch,
     Arg, Opt,
 };
 use std::{
@@ -344,6 +345,10 @@ pub fn parse_arguments() -> HashMap<String, Opt> {
                 value: opt.value,
             },
         );
+    }
+    if args["branch"].value == "@" {
+        println!("{}", get_branch());
+        // args["branch"] = get_branch();
     }
     args
 }
