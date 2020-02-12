@@ -347,7 +347,7 @@ pub fn parse_arguments() -> HashMap<String, Opt> {
         );
     }
     if args["branch"].value == "@" {
-        println!("{}", get_branch());
+        println!("\"{}\"", get_branch());
         // args["branch"] = get_branch();
     }
     args
