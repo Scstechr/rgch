@@ -8,5 +8,6 @@ pub mod init;
 pub mod log;
 pub mod pull;
 pub mod push;
+pub mod remote;
 pub mod reset;
 pub mod status;

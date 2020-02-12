@@ -12,6 +12,7 @@ use rgch::{
         log::log,
         pull::pull,
         push::push,
+        remote::set_remote,
         reset::reset,
         status::{check_status, is_status_clean, short_status},
     },
@@ -54,6 +55,7 @@ fn main() {
         amend();
     } else {
         let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
+        let remote = set_remote(&args["remote"].value, &args["gitdir"].value);
 
         if args["log"].flag {
             log();
@@ -82,7 +84,7 @@ fn main() {
             reset();
         }
         if args["push"].flag {
-            push(&branch);
+            push(&branch, &remote);
         }
     }
 }

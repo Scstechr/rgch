@@ -43,9 +43,7 @@ fn make_branch(branch: &str) {
     checkout_new_branch(&branch);
 }
 
-pub fn set_branch(branch: &str, path: &str) -> String {
-    let mut final_branch = branch.to_string();
-    // let git_dir_path = format!(".git");
+fn git_path_check(path: &str) {
     if !Path::new(&".git").exists() {
         let string = format!("Path `{}` does not have a `.git` directory!", path);
         warning(&string);
@@ -56,6 +54,12 @@ pub fn set_branch(branch: &str, path: &str) -> String {
             exit_msg(1);
         }
     }
+}
+
+pub fn set_branch(branch: &str, path: &str) -> String {
+    let mut final_branch = branch.to_string();
+    // let git_dir_path = format!(".git");
+    git_path_check(&path);
     let current = get_branch();
     let branches = get_branch_list();
     if !branches.is_empty() {

@@ -289,7 +289,7 @@ fn search_and_set(arg: &str, string: String, options: &mut Vec<Arg>) {
         }
     }
     if !hit {
-        panic!("Invalid argument: {}", arg);
+        invalid_argument(arg);
     };
 }
 
