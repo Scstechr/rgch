@@ -338,13 +338,12 @@ pub fn parse_arguments() -> HashMap<String, Opt> {
     let mut args: HashMap<String, Opt> = HashMap::new();
     for opt in options {
         let value = match opt.long {
-            "branch" => match get_branch().len() {
-                0 => "master".to_string(),
-                1 => match opt.value.as_str() {
+            "branch" => match get_branch().as_str() {
+                "" => "master".to_string(),
+                _ => match opt.value.as_str() {
                     "@" => get_branch(),
                     _ => opt.value,
                 },
-                _ => opt.value,
             },
             _ => opt.value,
         };
@@ -357,14 +356,5 @@ pub fn parse_arguments() -> HashMap<String, Opt> {
             },
         );
     }
-    println!("\"{}\"", args["branch"].value);
-    // args["branch"].value = match get_branch().len() {
-    //     0 => "master".to_string(),
-    //     _ => get_branch(),
-    // };
-    // // if args["branch"].value == "@" {
-    // //     println!("\"{}\"", get_branch());
-    //     // args["branch"] = get_branch();
-    // }
     args
 }
