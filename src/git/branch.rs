@@ -4,7 +4,7 @@ use crate::{
         others::ARS,
     },
     error::unimplemented,
-    git::init::init,
+    git::{checkout::checkout_new_branch, init::init},
     misc::{beep, confirm, exit_msg, warning},
     proc::execute_out,
 };
@@ -39,6 +39,10 @@ fn format_branch(branch: &str) -> String {
     format!("{u}{b}{x}", u = U, b = branch, x = X)
 }
 
+fn make_branch(branch: &str) {
+    checkout_new_branch(&branch);
+}
+
 pub fn set_branch(branch: &str, path: &str) -> String {
     let mut final_branch = branch.to_string();
     // let git_dir_path = format!(".git");
@@ -66,6 +70,7 @@ pub fn set_branch(branch: &str, path: &str) -> String {
             );
             let confirm_string = format!("Make branch {}", branch);
             if confirm(&confirm_string) {
+                make_branch(&branch);
                 unimplemented();
             } else {
                 final_branch = current;
