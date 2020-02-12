@@ -6,6 +6,7 @@ pub mod commit;
 pub mod diff;
 pub mod init;
 pub mod log;
+pub mod ls_files;
 pub mod pull;
 pub mod push;
 pub mod remote;

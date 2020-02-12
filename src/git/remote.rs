@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-#![allow(unused_variables)]
 use crate::ansi::{
     colors::{G, R, X},
     others::ARS,

@@ -197,6 +197,16 @@ pub fn opt_set() -> Vec<Arg> {
         exp: "Change the last commit message.",
     });
     opts.push(Arg {
+        short: "",
+        long: "ls",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "extras",
+        value: "".to_string(),
+        exp: "List up tracking file(s).",
+    });
+    opts.push(Arg {
         short: "g",
         long: "gitdir",
         types: "path",
