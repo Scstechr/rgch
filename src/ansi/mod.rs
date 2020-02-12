@@ -79,7 +79,7 @@ pub mod others {
     /// Something before commands etc.
     pub const ARS: &str = ">> ";
     /// Generic save icon (floppy disk)
-    pub const SAVE: &str = "\u{2398}";
+    pub const SAVE: &str = "\x1b[96m\u{2398}\x1b[m";
     /// Circle symbol
     pub const CIRC: &str = "\u{25CF}";
     /// Square symbol

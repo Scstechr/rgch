@@ -28,7 +28,7 @@ fn main() {
     let args = parse_arguments();
     let args = set_default(&args);
     if args["show-args"].flag {
-        println!("{:#?}", args);
+        println!("{:?}", args);
     }
     if args["save"].flag {
         save(&args);
@@ -90,4 +90,5 @@ fn main() {
             push(&remote, &branch);
         }
     }
+    println!();
 }
