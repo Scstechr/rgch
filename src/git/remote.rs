@@ -1,12 +1,20 @@
+#![allow(dead_code)]
 #![allow(unused_variables)]
-pub fn get_remote() -> String {
-    "origin".to_string()
-}
+use crate::proc::execute_out;
 
 fn get_remote_list() -> Vec<String> {
-    vec!["origin".to_string()]
+    let (output, _) = execute_out("git remote");
+    let mut remotes: Vec<String> = Vec::new();
+    let remotes_strs: Vec<&str> = output.split('\n').collect();
+    for remote in remotes_strs {
+        if !remote.is_empty() {
+            remotes.push(remote.replace(" ", "").to_string());
+        }
+    }
+    remotes
 }
 
 pub fn set_remote(remote: &str, path: &str) -> String {
+    println!("{:#?}", get_remote_list());
     "origin".to_string()
 }
