@@ -14,7 +14,7 @@ use std::collections::HashMap;
 
 const LAYER: usize = 5;
 
-fn parse(output: Vec<&str>) {
+fn parse(output: Vec<&str>) -> HashMap<&str, HashMap<&str, HashMap<&str, HashMap<&str, &str>>>> {
     let mut d: HashMap<&str, HashMap<&str, HashMap<&str, HashMap<&str, &str>>>> = HashMap::new();
     for f in &output {
         let s: Vec<&str> = f.split('/').collect();
@@ -45,12 +45,12 @@ fn parse(output: Vec<&str>) {
                 .insert(s[3], "");
         }
     }
-    println!("{:#?}", d);
+    d
 }
 
 pub fn ls() {
     let (output, _) = execute_out("git ls-files");
     let mut files: Vec<&str> = output.split('\n').collect();
     files.pop(); // remove "" at the end of vector
-    parse(files);
+    let d = parse(files);
 }
