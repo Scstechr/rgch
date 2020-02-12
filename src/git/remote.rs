@@ -15,6 +15,6 @@ fn get_remote_list() -> Vec<String> {
 }
 
 pub fn set_remote(remote: &str, path: &str) -> String {
-    // println!("{:#?}", get_remote_list());
+    println!("{:#?}", get_remote_list());
     "origin".to_string()
 }

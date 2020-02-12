@@ -4,11 +4,10 @@ use crate::{
         others::ARS,
     },
     error::unimplemented,
-    git::{checkout::checkout_new_branch, init::init},
-    misc::{beep, confirm, exit_msg, warning},
+    git::{checkout::checkout_new_branch, git_path_check},
+    misc::{beep, confirm},
     proc::execute_out,
 };
-use std::path::Path;
 
 pub fn get_branch() -> String {
     let (output, _) = execute_out("git branch");
@@ -41,19 +40,6 @@ fn format_branch(branch: &str) -> String {
 
 fn make_branch(branch: &str) {
     checkout_new_branch(&branch);
-}
-
-fn git_path_check(path: &str) {
-    if !Path::new(&".git").exists() {
-        let string = format!("Path `{}` does not have a `.git` directory!", path);
-        warning(&string);
-        let question = "Initialize".to_string();
-        if confirm(&question) {
-            init(path);
-        } else {
-            exit_msg(1);
-        }
-    }
 }
 
 pub fn set_branch(branch: &str, path: &str) -> String {
