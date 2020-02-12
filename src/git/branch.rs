@@ -71,7 +71,7 @@ pub fn set_branch(branch: &str, path: &str) -> String {
             let confirm_string = format!("Make branch {}", branch);
             if confirm(&confirm_string) {
                 make_branch(&branch);
-                unimplemented();
+            // unimplemented();
             } else {
                 final_branch = current;
                 println!(
