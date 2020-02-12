@@ -55,8 +55,7 @@ pub fn set_branch(branch: &str, path: &str) -> String {
     let current = get_branch();
     let branches = get_branch_list();
     if !branches.is_empty() {
-        let check = branches.iter().any(|b| b == branch);
-        if !check {
+        if !branches.iter().any(|b| b == branch) {
             beep();
             println!(
                 "{r}{a}Branch {b}{r} not found.{x}",
