@@ -340,7 +340,7 @@ pub fn parse_arguments() -> HashMap<String, Opt> {
         let value = match opt.long {
             "branch" => match get_branch().len() {
                 0 => "master".to_string(),
-                1 => match opt.value.as_ref() {
+                1 => match opt.value.as_str() {
                     "@" => get_branch(),
                     _ => opt.value,
                 },
