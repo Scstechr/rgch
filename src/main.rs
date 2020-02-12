@@ -10,6 +10,7 @@ use rgch::{
         diff::diff,
         init::init,
         log::log,
+        ls_files::ls,
         pull::pull,
         push::push,
         remote::set_remote,
@@ -62,6 +63,10 @@ fn main() {
 
         if args["log"].flag {
             log();
+        }
+
+        if args["ls"].flag {
+            ls();
         }
 
         if args["pull"].flag {
