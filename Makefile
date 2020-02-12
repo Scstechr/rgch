@@ -30,3 +30,8 @@ update:
 
 build-musl:
 	docker run --rm -it -v `pwd`:/home/rust/src ekidd/rust-musl-builder cargo build --release
+
+check:
+	cargo fmt
+	cargo check --release
+
