@@ -84,7 +84,7 @@ fn main() {
             reset();
         }
         if args["push"].flag {
-            push(&branch, &remote);
+            push(&remote, &branch);
         }
     }
 }

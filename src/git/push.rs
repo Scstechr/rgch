@@ -1,6 +1,6 @@
 use crate::proc::execute;
 
-pub fn push(branch: &str, remote: &str) {
-    let string = format!("git push origin {}", branch);
+pub fn push(remote: &str, branch: &str) {
+    let string = format!("git push {} {}", remote, branch);
     execute(&string);
 }

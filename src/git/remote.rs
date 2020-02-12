@@ -1,4 +1,4 @@
-#![allow(unused_variable)]
+#![allow(unused_variables)]
 pub fn get_remote() -> String {
     "origin".to_string()
 }
