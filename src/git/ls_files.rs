@@ -18,6 +18,7 @@ use std::collections::HashMap;
 
 const LAYER: usize = 5;
 const LEVEL: [usize; LAYER] = [0, 1, 2, 3, 4];
+static COUNT: [usize; 2] = [0, 0];
 
 fn parse(output: Vec<&str>) -> HashMap<&str, HashMap<&str, HashMap<&str, HashMap<&str, &str>>>> {
     let mut d: HashMap<&str, HashMap<&str, HashMap<&str, HashMap<&str, &str>>>> = HashMap::new();
@@ -53,9 +54,17 @@ fn parse(output: Vec<&str>) -> HashMap<&str, HashMap<&str, HashMap<&str, HashMap
     d
 }
 
+fn print_out<T: std::fmt::Debug>(d: HashMap<&str, T>) {
+    for (key, val) in d.iter() {
+        print!("{s}", s = TAB);
+        println!("{:?}, {:#?}", key, val);
+    }
+}
+
 pub fn ls() {
     let (output, _) = execute_out("git ls-files");
     let mut files: Vec<&str> = output.split('\n').collect();
     files.pop(); // remove "" at the end of vector
     let d = parse(files);
+    print_out(d);
 }
