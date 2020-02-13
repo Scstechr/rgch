@@ -4,7 +4,10 @@ use crate::{
         others::ARS,
     },
     error::unimplemented,
-    git::{checkout::checkout_new_branch, format, git_path_check},
+    git::{
+        checkout::{checkout, checkout_new_branch},
+        format, git_path_check,
+    },
     misc::{beep, confirm},
     proc::execute_out,
 };
@@ -79,7 +82,8 @@ pub fn set_branch(branch: &str, path: &str) -> String {
         );
         let confirm_string = format!("Checkout to branch {b}", b = format(&branch));
         if confirm(&confirm_string) {
-            unimplemented();
+            checkout(&branch);
+        // unimplemented();
         } else {
             final_branch = current;
             println!(
