@@ -1,5 +1,6 @@
 extern crate rgch;
 
+// some random comment,,,
 use rgch::{
     arg::{parse_arguments, save, set_default, set_git_dir},
     git::{
