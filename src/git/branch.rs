@@ -3,7 +3,6 @@ use crate::{
         colors::{G, R, X},
         others::ARS,
     },
-    error::unimplemented,
     git::{
         checkout::{checkout, checkout_new_branch},
         format, git_path_check,

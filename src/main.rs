@@ -1,6 +1,5 @@
 extern crate rgch;
 
-// some random comment,,,
 use rgch::{
     arg::{parse_arguments, save, set_default, set_git_dir},
     git::{
@@ -63,7 +62,11 @@ fn main() {
         amend();
     } else {
         let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
-        let remote = set_remote(&args["remote"].value, &args["gitdir"].value);
+        let remote = if args["push"].flag {
+            set_remote(&args["remote"].value, &args["gitdir"].value)
+        } else {
+            "origin".to_string()
+        };
 
         if args["log"].flag {
             log();
