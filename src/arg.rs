@@ -183,7 +183,7 @@ pub fn opt_set() -> Vec<Arg> {
         flag: false,
         category: "remote",
         value: "".to_string(),
-        exp: "Pull (fetch and rebase).",
+        exp: "Pull (fetch and merge).",
     });
     opts.push(Arg {
         short: "p",
