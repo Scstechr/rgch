@@ -84,6 +84,7 @@ pub fn save<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S
     let toml = toml::to_string(args).unwrap();
     write!(file, "{}", toml).unwrap_or_else(|_| panic!("failed to write .config.toml"));
 }
+
 pub fn opt_set() -> Vec<Arg> {
     let mut opts: Vec<Arg> = Vec::new();
 

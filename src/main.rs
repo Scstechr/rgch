@@ -62,7 +62,7 @@ fn main() {
     } else if args["amd"].flag {
         amend();
     } else if args["merge"].flag {
-        merge(&args["remote"].value, &args["branch"].value);
+        merge(&args);
     } else {
         let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
         let remote = if args["push"].flag {
