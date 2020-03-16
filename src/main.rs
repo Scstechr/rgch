@@ -80,7 +80,7 @@ fn main() {
         }
 
         if args["pull"].flag {
-            pull(&args["remote"].value, &args["branch"].value);
+            pull(&args["remote"].value, &args["branch"].value, true);
         }
 
         if is_status_clean() {
