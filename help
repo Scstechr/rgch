@@ -1,9 +1,0 @@
-RGCH: v0.1.27 (bf4916e1 2020-03-17)
-
-[4mUsage:[m
-
-  rgch [93m[FLAGS] [OPTIONS] [91m<INPUT>[m
-
-[4mOptions:[m
-  # Options with [96m⎘[m will be saved with `-s/--save`.
-
