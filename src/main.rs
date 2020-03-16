@@ -39,10 +39,6 @@ fn main() {
         save(&args);
     }
 
-    // for arg in &args {
-    //     println!("{:?}", arg);
-    // }
-    // exit(0);
     if args["gitdir"].flag {
         set_git_dir(&args["gitdir"].value);
     }
