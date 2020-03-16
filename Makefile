@@ -36,8 +36,8 @@ check:
 	cargo check --release
 
 build-musl-in:
-	cp -rf target/release release 
+	mv target/release .
+	mv target/x86_64-unknown-linux-musl/release target/
 	cargo build --release
-	rm -rf target/x86_64-unknown-linux-musl/release/
 	mv target/release target/x86_64-unknown-linux-musl/
 	mv ./release target/
