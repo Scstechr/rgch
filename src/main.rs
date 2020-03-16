@@ -87,22 +87,23 @@ fn main() {
             silence_add(&args["add"].value, args["force"].flag);
         }
 
-        if args["merge"].flag {
+        let branch = if args["merge"].flag {
             if !is_status_clean() {
                 commit(&args["commit"].value);
             }
             merge(&args);
-        } else if args["commit"].flag {
-            commit(&args["commit"].value);
+            args["merge"].value.clone()
         } else {
-            if check_status() {
-                short_status();
+            if args["commit"].flag {
+                commit(&args["commit"].value);
+            } else {
+                if check_status() {
+                    short_status();
+                }
+                reset();
             }
-            reset();
-        }
-
-        let args = parse_arguments();
-        let args = set_default(&args);
+            branch
+        };
 
         if args["push"].flag {
             push(&remote, &branch);
