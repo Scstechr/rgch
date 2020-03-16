@@ -35,3 +35,8 @@ check:
 	cargo fmt
 	cargo check --release
 
+build-musl-in:
+	cp target/release .
+	cargo build --release
+	mv target/release/rgch target/x86_64-unknown-linux-musl/release/
+	mv ./rgch target/release/
