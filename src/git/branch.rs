@@ -8,7 +8,7 @@ use crate::{
         format, git_path_check,
     },
     misc::{beep, confirm},
-    proc::execute_out,
+    proc::{execute, execute_out},
 };
 
 pub fn get_branch() -> String {
@@ -38,6 +38,11 @@ fn get_branch_list() -> Vec<String> {
 
 fn make_branch(branch: &str) {
     checkout_new_branch(&branch);
+}
+
+pub fn delete_branch(branch: &str) {
+    let command = format!("git branch -d {}", branch);
+    execute(&command);
 }
 
 pub fn set_branch(branch: &str, path: &str) -> String {
