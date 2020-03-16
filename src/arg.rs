@@ -152,6 +152,16 @@ pub fn opt_set() -> Vec<Arg> {
         value: "".to_string(),
         exp: "Commit.",
     });
+    opts.push(Arg {
+        short: "m",
+        long: "merge",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "change",
+        value: "".to_string(),
+        exp: "Merge (experimental feature)",
+    });
 
     // Remote
     opts.push(Arg {
