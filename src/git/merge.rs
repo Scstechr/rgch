@@ -27,12 +27,12 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             },
         );
     }
-    if Path::new("./.config.toml").exists() {
-        save(&args_c);
-    }
     checkout::checkout(&args_c["branch"].value);
     pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
     let command = format!("git merge {} --no-ff", branch);
     proc::execute(&command);
     branch::delete_branch(&branch);
+    if Path::new("./.config.toml").exists() {
+        save(&args_c);
+    }
 }
