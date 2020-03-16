@@ -65,14 +65,6 @@ fn main() {
             "origin".to_string()
         };
 
-        if args["merge"].flag {
-            merge(&args);
-            if args["push"].flag {
-                push(&remote, &branch);
-            }
-            exit(0);
-        }
-
         if args["log"].flag {
             log();
         }
@@ -85,7 +77,7 @@ fn main() {
             pull(&args["remote"].value, &args["branch"].value, true);
         }
 
-        if is_status_clean() {
+        if !is_status_clean() {
             diff(args["verbose"].flag);
         }
 
@@ -95,7 +87,12 @@ fn main() {
             silence_add(&args["add"].value, args["force"].flag);
         }
 
-        if args["commit"].flag {
+        if args["merge"].flag {
+            if !is_status_clean() {
+                commit(&args["commit"].value);
+            }
+            merge(&args);
+        } else if args["commit"].flag {
             commit(&args["commit"].value);
         } else {
             if check_status() {

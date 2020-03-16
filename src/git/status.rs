@@ -35,11 +35,11 @@ pub fn status() {
 
 pub fn is_status_clean() -> bool {
     let (output, _) = execute_out("git status --short");
-    !output.is_empty()
+    output.is_empty()
 }
 
 pub fn check_status() -> bool {
-    if is_status_clean() {
+    if !is_status_clean() {
         true
     } else {
         println!(
