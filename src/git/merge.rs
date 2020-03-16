@@ -7,9 +7,9 @@ use std::collections::HashMap;
 use std::path::Path;
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
-    warning(&"Experimental Feature");
     let branch = branch::get_branch();
     if branch != args["merge"].value {
+        warning(&"Experimental Feature");
         let mut args_c: HashMap<String, Opt> = HashMap::new();
         for (a, o) in args.iter() {
             args_c.insert(
@@ -36,5 +36,11 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
         if Path::new("./.config.toml").exists() {
             save(&args_c);
         }
+    } else {
+        let msg = format!(
+            "Cannot merge {} (current) w/ {} (merge)",
+            branch, args["merge"].value
+        );
+        warning(&msg);
     }
 }
