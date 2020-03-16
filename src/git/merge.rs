@@ -1,16 +1,17 @@
+use crate::arg::save;
 use crate::git::{branch, checkout, pull};
-use crate::misc::beep;
+use crate::misc::warning;
 use crate::proc;
 use crate::Opt;
 use std::collections::HashMap;
+use std::path::Path;
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
-    beep();
-    println!("EXPERIMENTAL FEATURE!");
+    warning(&"Experimental Feature");
     let branch = branch::get_branch();
-    let mut args_copy: HashMap<String, Opt> = HashMap::new();
+    let mut args_c: HashMap<String, Opt> = HashMap::new();
     for (a, o) in args.iter() {
-        args_copy.insert(
+        args_c.insert(
             a.to_string(),
             match a as &str {
                 "branch" => Opt {
@@ -26,10 +27,12 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             },
         );
     }
-    // args["branch"].value = "master".to_string();
-    // checkout::checkout(&args["branch"].value);
-    // pull::pull(&args["remote"].value, &args["branch"].value, false);
-    // let command = format!("git merge {} --no-ff", branch);
-    // proc::execute(&command);
-    // branch::delete_branch(&branch);
+    if Path::new("./.config.toml").exists() {
+        save(&args_c);
+    }
+    checkout::checkout(&args_c["branch"].value);
+    pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
+    let command = format!("git merge {} --no-ff", branch);
+    proc::execute(&command);
+    branch::delete_branch(&branch);
 }
