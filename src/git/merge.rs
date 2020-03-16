@@ -17,7 +17,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
                 "branch" => Opt {
                     save: o.save,
                     flag: o.flag,
-                    value: "master".to_string(),
+                    value: args["merge"].value.clone(),
                 },
                 _ => Opt {
                     save: o.save,
