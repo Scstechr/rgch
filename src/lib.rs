@@ -1,6 +1,5 @@
 //! # rgch: Rust implementation of git commit handler
 
-extern crate serde;
 use serde::{Deserialize, Serialize};
 
 pub mod ansi;
