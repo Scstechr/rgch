@@ -101,6 +101,9 @@ fn main() {
             reset();
         }
 
+        let args = parse_arguments();
+        let args = set_default(&args);
+
         if args["push"].flag {
             push(&remote, &branch);
         }
