@@ -11,6 +11,7 @@ use rgch::{
         init::init,
         log::log,
         ls_files::ls,
+        merge::merge,
         pull::pull,
         push::push,
         remote::set_remote,
@@ -60,6 +61,8 @@ fn main() {
         init(&args["gitdir"].value);
     } else if args["amd"].flag {
         amend();
+    } else if args["merge"].flag {
+        merge();
     } else {
         let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
         let remote = if args["push"].flag {
