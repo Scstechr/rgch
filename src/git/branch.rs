@@ -55,7 +55,6 @@ pub fn set_branch(branch: &str, path: &str) -> String {
     // let git_dir_path = format!(".git");
     git_path_check(&path);
     let current = get_branch();
-    let branches = get_branch_list();
     if !branch_exists(&branch) {
         beep();
         println!(
