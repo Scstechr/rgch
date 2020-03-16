@@ -57,8 +57,6 @@ fn main() {
         init(&args["gitdir"].value);
     } else if args["amd"].flag {
         amend();
-    } else if args["merge"].flag {
-        merge(&args);
     } else {
         let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
         let remote = if args["push"].flag {
@@ -66,6 +64,14 @@ fn main() {
         } else {
             "origin".to_string()
         };
+
+        if args["merge"].flag {
+            merge(&args);
+            if args["push"].flag {
+                push(&remote, &branch);
+            }
+            exit(0);
+        }
 
         if args["log"].flag {
             log();

@@ -10,7 +10,7 @@ use std::process::exit;
 pub fn pull(given_remote: &str, given_branch: &str, exit_flag: bool) {
     // println!("{}", given_input);
     println!(
-        "\n{c}{a}Pull (fetch, rebase) from remote repository...{x}",
+        "\n{c}{a}Pull (fetch, merge) from remote repository...{x}",
         a = ARS,
         c = G,
         x = X
@@ -22,7 +22,7 @@ pub fn pull(given_remote: &str, given_branch: &str, exit_flag: bool) {
     // let name = set_clone_dir(&url);
     let command = format!("git fetch {} {}", remote, branch);
     execute(&command);
-    let command = format!("git rebase {}/{}", remote, branch);
+    let command = format!("git merge {}/{}", remote, branch);
     execute(&command);
     if exit_flag {
         exit(0);
