@@ -109,5 +109,6 @@ fn main() {
             push(&remote, &branch);
         }
     }
+
     println!();
 }
