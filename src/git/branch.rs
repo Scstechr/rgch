@@ -45,13 +45,18 @@ pub fn delete_branch(branch: &str) {
     execute(&command);
 }
 
+pub fn branch_exists(branch: &str) -> bool {
+    let branches = get_branch_list();
+    branches.iter().any(|b| b == branch)
+}
+
 pub fn set_branch(branch: &str, path: &str) -> String {
     let mut final_branch = branch.to_string();
     // let git_dir_path = format!(".git");
     git_path_check(&path);
     let current = get_branch();
     let branches = get_branch_list();
-    if !branches.iter().any(|b| b == branch) {
+    if !branch_exists(&branch) {
         beep();
         println!(
             "{r}{a}Branch {b}{r} not found.{x}",

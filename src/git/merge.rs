@@ -37,10 +37,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             save(&args_c);
         }
     } else {
-        let msg = format!(
-            "Cannot merge {} into {}.",
-            branch, args["merge"].value
-        );
+        let msg = format!("Cannot merge {} into {}.", branch, args["merge"].value);
         warning(&msg);
     }
 }
