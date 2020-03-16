@@ -62,7 +62,7 @@ fn main() {
     } else if args["amd"].flag {
         amend();
     } else if args["merge"].flag {
-        merge();
+        merge(&args["remote"].value, &args["branch"].value);
     } else {
         let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
         let remote = if args["push"].flag {
@@ -80,7 +80,7 @@ fn main() {
         }
 
         if args["pull"].flag {
-            pull(&args["remote"].value, &args["branch"].value);
+            pull(&args["remote"].value, &args["branch"].value, true);
         }
 
         if is_status_clean() {
@@ -101,6 +101,7 @@ fn main() {
             }
             reset();
         }
+
         if args["push"].flag {
             push(&remote, &branch);
         }

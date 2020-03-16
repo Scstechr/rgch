@@ -7,7 +7,7 @@ use crate::{
 };
 use std::process::exit;
 
-pub fn pull(given_remote: &str, given_branch: &str) {
+pub fn pull(given_remote: &str, given_branch: &str, exit_flag: bool) {
     // println!("{}", given_input);
     println!(
         "\n{c}{a}Pull (fetch, rebase) from remote repository...{x}",
@@ -24,5 +24,7 @@ pub fn pull(given_remote: &str, given_branch: &str) {
     execute(&command);
     let command = format!("git rebase {}/{}", remote, branch);
     execute(&command);
-    exit(0);
+    if exit_flag {
+        exit(0);
+    }
 }
