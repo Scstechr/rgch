@@ -156,11 +156,11 @@ pub fn opt_set() -> Vec<Arg> {
     opts.push(Arg {
         short: "m",
         long: "merge",
-        types: "flag",
+        types: "string",
         save: false,
         flag: false,
         category: "change",
-        value: "".to_string(),
+        value: "master".to_string(),
         exp: "Merge (experimental feature)",
     });
 
