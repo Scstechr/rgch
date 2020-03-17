@@ -54,6 +54,12 @@ fn main() {
 
     set_git_dir(&args["gitdir"].value);
 
+    match (args["log"].flag, args["ls"].flag) {
+        (true, _) => log(),
+        (_, true) => ls(),
+        (_, _) => (),
+    }
+
     if args["save"].flag {
         save(&args);
     }
@@ -66,14 +72,6 @@ fn main() {
         } else {
             "origin".to_string()
         };
-
-        if args["log"].flag {
-            log();
-        }
-
-        if args["ls"].flag {
-            ls();
-        }
 
         if args["pull"].flag {
             pull(&args["remote"].value, &args["branch"].value, true);
