@@ -33,10 +33,9 @@ fn return_args_c<S: ::std::hash::BuildHasher + Default>(
 }
 
 pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+    warning(&"Experimental Feature");
     println!("{:?}", args["branch"]);
     println!("{:?}", args["merge"]);
-    // let branch = branch::get_branch();
-    // warning(&"Experimental Feature");
     // let args_c = return_args_c(&args);
     // println!("{}, {}", args_c["branch"].value, args["branch"].value);
     // if args["branch"].value == "master" {
