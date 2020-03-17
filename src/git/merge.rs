@@ -45,11 +45,12 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     if !get_remote_list().is_empty() {
         pull::pull(&args["remote"].value, &args["branch"].value, false);
     }
-    // let command = if branch != "master" {
-    let command = format!("git merge {} --no-ff", branch);
-    // } else {
-    //     format!("git merge {} --no-ff", args["merge"].value)
-    // };
+    let command = if branch != "master" {
+        // let command =
+        format!("git merge {} --no-ff", branch)
+    } else {
+        format!("git merge {} --no-ff", args["merge"].value)
+    };
     proc::execute(&command);
     let branch = if branch == "master" {
         args["merge"].value.clone()
