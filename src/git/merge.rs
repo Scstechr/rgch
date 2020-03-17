@@ -33,25 +33,27 @@ fn return_args_c<S: ::std::hash::BuildHasher + Default>(
 }
 
 pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
-    let branch = branch::get_branch();
-    warning(&"Experimental Feature");
-    let args_c = return_args_c(&args);
-    println!("{}, {}", args_c["branch"].value, args["branch"].value);
-    if args["branch"].value == "master" {
-        checkout::checkout(&args["branch"].value);
-    } else {
-        checkout::checkout(&args["merge"].value);
-    }
-    pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
-    let command = format!("git merge {} --no-ff", branch);
-    proc::execute(&command);
-    let command = format!("Delete branch {}", branch);
-    if confirm(&command) {
-        branch::delete_branch(&branch);
-    }
-    if Path::new("./.config.toml").exists() {
-        save(&args_c);
-    }
+    println!("{:?}", args["branch"]);
+    println!("{:?}", args["merge"]);
+    // let branch = branch::get_branch();
+    // warning(&"Experimental Feature");
+    // let args_c = return_args_c(&args);
+    // println!("{}, {}", args_c["branch"].value, args["branch"].value);
+    // if args["branch"].value == "master" {
+    //     checkout::checkout(&args["branch"].value);
+    // } else {
+    //     checkout::checkout(&args["merge"].value);
+    // }
+    // pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
+    // let command = format!("git merge {} --no-ff", branch);
+    // proc::execute(&command);
+    // let command = format!("Delete branch {}", branch);
+    // if confirm(&command) {
+    //     branch::delete_branch(&branch);
+    // }
+    // if Path::new("./.config.toml").exists() {
+    //     save(&args_c);
+    // }
 }
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
