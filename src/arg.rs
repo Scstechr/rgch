@@ -25,9 +25,10 @@ pub fn set_git_dir(path: &str) -> bool {
     }
 }
 
-pub fn set_default<S: ::std::hash::BuildHasher + Default>(
-    args: &HashMap<String, Opt, S>,
-) -> HashMap<String, Opt> {
+// pub fn set_default<S: ::std::hash::BuildHasher + Default>(
+//     args: &HashMap<String, Opt, S>,
+pub fn set_default() -> HashMap<String, Opt> {
+    let args = parse_arguments();
     // pub fn set_default(args: &HashMap<String, Opt>) -> HashMap<String, Opt> {
     let f = fs::read_to_string(".config.toml");
     let config = match f {

@@ -2,12 +2,12 @@
 extern crate rgch;
 
 use rgch::{
-    arg::{parse_arguments, save, set_default, set_git_dir},
+    arg::{save, set_default, set_git_dir},
     git::{
         add::{add, silence_add},
         branch::set_branch,
         clone::clone,
-        commit::{amend, check_raw_commit, commit},
+        commit::{amend, check_raw_commit},
         diff::diff,
         init::init,
         log::log,
@@ -20,7 +20,7 @@ use rgch::{
         status::{check_status, is_status_clean, short_status},
     },
     help::help,
-    misc::{show, warning},
+    misc::show,
     version::{short_version, version},
 };
 #[allow(unused_imports)]
@@ -29,8 +29,7 @@ use std::process::exit;
 fn main() {
     short_version();
 
-    let args = parse_arguments();
-    let args = set_default(&args);
+    let args = set_default();
 
     if args["show-args"].flag {
         show(&args);
