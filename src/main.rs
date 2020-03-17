@@ -89,6 +89,9 @@ fn main() {
             silence_add(&args["add"].value, args["force"].flag);
         }
 
+        if !args["merge"].flag {
+            set_branch(&args["branch"].value, &args["gitdir"].value);
+        }
         let branch = if args["merge"].flag {
             if !is_status_clean() && args["merge"].value == "master" {
                 if args["branch"].value == "master" && !args["no-raw"].flag {
