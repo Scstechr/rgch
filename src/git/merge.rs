@@ -40,7 +40,7 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     args: &HashMap<String, Opt, S>,
     branch: &str,
 ) {
-    checkout::checkout(&args["merge"].value);
+    checkout::checkout(&"master");
     if !get_remote_list().is_empty() {
         pull::pull(&args["remote"].value, &args["branch"].value, false);
     }
