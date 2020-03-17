@@ -60,16 +60,15 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
         branch.to_string()
     };
     let command = format!("Delete branch `{}`", branch);
-    let flag = confirm(&command);
-    println!();
-    if flag {
+    let flag = 
+    if confirm(&command) {
         branch::delete_branch(&branch);
-    }
-    let args_c = return_args_c(&args);
-    if Path::new("./.config.toml").exists() {
-        save(&args_c);
-    }
-    if !flag {
+        let args_c = return_args_c(&args);
+        if Path::new("./.config.toml").exists() {
+            save(&args_c);
+        }
+    } else {
+        println!();
         checkout::checkout(&branch);
     }
 }
@@ -102,7 +101,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
                 branch, args["merge"].value
             );
             warning(&msg);
-            warning(&"Use `rgch -b/--branch <branch name>` instead.");
+            warning(&"Use `rgch -b/--branch <branch name>` instead to switch branch.");
             exit(0);
         }
     } else {
