@@ -5,6 +5,8 @@ use crate::ansi::{
     moves::{up_delete, ERASE},
     others::ARS,
 };
+use crate::Opt;
+use std::collections::HashMap;
 use std::{
     io::{stdin, stdout, Write},
     process::{exit, Command},
@@ -111,4 +113,15 @@ pub fn input(question: &str) -> String {
         s.pop();
     }
     s
+}
+
+pub fn show<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+    match args["show-args"].value.len() {
+        0 => {
+            for (key, val) in args.iter() {
+                println!("{:?} {:?}", key, val)
+            }
+        }
+        _ => println!("{:#?}", args[&args["show-args"].value]),
+    };
 }
