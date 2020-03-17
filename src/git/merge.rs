@@ -40,11 +40,13 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     args: &HashMap<String, Opt, S>,
     branch: &str,
 ) {
-    checkout::checkout(&args["branch"].value);
+    checkout::checkout(&args["merge"].value);
+    // checkout::checkout(&branch);
     if !get_remote_list().is_empty() {
         pull::pull(&args["remote"].value, &args["branch"].value, false);
     }
     let command = if branch != "master" {
+        // let command =
         format!("git merge {} --no-ff", branch)
     } else {
         format!("git merge {} --no-ff", args["merge"].value)
@@ -91,7 +93,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             checkout_pull_merge(args, &branch);
         } else if branch::branch_exists(&args["merge"].value) {
             checkout::checkout(&args["merge"].value);
-            checkout_pull_merge(args, &args["merge"].value);
+            checkout_pull_merge(args, &branch);
         } else {
             let msg = format!(
                 "Nothing changed in `{}` and branch `{}` does not exist.",
