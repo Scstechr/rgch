@@ -1,4 +1,4 @@
-#![allow(clippy::collapsible_if)]
+// #![allow(clippy::collapsible_if)]
 extern crate rgch;
 
 use rgch::{
@@ -91,10 +91,11 @@ fn main() {
         }
 
         let branch = if args["merge"].flag {
-            if args["merge"].value != args["branch"].value {
-                if !is_status_clean() && args["merge"].value == "master" {
-                    check_raw_commit(&args);
-                }
+            if args["merge"].value != args["branch"].value
+                && !is_status_clean()
+                && args["merge"].value == "master"
+            {
+                check_raw_commit(&args);
             }
             merge(&args);
             args["merge"].value.clone()
