@@ -91,7 +91,7 @@ fn main() {
         }
 
         let branch = if args["merge"].flag {
-            if !is_status_clean() {
+            if !is_status_clean() && args["merge"].value == "master" {
                 if args["branch"].value == "master" && !args["no-raw"].flag {
                     commit(&args["commit"].value);
                 } else {

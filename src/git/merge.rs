@@ -39,7 +39,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
                 save(&args_c);
             }
         } else {
-            let branch = branch::set_branch(&args["merge"].value, &args["gitdir"].value);
+            branch::set_branch(&args["merge"].value, &args["gitdir"].value);
             unimplemented();
         }
     } else {
