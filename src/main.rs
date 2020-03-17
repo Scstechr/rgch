@@ -7,7 +7,7 @@ use rgch::{
         add::{add, silence_add},
         branch::set_branch,
         clone::clone,
-        commit::{amend, check_raw, commit},
+        commit::{amend, check_raw_commit, commit},
         diff::diff,
         init::init,
         log::log,
@@ -94,24 +94,14 @@ fn main() {
         let branch = if args["merge"].flag {
             if args["merge"].value != args["branch"].value {
                 if !is_status_clean() && args["merge"].value == "master" {
-                    if check_raw(&args) {
-                        commit(&args["commit"].value);
-                    } else {
-                        warning("Raw commit not allowed in master branch");
-                        reset();
-                    }
+                    check_raw_commit(&args);
                 }
             }
             merge(&args);
             args["merge"].value.clone()
         } else {
             if args["commit"].flag {
-                if check_raw(&args) {
-                    commit(&args["commit"].value);
-                } else {
-                    warning("Raw commit not allowed in master branch");
-                    reset();
-                }
+                check_raw_commit(&args);
             } else {
                 if check_status() {
                     short_status();

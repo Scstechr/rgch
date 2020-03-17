@@ -1,6 +1,7 @@
 use crate::{
+    git::reset::reset,
     git::status::{check_status, short_status},
-    misc::input,
+    misc::{input, warning},
     proc::execute,
     Opt,
 };
@@ -10,8 +11,13 @@ pub fn amend() {
     execute(&"git commit --amend");
 }
 
-pub fn check_raw<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) -> bool {
-    args["branch"].value == "master" && !args["no-raw"].flag
+pub fn check_raw_commit<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+    if args["branch"].value == "master" && !args["no-raw"].flag {
+        commit(&args["commit"].value);
+    } else {
+        warning("Raw commit not allowed in master branch");
+        reset();
+    }
 }
 
 pub fn commit(msg: &str) {
