@@ -277,6 +277,16 @@ pub fn opt_set() -> Vec<Arg> {
         value: "".to_string(),
         exp: "Show this message and exit.",
     });
+    opts.push(Arg {
+        short: "",
+        long: "no_raw_commit",
+        types: "flag",
+        save: true,
+        flag: false,
+        category: "extra",
+        value: "".to_string(),
+        exp: "Only allow merge commit in master.",
+    });
     // println!("{:?}", opts);
     opts.push(Arg {
         short: "",

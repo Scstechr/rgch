@@ -19,6 +19,7 @@ use rgch::{
         status::{check_status, is_status_clean, short_status},
     },
     help::help,
+    misc::warning,
     version::{short_version, version},
 };
 #[allow(unused_imports)]
@@ -95,7 +96,11 @@ fn main() {
             args["merge"].value.clone()
         } else {
             if args["commit"].flag {
-                commit(&args["commit"].value);
+                if !args["no_raw_commit"].flag && args["branch"].value == "master" {
+                    commit(&args["commit"].value);
+                } else {
+                    warning("Raw commit not allowed in master branch");
+                }
             } else {
                 if check_status() {
                     short_status();
