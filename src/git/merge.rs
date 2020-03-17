@@ -102,6 +102,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
                 branch, args["merge"].value
             );
             warning(&msg);
+            warning(&"Use `rgch -b/--branch <branch name>` instead.");
             exit(0);
         }
     } else {
