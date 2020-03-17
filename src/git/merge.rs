@@ -42,16 +42,16 @@ pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<St
     } else {
         checkout::checkout(&args["merge"].value);
     }
-    // pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
-    // let command = format!("git merge {} --no-ff", branch);
-    // proc::execute(&command);
-    // let command = format!("Delete branch {}", branch);
-    // if confirm(&command) {
-    //     branch::delete_branch(&branch);
-    // }
-    // if Path::new("./.config.toml").exists() {
-    //     save(&args_c);
-    // }
+    pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
+    let command = format!("git merge {} --no-ff", branch);
+    proc::execute(&command);
+    let command = format!("Delete branch {}", branch);
+    if confirm(&command) {
+        branch::delete_branch(&branch);
+    }
+    if Path::new("./.config.toml").exists() {
+        save(&args_c);
+    }
 }
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
