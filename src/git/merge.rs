@@ -50,5 +50,9 @@ pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<St
 }
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
-    merge_not_master(args);
+    if args["branch"].value != "master" {
+        merge_not_master(args);
+    } else {
+        println!("merging {:?} to master?", args["merge"].value);
+    }
 }
