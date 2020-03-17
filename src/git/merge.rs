@@ -36,17 +36,17 @@ pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<St
     let branch = branch::get_branch();
     warning(&"Experimental Feature");
     let args_c = return_args_c(&args);
-    checkout::checkout(&args_c["branch"].value);
-    pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
-    let command = format!("git merge {} --no-ff", branch);
-    proc::execute(&command);
-    let command = format!("Delete branch {}", branch);
-    if confirm(&command) {
-        branch::delete_branch(&branch);
-    }
-    if Path::new("./.config.toml").exists() {
-        save(&args_c);
-    }
+    checkout::checkout(&args["branch"].value);
+    // pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
+    // let command = format!("git merge {} --no-ff", branch);
+    // proc::execute(&command);
+    // let command = format!("Delete branch {}", branch);
+    // if confirm(&command) {
+    //     branch::delete_branch(&branch);
+    // }
+    // if Path::new("./.config.toml").exists() {
+    //     save(&args_c);
+    // }
 }
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
@@ -61,13 +61,14 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
         if !is_status_clean() {
             if branch::branch_exists(&args["merge"].value) {
                 let msg = format!(
-                    "Abort due to: branch {} exists and some changes were made in {}",
+                    "Branch {} exists and some changes were made in {}",
                     args["merge"].value, args["branch"].value
                 );
                 warning(&msg);
                 exit(0);
             } else {
                 branch::make_branch(&args["merge"].value);
+                commit(&args["commit"].value);
                 merge_not_master(args);
             }
         } else {
