@@ -1,5 +1,5 @@
 use crate::arg::save;
-use crate::error::unimplemented;
+// use crate::error::unimplemented;
 use crate::git::{branch, checkout, commit::commit, pull, status::is_status_clean};
 use crate::misc::warning;
 use crate::proc;

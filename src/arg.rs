@@ -38,7 +38,6 @@ pub fn set_default<S: ::std::hash::BuildHasher + Default>(
     let mut set_args: HashMap<String, Opt> = HashMap::new();
     // let options = opt_set();
     for (key, val) in args.iter() {
-        println!("{:?}, {:?}", key, val);
         if !config.is_empty() {
             let default: Result<HashMap<String, Opt>, toml::de::Error> = toml::from_str(&config);
             let default = match default {
