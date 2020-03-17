@@ -1,11 +1,11 @@
-#![allow(unused_variables)]
-#![allow(unused_imports)]
-#![allow(dead_code)]
+// #![allow(unused_variables)]
+// #![allow(unused_imports)]
+// #![allow(dead_code)]
 
 use crate::arg::save;
 // use crate::error::unimplemented;
 use crate::git::{branch, checkout, commit::commit, pull, status::is_status_clean};
-use crate::misc::{self, confirm, warning};
+use crate::misc::{confirm, warning};
 use crate::proc;
 use crate::Opt;
 use std::collections::HashMap;
