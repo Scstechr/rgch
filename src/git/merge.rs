@@ -42,7 +42,11 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
 ) {
     checkout::checkout(&args["branch"].value);
     pull::pull(&args["remote"].value, &args["branch"].value, false);
-    let command = format!("git merge {} --no-ff", branch);
+    let command = if branch != "master" {
+        format!("git merge {} --no-ff", branch)
+    } else {
+        format!("git merge {} --no-ff", args["merge"].value)
+    };
     proc::execute(&command);
     if confirm(&command) {
         branch::delete_branch(&branch);
