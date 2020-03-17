@@ -87,7 +87,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             checkout_pull_merge(args, &branch);
         } else if branch::branch_exists(&args["merge"].value) {
             checkout::checkout(&args["merge"].value);
-            checkout_pull_merge(args, &branch);
+            checkout_pull_merge(args, &args["merge"].value);
         } else {
             let msg = format!(
                 "Nothing changed in `{}` and branch `{}` does not exist.",
