@@ -34,6 +34,7 @@ fn main() {
         show(&args);
     }
 
+    // can be operated without .git folder
     match (
         args["version"].flag,
         args["help"].flag,
@@ -51,24 +52,7 @@ fn main() {
         (_, _, _, _) => (),
     }
 
-    // // if args["version"].flag {
-    // //     version();
-    // // }
-
-    // // if args["help"].flag {
-    // //     help();
-    // // }
-
-    // // if args["clone"].flag {
-    // // }
-
-    // if args["init"].flag {
-    //     init(&args["gitdir"].value);
-    // }
-
-    if args["gitdir"].flag {
-        set_git_dir(&args["gitdir"].value);
-    }
+    set_git_dir(&args["gitdir"].value);
 
     if args["save"].flag {
         save(&args);
