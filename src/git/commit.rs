@@ -1,11 +1,15 @@
 use crate::{
-    git::status::{check_status, short_status},
+    git::status::{check_status, is_status_clean, short_status},
     misc::input,
     proc::execute,
 };
 
 pub fn amend() {
     execute(&"git commit --amend");
+}
+
+pub fn check_raw(mbranch: &str) -> bool {
+    !is_status_clean() && mbranch == "master"
 }
 
 pub fn commit(msg: &str) {

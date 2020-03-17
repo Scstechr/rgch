@@ -7,7 +7,7 @@ use rgch::{
         add::{add, silence_add},
         branch::set_branch,
         clone::clone,
-        commit::{amend, commit},
+        commit::{amend, check_raw, commit},
         diff::diff,
         init::init,
         log::log,
@@ -93,7 +93,7 @@ fn main() {
 
         let branch = if args["merge"].flag {
             if args["merge"].value != args["branch"].value {
-                if !is_status_clean() && args["merge"].value == "master" {
+                if check_raw(&args["merge"].value) {
                     if args["branch"].value == "master" && !args["no-raw"].flag {
                         commit(&args["commit"].value);
                     } else {
