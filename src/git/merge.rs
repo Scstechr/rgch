@@ -47,10 +47,10 @@ pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<St
 }
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
-    if args["branch"].value != "master" {
+    let branch = branch::get_branch();
+    if branch != "master" {
         merge_not_master(args);
     } else {
-        let branch = branch::get_branch();
         println!("merging {:?} {:?} to master?", branch, args["branch"].value);
         // branch::set_branch(&args["merge"].value, &args["gitdir"].value);
         if !is_status_clean() {
