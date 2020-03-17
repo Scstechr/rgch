@@ -56,18 +56,17 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
         branch.to_string()
     };
     let command = format!("Delete branch `{}`", branch);
-    if confirm(&command) {
+    let flag = confirm(&command);
+    if flag {
         branch::delete_branch(&branch);
     }
     let args_c = return_args_c(&args);
-    // misc::show(&args_c);
-    // misc::show(&args);
-    // println!("{}, {}", args_c["branch"].value, args["branch"].value);
-    // pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
     if Path::new("./.config.toml").exists() {
         save(&args_c);
     }
-    checkout::checkout(&branch);
+    if !flag {
+        checkout::checkout(&branch);
+    }
 }
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
