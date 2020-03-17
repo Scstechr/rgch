@@ -1,3 +1,4 @@
+#![allow(clippy::collapsible_if)]
 extern crate rgch;
 
 use rgch::{
@@ -33,7 +34,11 @@ fn main() {
 
     if args["show-args"].flag {
         match args["show-args"].value.len() {
-            0 => println!("{:?}", args),
+            0 => {
+                for (key, val) in args.iter() {
+                    println!("{:?} {:?}", key, val)
+                }
+            }
             _ => println!("{:#?}", args[&args["show-args"].value]),
         };
     }
