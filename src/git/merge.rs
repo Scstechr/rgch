@@ -1,13 +1,13 @@
 use crate::arg::save;
 // use crate::error::unimplemented;
 use crate::git::{branch, checkout, commit::commit, pull, status::is_status_clean};
-use crate::misc::warning;
+use crate::misc::{confirm, warning};
 use crate::proc;
 use crate::Opt;
 use std::collections::HashMap;
 use std::path::Path;
 
-pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
     let branch = branch::get_branch();
     if branch != args["merge"].value {
         warning(&"Experimental Feature");
@@ -39,12 +39,23 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
         pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
         let command = format!("git merge {} --no-ff", branch);
         proc::execute(&command);
-        branch::delete_branch(&branch);
+        let command = format!("Delete branch {}", branch);
+        if confirm(&command) {
+            branch::delete_branch(&branch);
+        }
         if Path::new("./.config.toml").exists() {
             save(&args_c);
         }
     } else {
         let msg = format!("Cannot merge {} into {}.", branch, args["merge"].value);
         warning(&msg);
+    }
+}
+
+pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+    if args["branch"].value != "master" {
+        merge_not_master(args);
+    } else {
+        println!("merging {:?} to master?", args["merge"].value);
     }
 }
