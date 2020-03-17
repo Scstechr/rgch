@@ -30,12 +30,14 @@ fn main() {
 
     let args = parse_arguments();
     let args = set_default(&args);
+
     if args["show-args"].flag {
         match args["show-args"].value.len() {
             0 => println!("{:?}", args),
             _ => println!("{:#?}", args[&args["show-args"].value]),
         };
     }
+
     if args["save"].flag {
         save(&args);
     }
@@ -90,13 +92,17 @@ fn main() {
 
         let branch = if args["merge"].flag {
             if !is_status_clean() {
-                commit(&args["commit"].value);
+                if args["branch"].value == "master" && !args["no-raw"].flag {
+                    commit(&args["commit"].value);
+                } else {
+                    warning("Raw commit not allowed in master branch");
+                }
             }
             merge(&args);
             args["merge"].value.clone()
         } else {
             if args["commit"].flag {
-                if !args["no_raw_commit"].flag && args["branch"].value == "master" {
+                if args["branch"].value == "master" && !args["no-raw"].flag {
                     commit(&args["commit"].value);
                 } else {
                     warning("Raw commit not allowed in master branch");
