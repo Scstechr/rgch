@@ -1,6 +1,6 @@
 use crate::arg::save;
 use crate::error::unimplemented;
-use crate::git::{branch, checkout, pull};
+use crate::git::{branch, checkout, commit::commit, pull, status::is_status_clean};
 use crate::misc::warning;
 use crate::proc;
 use crate::Opt;
@@ -29,18 +29,19 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
                 },
             );
         }
-        if args["merge"].value == "master" {
-            checkout::checkout(&args_c["branch"].value);
-            pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
-            let command = format!("git merge {} --no-ff", branch);
-            proc::execute(&command);
-            branch::delete_branch(&branch);
-            if Path::new("./.config.toml").exists() {
-                save(&args_c);
-            }
-        } else {
+        if args["merge"].value != "master" {
             branch::set_branch(&args["merge"].value, &args["gitdir"].value);
-            unimplemented();
+            if !is_status_clean() {
+                commit(&args["commit"].value);
+            }
+        }
+        checkout::checkout(&args_c["branch"].value);
+        pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
+        let command = format!("git merge {} --no-ff", branch);
+        proc::execute(&command);
+        branch::delete_branch(&branch);
+        if Path::new("./.config.toml").exists() {
+            save(&args_c);
         }
     } else {
         let msg = format!("Cannot merge {} into {}.", branch, args["merge"].value);
