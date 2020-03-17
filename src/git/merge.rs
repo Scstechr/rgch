@@ -69,8 +69,8 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
 }
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
-    warning(&"Experimental Feature");
-    warning(&"Stricted to merging branches to `master` only");
+    warning(&"Experimental Feature!");
+    warning(&"Stricted to merging branches to `master` only.");
     let branch = branch::get_branch();
     if branch != args["merge"].value {
         if !is_status_clean() {
