@@ -279,7 +279,7 @@ pub fn opt_set() -> Vec<Arg> {
     });
     opts.push(Arg {
         short: "",
-        long: "no-raw-commit",
+        long: "no_raw_commit",
         types: "flag",
         save: true,
         flag: false,

@@ -94,7 +94,7 @@ fn main() {
             merge(&args);
             args["merge"].value.clone()
         } else {
-            if args["commit"].flag && (!args["no-raw-commit"].flag && args["branch"].value == "master"){
+            if args["commit"].flag && (!args["no_raw_commit"].flag && args["branch"].value == "master"){
                 commit(&args["commit"].value);
             } else {
                 if check_status() {
