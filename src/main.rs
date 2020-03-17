@@ -109,7 +109,7 @@ fn main() {
                 }
                 reset();
             }
-            set_branch(&args["branch"].value, &args["gitdir"].value)
+            args["branch"].value.clone()
         };
 
         if args["push"].flag {
