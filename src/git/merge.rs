@@ -7,7 +7,7 @@ use crate::Opt;
 use std::collections::HashMap;
 use std::path::Path;
 
-pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
     let branch = branch::get_branch();
     if branch != args["merge"].value {
         warning(&"Experimental Feature");
@@ -47,4 +47,8 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
         let msg = format!("Cannot merge {} into {}.", branch, args["merge"].value);
         warning(&msg);
     }
+}
+
+pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+    merge_not_master(args);
 }
