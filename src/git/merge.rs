@@ -57,6 +57,7 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     };
     let command = format!("Delete branch `{}`", branch);
     let flag = confirm(&command);
+    println!();
     if flag {
         branch::delete_branch(&branch);
     }
@@ -65,7 +66,6 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
         save(&args_c);
     }
     if !flag {
-        println!();
         checkout::checkout(&branch);
     }
 }
