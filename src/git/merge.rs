@@ -75,22 +75,18 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
         // println!(" args-branch: {:?}", args["branch"]);
         // println!(" args-merge : {:?}", args["merge"]);
         if !is_status_clean() {
-            if branch::branch_exists(&args["merge"].value) {
-                if args["merge"].value != "master" {
-                    let msg = format!(
-                        "Branch `{}` exists and some changes were made in `{}`.",
-                        args["merge"].value, branch
-                    );
-                    warning(&msg);
-                    exit(0);
-                }
-                commit(&args["commit"].value);
-                checkout_pull_merge(args, &branch);
+            if branch::branch_exists(&args["merge"].value) && args["merge"].value != "master" {
+                let msg = format!(
+                    "Branch `{}` exists and some changes were made in `{}`.",
+                    args["merge"].value, branch
+                );
+                warning(&msg);
+                exit(0);
             } else {
                 branch::make_branch(&args["merge"].value);
-                commit(&args["commit"].value);
-                checkout_pull_merge(args, &branch);
             }
+            commit(&args["commit"].value);
+            checkout_pull_merge(args, &branch);
         } else if branch::branch_exists(&args["merge"].value) {
             checkout::checkout(&args["merge"].value);
         } else {
