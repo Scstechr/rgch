@@ -23,7 +23,7 @@ fn return_args_c<S: ::std::hash::BuildHasher + Default>(
                 "branch" => Opt {
                     save: o.save,
                     flag: o.flag,
-                    value: args["merge"].value.clone(),
+                    value: "master".to_string(), //args["merge"].value.clone(),
                 },
                 _ => Opt {
                     save: o.save,
