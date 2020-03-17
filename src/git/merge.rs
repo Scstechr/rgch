@@ -63,7 +63,7 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     } else {
         println!();
         checkout::checkout(&branch);
-        args["merge"].value.clone()
+        branch
     };
     let args_c = return_args_c(&args, &mbranch);
     if Path::new("./.config.toml").exists() {
