@@ -6,6 +6,9 @@ edition = "2018"
 description = "Rust version of gch"
 license-file = "LICENSE"
 repository = "https://github.com/Scstechr/rgch"
+readme = "README.md"
+categories = ["command line utilities"]
+keywords = ["cli"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
