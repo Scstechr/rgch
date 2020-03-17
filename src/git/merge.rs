@@ -36,38 +36,49 @@ fn return_args_c<S: ::std::hash::BuildHasher + Default>(
     args_c
 }
 
-pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
-    warning(&"Experimental Feature");
+pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+    checkout::checkout(&args["branch"].value);
+    pull::pull(&args["remote"].value, &args["branch"].value, false);
+    let command = format!("git merge {} --no-ff", args["merge"].value);
+    proc::execute(&command);
+    // if confirm(&command) {
+    //     branch::delete_branch(&branch);
+    // }
     // let args_c = return_args_c(&args);
     // println!("{}, {}", args_c["branch"].value, args["branch"].value);
     // pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
     // let command = format!("git merge {} --no-ff", branch);
     // proc::execute(&command);
     // let command = format!("Delete branch {}", branch);
-    // if confirm(&command) {
-    //     branch::delete_branch(&branch);
-    // }
     // if Path::new("./.config.toml").exists() {
     //     save(&args_c);
     // }
 }
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+    warning(&"Experimental Feature");
     let branch = branch::get_branch();
-    println!("current    : {:?}", branch);
-    println!("args-branch: {:?}", args["branch"]);
-    println!("args-merge : {:?}", args["merge"]);
+    println!(" current    : {:?}", branch);
+    println!(" args-branch: {:?}", args["branch"]);
+    println!(" args-merge : {:?}", args["merge"]);
     if !is_status_clean() {
         if branch::branch_exists(&args["merge"].value) {
-            let msg = format!(
-                "Branch `{}` exists and some changes were made in `{}`.",
-                args["merge"].value, branch
-            );
-            warning(&msg);
-            exit(0);
+            if args["merge"].value != "master" {
+                let msg = format!(
+                    "Branch `{}` exists and some changes were made in `{}`.",
+                    args["merge"].value, branch
+                );
+                warning(&msg);
+                exit(0);
+            }
+            commit(&args["commit"].value);
+            println!("aaa");
+            checkout_pull_merge(args);
         } else {
             branch::make_branch(&args["merge"].value);
+            commit(&args["commit"].value);
             println!("bbb");
+            checkout_pull_merge(args);
         }
     } else {
         if branch::branch_exists(&args["merge"].value) {
@@ -84,7 +95,6 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
     }
     // if branch != "master" {
     //     if !is_status_clean() {
-    //         commit(&args["commit"].value);
     //     }
     //     merge_not_master(args);
     // } else {
