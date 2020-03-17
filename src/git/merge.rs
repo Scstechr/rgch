@@ -10,26 +10,26 @@ use std::path::Path;
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
     let branch = branch::get_branch();
     if branch != args["merge"].value {
-        if args["merge"].value == "master" {
-            warning(&"Experimental Feature");
-            let mut args_c: HashMap<String, Opt> = HashMap::new();
-            for (a, o) in args.iter() {
-                args_c.insert(
-                    a.to_string(),
-                    match a as &str {
-                        "branch" => Opt {
-                            save: o.save,
-                            flag: o.flag,
-                            value: args["merge"].value.clone(),
-                        },
-                        _ => Opt {
-                            save: o.save,
-                            flag: o.flag,
-                            value: o.value.clone(),
-                        },
+        warning(&"Experimental Feature");
+        let mut args_c: HashMap<String, Opt> = HashMap::new();
+        for (a, o) in args.iter() {
+            args_c.insert(
+                a.to_string(),
+                match a as &str {
+                    "branch" => Opt {
+                        save: o.save,
+                        flag: o.flag,
+                        value: args["merge"].value.clone(),
                     },
-                );
-            }
+                    _ => Opt {
+                        save: o.save,
+                        flag: o.flag,
+                        value: o.value.clone(),
+                    },
+                },
+            );
+        }
+        if args["merge"].value == "master" {
             checkout::checkout(&args_c["branch"].value);
             pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
             let command = format!("git merge {} --no-ff", branch);
@@ -39,6 +39,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
                 save(&args_c);
             }
         } else {
+            let branch = branch::set_branch(&args["merge"].value, &args["gitdir"].value);
             unimplemented();
         }
     } else {

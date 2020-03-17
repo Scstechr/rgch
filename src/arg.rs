@@ -279,11 +279,11 @@ pub fn opt_set() -> Vec<Arg> {
     });
     opts.push(Arg {
         short: "",
-        long: "no_raw_commit",
+        long: "no-raw",
         types: "flag",
         save: true,
         flag: false,
-        category: "extra",
+        category: "extras",
         value: "".to_string(),
         exp: "Only allow merge commit in master.",
     });
@@ -302,6 +302,7 @@ pub fn opt_set() -> Vec<Arg> {
 }
 
 fn search(arg: &str, options: &mut Vec<Arg>) {
+    // println!("{:?}, {:?}", arg, options);
     let mut hit = false;
     for mut opt in options.iter_mut() {
         if arg.contains(opt.long) || arg == opt.short {
@@ -379,12 +380,9 @@ pub fn parse_arguments() -> HashMap<String, Opt> {
     let mut args: HashMap<String, Opt> = HashMap::new();
     for opt in options {
         let value = match opt.long {
-            "branch" => match get_branch().as_str() {
-                "" => "master".to_string(),
-                _ => match opt.value.as_str() {
-                    "@" => get_branch(),
-                    _ => opt.value,
-                },
+            "branch" => match opt.value.as_str() {
+                "@" => get_branch(),
+                _ => opt.value,
             },
             _ => opt.value,
         };
