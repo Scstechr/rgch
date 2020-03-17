@@ -58,8 +58,8 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
         branch::delete_branch(&branch);
     }
     let args_c = return_args_c(&args);
-    misc::show(&args_c);
-    misc::show(&args);
+    // misc::show(&args_c);
+    // misc::show(&args);
     // println!("{}, {}", args_c["branch"].value, args["branch"].value);
     // pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
     if Path::new("./.config.toml").exists() {
