@@ -76,6 +76,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
         }
     } else {
         if branch::branch_exists(&args["merge"].value) {
+            checkout::checkout(&args["merge"].value);
             println!("ccc");
         } else {
             branch::make_branch(&args["merge"].value);
