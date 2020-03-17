@@ -61,7 +61,6 @@ fn main() {
     } else if args["amd"].flag {
         amend();
     } else {
-        let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
         let remote = if args["push"].flag {
             set_remote(&args["remote"].value, &args["gitdir"].value)
         } else {
@@ -113,7 +112,7 @@ fn main() {
                 }
                 reset();
             }
-            branch
+            set_branch(&args["branch"].value, &args["gitdir"].value)
         };
 
         if args["push"].flag {
