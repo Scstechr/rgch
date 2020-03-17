@@ -41,7 +41,7 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     branch: &str,
 ) {
     // if args["branch"].value != "master" {
-    checkout::checkout(&args["merge"].value);
+    checkout::checkout(&branch);
     // } else {
     // checkout::checkout(&"master");
     // }
