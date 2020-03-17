@@ -68,6 +68,37 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     }
 }
 
+fn branch_already_exists<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+    let msg = format!(
+        "Branch `{}` already exists, and its unimplemented behavior.",
+        args["merge"].value
+    );
+    warning(&msg);
+    exit(0);
+}
+
+fn use_branch_instead<S: ::std::hash::BuildHasher + Default>(
+    args: &HashMap<String, Opt, S>,
+    branch: &str,
+) {
+    let msg = format!(
+        "Nothing changed in `{}` and branch `{}` does not exist.",
+        branch, args["merge"].value
+    );
+    warning(&msg);
+    warning(&"Use `rgch -b/--branch <branch name>` instead to switch branch.");
+    exit(0);
+}
+
+fn cannot_merge<S: ::std::hash::BuildHasher + Default>(
+    args: &HashMap<String, Opt, S>,
+    branch: &str,
+) {
+    let msg = format!("Cannot merge `{}` to `{}`.", args["merge"].value, branch);
+    warning(&msg);
+    exit(0);
+}
+
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
     warning(&"Experimental Feature!");
     warning(&"Stricted to merging branches to `master` only.");
@@ -89,25 +120,11 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             commit(&args["commit"].value);
             checkout_pull_merge(args, &branch);
         } else if branch::branch_exists(&args["merge"].value) {
-            let msg = format!(
-                "Branch `{}` already exists, and its unimplemented behavior.",
-                args["merge"].value
-            );
-            warning(&msg);
-            exit(0);
-        // checkout_pull_merge(args, &branch);
+            branch_already_exists(args);
         } else {
-            let msg = format!(
-                "Nothing changed in `{}` and branch `{}` does not exist.",
-                branch, args["merge"].value
-            );
-            warning(&msg);
-            warning(&"Use `rgch -b/--branch <branch name>` instead to switch branch.");
-            exit(0);
+            use_branch_instead(args, &branch);
         }
     } else {
-        let msg = format!("Cannot merge `{}` to `{}`.", args["merge"].value, branch);
-        warning(&msg);
-        exit(0);
+        cannot_merge(args, &branch);
     }
 }
