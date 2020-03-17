@@ -51,7 +51,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
         merge_not_master(args);
     } else {
         let branch = branch::get_branch();
-        println!("merging {:?} to master?", branch);
+        println!("merging {:?} {:?} to master?", branch, args["branch"].value);
         // branch::set_branch(&args["merge"].value, &args["gitdir"].value);
         if !is_status_clean() {
             commit(&args["commit"].value);
