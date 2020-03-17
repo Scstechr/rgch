@@ -63,7 +63,7 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     } else {
         println!();
         checkout::checkout(&branch);
-        args["merge"].value.clone()
+        branch
     };
     let args_c = return_args_c(&args, &mbranch);
     if Path::new("./.config.toml").exists() {
@@ -123,7 +123,10 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             commit(&args["commit"].value);
             checkout_pull_merge(args, &branch);
         } else if branch::branch_exists(&args["merge"].value) {
-            branch_already_exists(args);
+            if args["merge"].value != "master" {
+                branch_already_exists(args);
+            }
+            checkout_pull_merge(args, &branch);
         } else {
             use_branch_instead(args, &branch);
         }
