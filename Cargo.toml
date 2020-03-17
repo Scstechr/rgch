@@ -1,13 +1,13 @@
 [package]
 name = "rgch"
-version = "0.1.28"
+version = "0.1.29"
 authors = ["Scstechr <teufelkonig@gmail.com>"]
 edition = "2018"
 description = "Rust version of gch"
 license-file = "LICENSE"
 repository = "https://github.com/Scstechr/rgch"
 readme = "README.md"
-categories = ["command line utilities"]
+categories = ["command_line_utilities"]
 keywords = ["cli"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
