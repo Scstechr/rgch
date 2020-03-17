@@ -14,6 +14,7 @@ use std::{collections::HashMap, path::Path, process::exit};
 
 fn return_args_c<S: ::std::hash::BuildHasher + Default>(
     args: &HashMap<String, Opt, S>,
+    branch: &str,
 ) -> HashMap<String, Opt> {
     let mut args_c: HashMap<String, Opt> = HashMap::new();
     for (a, o) in args.iter() {
@@ -23,7 +24,7 @@ fn return_args_c<S: ::std::hash::BuildHasher + Default>(
                 "branch" => Opt {
                     save: o.save,
                     flag: o.flag,
-                    value: "master".to_string(), //args["merge"].value.clone(),
+                    value: branch.to_string(),
                 },
                 _ => Opt {
                     save: o.save,
@@ -56,15 +57,17 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
         branch.to_string()
     };
     let command = format!("Delete branch `{}`", branch);
-    if confirm(&command) {
+    let mbranch = if confirm(&command) {
         branch::delete_branch(&branch);
-        let args_c = return_args_c(&args);
-        if Path::new("./.config.toml").exists() {
-            save(&args_c);
-        }
+        "master".to_string()
     } else {
         println!();
         checkout::checkout(&branch);
+        args["merge"].value.clone()
+    };
+    let args_c = return_args_c(&args, &mbranch);
+    if Path::new("./.config.toml").exists() {
+        save(&args_c);
     }
 }
 
