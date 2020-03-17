@@ -36,7 +36,7 @@ pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<St
     let branch = branch::get_branch();
     warning(&"Experimental Feature");
     let args_c = return_args_c(&args);
-    println!("{}, {}", args_c["branch"].value, args_c["merge"].value);
+    println!("{}, {}", args_c["branch"].value, args["merge"].value);
     // checkout::checkout(&args["branch"].value);
     // pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
     // let command = format!("git merge {} --no-ff", branch);
