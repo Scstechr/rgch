@@ -29,12 +29,6 @@ pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<St
                 },
             );
         }
-        if args["merge"].value != "master" {
-            branch::set_branch(&args["merge"].value, &args["gitdir"].value);
-            if !is_status_clean() {
-                commit(&args["commit"].value);
-            }
-        }
         checkout::checkout(&args_c["branch"].value);
         pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
         let command = format!("git merge {} --no-ff", branch);
@@ -56,6 +50,10 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
     if args["branch"].value != "master" {
         merge_not_master(args);
     } else {
+        branch::set_branch(&args["merge"].value, &args["gitdir"].value);
+        if !is_status_clean() {
+            commit(&args["commit"].value);
+        }
         println!("merging {:?} to master?", args["merge"].value);
     }
 }
