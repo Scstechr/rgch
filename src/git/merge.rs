@@ -4,7 +4,9 @@
 
 use crate::{
     arg::save,
-    git::{branch, checkout, commit::commit, pull, status::is_status_clean},
+    git::{
+        branch, checkout, commit::commit, pull, remote::get_remote_list, status::is_status_clean,
+    },
     misc::{confirm, warning},
     proc, Opt,
 };
@@ -39,7 +41,9 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     branch: &str,
 ) {
     checkout::checkout(&args["branch"].value);
-    pull::pull(&args["remote"].value, &args["branch"].value, false);
+    if !get_remote_list().is_empty() {
+        pull::pull(&args["remote"].value, &args["branch"].value, false);
+    }
     let command = if branch != "master" {
         format!("git merge {} --no-ff", branch)
     } else {
