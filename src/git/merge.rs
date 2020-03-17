@@ -36,10 +36,13 @@ fn return_args_c<S: ::std::hash::BuildHasher + Default>(
     args_c
 }
 
-pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
+pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
+    args: &HashMap<String, Opt, S>,
+    branch: &str,
+) {
     checkout::checkout(&args["branch"].value);
     pull::pull(&args["remote"].value, &args["branch"].value, false);
-    let command = format!("git merge {} --no-ff", args["merge"].value);
+    let command = format!("git merge {} --no-ff", branch);
     proc::execute(&command);
     // if confirm(&command) {
     //     branch::delete_branch(&branch);
@@ -73,12 +76,12 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             }
             commit(&args["commit"].value);
             println!("aaa");
-            checkout_pull_merge(args);
+            checkout_pull_merge(args, &branch);
         } else {
             branch::make_branch(&args["merge"].value);
             commit(&args["commit"].value);
             println!("bbb");
-            checkout_pull_merge(args);
+            checkout_pull_merge(args, &branch);
         }
     } else {
         if branch::branch_exists(&args["merge"].value) {
