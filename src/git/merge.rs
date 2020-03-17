@@ -74,8 +74,12 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             checkout::checkout(&args["merge"].value);
             println!("ccc");
         } else {
-            branch::make_branch(&args["merge"].value);
-            println!("ddd");
+            let msg = format!(
+                "Nothing changed in `{}` and branch `{}` does not exist.",
+                branch, args["merge"].value
+            );
+            warning(&msg);
+            exit(0);
         }
     }
     // if branch != "master" {
