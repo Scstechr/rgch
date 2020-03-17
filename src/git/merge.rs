@@ -44,9 +44,9 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     pull::pull(&args["remote"].value, &args["branch"].value, false);
     let command = format!("git merge {} --no-ff", branch);
     proc::execute(&command);
-    // if confirm(&command) {
-    //     branch::delete_branch(&branch);
-    // }
+    if confirm(&command) {
+        branch::delete_branch(&branch);
+    }
     // let args_c = return_args_c(&args);
     // println!("{}, {}", args_c["branch"].value, args["branch"].value);
     // pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
