@@ -91,7 +91,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             commit(&args["commit"].value);
             checkout_pull_merge(args, &branch);
         } else if branch::branch_exists(&args["merge"].value) {
-            checkout::checkout(&args["merge"].value);
+            // checkout::checkout(&args["merge"].value);
             checkout_pull_merge(args, &args["merge"].value);
         } else {
             let msg = format!(
