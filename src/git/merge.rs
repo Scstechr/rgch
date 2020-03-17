@@ -1,3 +1,7 @@
+#![allow(unused_variables)]
+#![allow(unused_imports)]
+#![allow(dead_code)]
+
 use crate::arg::save;
 // use crate::error::unimplemented;
 use crate::git::{branch, checkout, commit::commit, pull, status::is_status_clean};
@@ -34,10 +38,6 @@ fn return_args_c<S: ::std::hash::BuildHasher + Default>(
 
 pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
     warning(&"Experimental Feature");
-    let branch = branch::get_branch();
-    println!("current    : {:?}", branch);
-    println!("args-branch: {:?}", args["branch"]);
-    println!("args-merge : {:?}", args["merge"]);
     // let args_c = return_args_c(&args);
     // println!("{}, {}", args_c["branch"].value, args["branch"].value);
     // if args["branch"].value == "master" {
@@ -59,30 +59,41 @@ pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<St
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
     let branch = branch::get_branch();
-    if branch != "master" {
-        if !is_status_clean() {
-            commit(&args["commit"].value);
-        }
-        merge_not_master(args);
-    } else {
-        println!("merging {:?} to master?", args["merge"].value);
-        if !is_status_clean() {
-            if branch::branch_exists(&args["merge"].value) {
-                let msg = format!(
-                    "Branch {} exists and some changes were made in {}",
-                    args["merge"].value, args["branch"].value
-                );
-                warning(&msg);
-                exit(0);
-            } else {
-                branch::make_branch(&args["merge"].value);
-                commit(&args["commit"].value);
-                merge_not_master(args);
-            }
+    println!("current    : {:?}", branch);
+    println!("args-branch: {:?}", args["branch"]);
+    println!("args-merge : {:?}", args["merge"]);
+    if !is_status_clean() {
+        if branch::branch_exists(&args["merge"].value) {
+            println!("aaa");
         } else {
-            let msg = format!("No changes in branch {}", args["branch"].value);
-            warning(&msg);
-            exit(0);
+            branch::make_branch(&args["merge"].value);
+            println!("bbb");
+        }
+    } else {
+        if branch::branch_exists(&args["merge"].value) {
+            println!("ccc");
+        } else {
+            branch::make_branch(&args["merge"].value);
+            println!("ddd");
         }
     }
+    // if branch != "master" {
+    //     if !is_status_clean() {
+    //         commit(&args["commit"].value);
+    //     }
+    //     merge_not_master(args);
+    // } else {
+    //     println!("merging {:?} to master?", args["merge"].value);
+    //     if !is_status_clean() {
+    //             let msg = format!(
+    //                 "Branch {} exists and some changes were made in {}",
+    //                 args["merge"].value, args["branch"].value
+    //             );
+    //             warning(&msg);
+    //             exit(0);
+    //         } else {
+    //             commit(&args["commit"].value);
+    //             merge_not_master(args);
+    //         }
+    // }
 }
