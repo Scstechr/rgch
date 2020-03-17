@@ -65,6 +65,7 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
         save(&args_c);
     }
     if !flag {
+        println!();
         checkout::checkout(&branch);
     }
 }
