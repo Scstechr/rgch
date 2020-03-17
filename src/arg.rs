@@ -83,6 +83,7 @@ pub fn save<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S
     let mut file =
         File::create(".config.toml").unwrap_or_else(|_| panic!("Failed to create .config.toml"));
     let toml = toml::to_string(args).unwrap();
+    println!("Setting saved!");
     write!(file, "{}", toml).unwrap_or_else(|_| panic!("failed to write .config.toml"));
 }
 
