@@ -2,15 +2,13 @@
 // #![allow(unused_imports)]
 // #![allow(dead_code)]
 
-use crate::arg::save;
-// use crate::error::unimplemented;
-use crate::git::{branch, checkout, commit::commit, pull, status::is_status_clean};
-use crate::misc::{confirm, warning};
-use crate::proc;
-use crate::Opt;
-use std::collections::HashMap;
-use std::path::Path;
-use std::process::exit;
+use crate::{
+    arg::save,
+    git::{branch, checkout, commit::commit, pull, status::is_status_clean},
+    misc::{confirm, warning},
+    proc, Opt,
+};
+use std::{collections::HashMap, path::Path, process::exit};
 
 fn return_args_c<S: ::std::hash::BuildHasher + Default>(
     args: &HashMap<String, Opt, S>,

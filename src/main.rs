@@ -1,4 +1,3 @@
-// #![allow(clippy::collapsible_if)]
 extern crate rgch;
 
 use rgch::{
@@ -35,27 +34,47 @@ fn main() {
         show(&args);
     }
 
-    if args["save"].flag {
-        save(&args);
+    match (
+        args["version"].flag,
+        args["help"].flag,
+        args["clone"].flag,
+        args["init"].flag,
+    ) {
+        (true, _, _, _) => version(),
+        (_, true, _, _) => help(),
+        (_, _, true, _) => clone(
+            &args["clone"].value,
+            &args["branch"].value,
+            args["branch"].flag,
+        ),
+        (_, _, _, true) => init(&args["gitdir"].value),
+        (_, _, _, _) => (),
     }
+
+    // // if args["version"].flag {
+    // //     version();
+    // // }
+
+    // // if args["help"].flag {
+    // //     help();
+    // // }
+
+    // // if args["clone"].flag {
+    // // }
+
+    // if args["init"].flag {
+    //     init(&args["gitdir"].value);
+    // }
 
     if args["gitdir"].flag {
         set_git_dir(&args["gitdir"].value);
     }
 
-    if args["help"].flag {
-        help();
-    } else if args["version"].flag {
-        version();
-    } else if args["clone"].flag {
-        clone(
-            &args["clone"].value,
-            &args["branch"].value,
-            args["branch"].flag,
-        );
-    } else if args["init"].flag {
-        init(&args["gitdir"].value);
-    } else if args["amd"].flag {
+    if args["save"].flag {
+        save(&args);
+    }
+
+    if args["amd"].flag {
         amend();
     } else {
         let remote = if args["push"].flag {
