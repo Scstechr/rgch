@@ -281,7 +281,7 @@ pub fn opt_set() -> Vec<Arg> {
         short: "",
         long: "no-raw-commit",
         types: "flag",
-        save: false,
+        save: true,
         flag: false,
         category: "extra",
         value: "".to_string(),
