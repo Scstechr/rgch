@@ -90,6 +90,7 @@ fn main() {
         if !args["merge"].flag {
             set_branch(&args["branch"].value, &args["gitdir"].value);
         }
+
         let branch = if args["merge"].flag {
             if args["merge"].value != args["branch"].value {
                 if !is_status_clean() && args["merge"].value == "master" {
@@ -97,6 +98,7 @@ fn main() {
                         commit(&args["commit"].value);
                     } else {
                         warning("Raw commit not allowed in master branch");
+                        reset();
                     }
                 }
             }
@@ -108,6 +110,7 @@ fn main() {
                     commit(&args["commit"].value);
                 } else {
                     warning("Raw commit not allowed in master branch");
+                    reset();
                 }
             } else {
                 if check_status() {

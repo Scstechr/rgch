@@ -102,16 +102,4 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
         warning(&msg);
         exit(0);
     }
-    // if branch != "master" {
-    //     if !is_status_clean() {
-    //     }
-    //     merge_not_master(args);
-    // } else {
-    //     println!("merging {:?} to master?", args["merge"].value);
-    //     if !is_status_clean() {
-    //         } else {
-    //             commit(&args["commit"].value);
-    //             merge_not_master(args);
-    //         }
-    // }
 }
