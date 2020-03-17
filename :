@@ -1,19 +1,16 @@
 use crate::{
-    git::status::{check_status, short_status},
+    git::status::{check_status, is_status_clean, short_status},
     misc::input,
     proc::execute,
-    Opt,
 };
-use std::collections::HashMap;
 
 pub fn amend() {
     execute(&"git commit --amend");
 }
 
-pub fn check_raw<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) -> bool {
-    args["branch"].value == "master" && !args["no-raw"].flag
-}
-
+pub fn check_raw<S: ::std::hash::BuildHasher + Default>(
+    args: &HashMap<String, Opt, S>,
+) -> p<String, Opt> {
 pub fn commit(msg: &str) {
     if check_status() {
         short_status();

@@ -93,8 +93,8 @@ fn main() {
 
         let branch = if args["merge"].flag {
             if args["merge"].value != args["branch"].value {
-                if check_raw(&args["merge"].value) {
-                    if args["branch"].value == "master" && !args["no-raw"].flag {
+                if !is_status_clean() && args["merge"].value == "master" {
+                    if check_raw(&args) {
                         commit(&args["commit"].value);
                     } else {
                         warning("Raw commit not allowed in master branch");
@@ -106,7 +106,7 @@ fn main() {
             args["merge"].value.clone()
         } else {
             if args["commit"].flag {
-                if args["branch"].value == "master" && !args["no-raw"].flag {
+                if check_raw(&args) {
                     commit(&args["commit"].value);
                 } else {
                     warning("Raw commit not allowed in master branch");
