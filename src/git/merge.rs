@@ -6,6 +6,7 @@ use crate::proc;
 use crate::Opt;
 use std::collections::HashMap;
 use std::path::Path;
+use std::process::exit;
 
 pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
     let branch = branch::get_branch();
@@ -49,12 +50,21 @@ pub fn merge_not_master<S: ::std::hash::BuildHasher + Default>(args: &HashMap<St
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {
     let branch = branch::get_branch();
     if branch != "master" {
-        merge_not_master(args);
-    } else {
-        println!("merging {:?} {:?} to master?", branch, args["branch"].value);
-        // branch::set_branch(&args["merge"].value, &args["gitdir"].value);
         if !is_status_clean() {
             commit(&args["commit"].value);
+        }
+        merge_not_master(args);
+    } else {
+        println!("merging {:?} to master?", args["merge"].value);
+        if !is_status_clean() && branch::branch_exists(&args["merge"].value) {
+            let msg = format!(
+                "Abort due to: branch {} exists and some changes were made in {}",
+                args["merge"].value, args["branch"].value
+            );
+            warning(&msg);
+            exit(0);
+        } else {
+            branch::make_branch(&args["merge"].value);
         }
     }
 }

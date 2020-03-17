@@ -93,11 +93,13 @@ fn main() {
             set_branch(&args["branch"].value, &args["gitdir"].value);
         }
         let branch = if args["merge"].flag {
-            if !is_status_clean() && args["merge"].value == "master" {
-                if args["branch"].value == "master" && !args["no-raw"].flag {
-                    commit(&args["commit"].value);
-                } else {
-                    warning("Raw commit not allowed in master branch");
+            if args["merge"].value != args["branch"].value {
+                if !is_status_clean() && args["merge"].value == "master" {
+                    if args["branch"].value == "master" && !args["no-raw"].flag {
+                        commit(&args["commit"].value);
+                    } else {
+                        warning("Raw commit not allowed in master branch");
+                    }
                 }
             }
             merge(&args);
