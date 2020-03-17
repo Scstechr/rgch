@@ -74,9 +74,6 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
     warning(&"Experimental Feature");
     let branch = branch::get_branch();
     if branch != args["merge"].value {
-        // println!(" current    : {:?}", branch);
-        // println!(" args-branch: {:?}", args["branch"]);
-        // println!(" args-merge : {:?}", args["merge"]);
         if !is_status_clean() {
             if branch::branch_exists(&args["merge"].value) {
                 if args["merge"].value != "master" {
