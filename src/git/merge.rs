@@ -5,7 +5,7 @@
 use crate::arg::save;
 // use crate::error::unimplemented;
 use crate::git::{branch, checkout, commit::commit, pull, status::is_status_clean};
-use crate::misc::{confirm, warning};
+use crate::misc::{self, confirm, warning};
 use crate::proc;
 use crate::Opt;
 use std::collections::HashMap;
@@ -57,15 +57,14 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     if confirm(&command) {
         branch::delete_branch(&branch);
     }
-    // let args_c = return_args_c(&args);
+    let args_c = return_args_c(&args);
+    misc::show(&args_c);
+    misc::show(&args);
     // println!("{}, {}", args_c["branch"].value, args["branch"].value);
     // pull::pull(&args_c["remote"].value, &args_c["branch"].value, false);
-    // let command = format!("git merge {} --no-ff", branch);
-    // proc::execute(&command);
-    // let command = format!("Delete branch {}", branch);
-    // if Path::new("./.config.toml").exists() {
-    //     save(&args_c);
-    // }
+    if Path::new("./.config.toml").exists() {
+        save(&args_c);
+    }
 }
 
 pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, S>) {

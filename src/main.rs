@@ -20,7 +20,7 @@ use rgch::{
         status::{check_status, is_status_clean, short_status},
     },
     help::help,
-    misc::warning,
+    misc::{show, warning},
     version::{short_version, version},
 };
 #[allow(unused_imports)]
@@ -33,14 +33,7 @@ fn main() {
     let args = set_default(&args);
 
     if args["show-args"].flag {
-        match args["show-args"].value.len() {
-            0 => {
-                for (key, val) in args.iter() {
-                    println!("{:?} {:?}", key, val)
-                }
-            }
-            _ => println!("{:#?}", args[&args["show-args"].value]),
-        };
+        show(&args);
     }
 
     if args["save"].flag {
