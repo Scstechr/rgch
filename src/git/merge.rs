@@ -51,7 +51,7 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     if branch == "master" {
         let command = format!("Delete branch `{}`", args["merge"].value);
         if confirm(&command) {
-            branch::delete_branch(&branch);
+            branch::delete_branch(&args["merge"].value);
         }
     }
     // let args_c = return_args_c(&args);
@@ -89,17 +89,15 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
                 commit(&args["commit"].value);
                 checkout_pull_merge(args, &branch);
             }
+        } else if branch::branch_exists(&args["merge"].value) {
+            checkout::checkout(&args["merge"].value);
         } else {
-            if branch::branch_exists(&args["merge"].value) {
-                checkout::checkout(&args["merge"].value);
-            } else {
-                let msg = format!(
-                    "Nothing changed in `{}` and branch `{}` does not exist.",
-                    branch, args["merge"].value
-                );
-                warning(&msg);
-                exit(0);
-            }
+            let msg = format!(
+                "Nothing changed in `{}` and branch `{}` does not exist.",
+                branch, args["merge"].value
+            );
+            warning(&msg);
+            exit(0);
         }
     } else {
         let msg = format!("Cannot merge `{}` to `{}`.", args["merge"].value, branch);
