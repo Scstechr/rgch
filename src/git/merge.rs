@@ -48,8 +48,11 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
         format!("git merge {} --no-ff", args["merge"].value)
     };
     proc::execute(&command);
-    if confirm(&command) {
-        branch::delete_branch(&branch);
+    if branch == "master" {
+        let command = format!("Delete branch `{}`", args["merge"].value);
+        if confirm(&command) {
+            branch::delete_branch(&branch);
+        }
     }
     // let args_c = return_args_c(&args);
     // println!("{}, {}", args_c["branch"].value, args["branch"].value);
