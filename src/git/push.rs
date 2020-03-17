@@ -1,4 +1,4 @@
-use crate::ansi::{colors::X, others::ARS};
+// use crate::ansi::{colors::X, others::ARS};
 use crate::git::pull;
 use crate::proc::execute;
 
