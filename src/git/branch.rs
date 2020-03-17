@@ -36,7 +36,7 @@ fn get_branch_list() -> Vec<String> {
     branches
 }
 
-fn make_branch(branch: &str) {
+pub fn make_branch(branch: &str) {
     checkout_new_branch(&branch);
 }
 

@@ -16,13 +16,14 @@ Also, this `rgch` aims for beginners of `git` by showing actual commands execute
 
 ```bash
 $ rgch --help
-RGCH: v0.1.15 (a9d52ebe 2020-01-03)
+RGCH: v0.1.27 (bf4916e1 2020-03-17)
 
 Usage:
 
   rgch [FLAGS] [OPTIONS] <INPUT>
 
 Options:
+  # Options with ⎘ will be saved with `-s/--save`.
 
            Name            Save Type   Explainations                 
   CREATE │ --clone              STRING Clone remote repository.
@@ -31,15 +32,19 @@ Options:
   CHANGE │ -l, --log            FLAG   Display log.
          │ -a, --add         ⎘  PATH   Specify path to add.
          │ -c, --commit         FLAG   Commit.
+         │ -m, --merge          STRING Merge (experimental feature)
   REMOTE │ -r, --remote         STRING Specify remote repository.
          │ --pull               FLAG   Pull (fetch and rebase).
          │ -p, --push           FLAG   Push.
-  EXTRAS │ -g, --gitdir      ⎘  PATH   Specify path of `.git`.
+  EXTRAS │ --amd                FLAG   Change the last commit message.
+         │ --ls                 FLAG   List up tracking file(s).
+         │ -g, --gitdir      ⎘  PATH   Specify path of `.git`.
          │ -f, --force          FLAG   `-f/--force` option to `add`.
          │ -v, --verbose     ⎘  FLAG   Verbose option.
-         │ -s, --save           FLAG   Save current setting to TOML file.
-         │ --version            FLAG   Display version and compiler info.
+         │ -s, --save           FLAG   Save settings to TOML file.
+         │ --version            FLAG   Version and compiler info.
          │ -h, --help           FLAG   Show this message and exit.
+
 ```
 
 ### Simple command

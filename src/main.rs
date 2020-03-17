@@ -1,12 +1,12 @@
 extern crate rgch;
 
 use rgch::{
-    arg::{parse_arguments, save, set_default, set_git_dir},
+    arg::{save, set_default, set_git_dir},
     git::{
         add::{add, silence_add},
         branch::set_branch,
         clone::clone,
-        commit::{amend, commit},
+        commit::{amend, check_raw_commit},
         diff::diff,
         init::init,
         log::log,
@@ -19,6 +19,7 @@ use rgch::{
         status::{check_status, is_status_clean, short_status},
     },
     help::help,
+    misc::show,
     version::{short_version, version},
 };
 #[allow(unused_imports)]
@@ -27,54 +28,53 @@ use std::process::exit;
 fn main() {
     short_version();
 
-    let args = parse_arguments();
-    let args = set_default(&args);
+    let args = set_default();
+
     if args["show-args"].flag {
-        match args["show-args"].value.len() {
-            0 => println!("{:?}", args),
-            _ => println!("{:#?}", args[&args["show-args"].value]),
-        };
+        show(&args);
     }
+
+    // can be operated without .git folder
+    match (
+        args["version"].flag,
+        args["help"].flag,
+        args["clone"].flag,
+        args["init"].flag,
+    ) {
+        (true, _, _, _) => version(),
+        (_, true, _, _) => help(),
+        (_, _, true, _) => clone(
+            &args["clone"].value,
+            &args["branch"].value,
+            args["branch"].flag,
+        ),
+        (_, _, _, true) => init(&args["gitdir"].value),
+        (_, _, _, _) => (),
+    }
+
+    set_git_dir(&args["gitdir"].value);
+
+    match (args["log"].flag, args["ls"].flag) {
+        (true, _) => log(),
+        (_, true) => ls(),
+        (_, _) => (),
+    }
+
     if args["save"].flag {
         save(&args);
     }
 
-    if args["gitdir"].flag {
-        set_git_dir(&args["gitdir"].value);
-    }
-
-    if args["help"].flag {
-        help();
-    } else if args["version"].flag {
-        version();
-    } else if args["clone"].flag {
-        clone(
-            &args["clone"].value,
-            &args["branch"].value,
-            args["branch"].flag,
-        );
-    } else if args["init"].flag {
-        init(&args["gitdir"].value);
-    } else if args["amd"].flag {
+    if args["amd"].flag {
         amend();
     } else {
-        let branch = set_branch(&args["branch"].value, &args["gitdir"].value);
         let remote = if args["push"].flag {
             set_remote(&args["remote"].value, &args["gitdir"].value)
         } else {
             "origin".to_string()
         };
 
-        if args["log"].flag {
-            log();
-        }
-
-        if args["ls"].flag {
-            ls();
-        }
-
         if args["pull"].flag {
-            pull(&args["remote"].value, &args["branch"].value, true);
+            pull(&remote, &args["branch"].value, true);
         }
 
         if !is_status_clean() {
@@ -87,22 +87,29 @@ fn main() {
             silence_add(&args["add"].value, args["force"].flag);
         }
 
+        if !args["merge"].flag {
+            set_branch(&args["branch"].value, &args["gitdir"].value);
+        }
+
         let branch = if args["merge"].flag {
-            if !is_status_clean() {
-                commit(&args["commit"].value);
+            if args["merge"].value != args["branch"].value
+                && !is_status_clean()
+                && args["merge"].value == "master"
+            {
+                check_raw_commit(&args);
             }
             merge(&args);
             args["merge"].value.clone()
         } else {
             if args["commit"].flag {
-                commit(&args["commit"].value);
+                check_raw_commit(&args);
             } else {
                 if check_status() {
                     short_status();
                 }
                 reset();
             }
-            branch
+            args["branch"].value.clone()
         };
 
         if args["push"].flag {

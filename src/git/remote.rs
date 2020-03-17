@@ -6,7 +6,7 @@ use crate::git::{format, git_path_check, set_url};
 use crate::misc::{beep, confirm};
 use crate::proc::{execute, execute_out};
 
-fn get_remote_list() -> Vec<String> {
+pub fn get_remote_list() -> Vec<String> {
     let (output, _) = execute_out("git remote");
     let mut remotes: Vec<String> = Vec::new();
     let remotes_strs: Vec<&str> = output.split('\n').collect();

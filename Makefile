@@ -4,7 +4,7 @@ build:
 	cargo clippy --version;
 	cargo clippy --release;
 	cargo build --release;
-	rgch -h;
+	./target/release/rgch -h;
 
 c:
 	cargo fmt --version;
@@ -12,7 +12,7 @@ c:
 	cargo clippy --version;
 	cargo clippy --release;
 	cargo build --release;
-	rgch -c;
+	./target/release/rgch -c;
 
 up:
 	rgch -c;
@@ -22,11 +22,11 @@ up:
 	cargo clippy --version;
 	cargo clippy --release;
 	cargo build --release;
-	rgch -vp
+	./target/release/rgch -vp
 
 update:
-	rgch --pull
-	rgch -h
+	./target/release/rgch --pull
+	./target/release/rgch -h
 
 build-musl:
 	docker run --rm -it -v `pwd`:/home/rust/src ekidd/rust-musl-builder cargo build --release
