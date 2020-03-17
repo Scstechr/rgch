@@ -87,9 +87,9 @@ fn main() {
             silence_add(&args["add"].value, args["force"].flag);
         }
 
-        // if !args["merge"].flag {
-        //     set_branch(&args["branch"].value, &args["gitdir"].value);
-        // }
+        if !args["merge"].flag {
+            set_branch(&args["branch"].value, &args["gitdir"].value);
+        }
 
         let branch = if args["merge"].flag {
             if args["merge"].value != args["branch"].value
@@ -109,7 +109,7 @@ fn main() {
                 }
                 reset();
             }
-            set_branch(&args["branch"].value, &args["gitdir"].value)
+            args["branch"].value.clone()
         };
 
         if args["push"].flag {
