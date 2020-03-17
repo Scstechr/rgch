@@ -40,8 +40,8 @@ pub fn checkout_pull_merge<S: ::std::hash::BuildHasher + Default>(
     args: &HashMap<String, Opt, S>,
     branch: &str,
 ) {
-    // checkout::checkout(&args["branch"].value);
-    checkout::checkout(&branch);
+    checkout::checkout(&args["merge"].value);
+    // checkout::checkout(&branch);
     if !get_remote_list().is_empty() {
         pull::pull(&args["remote"].value, &args["branch"].value, false);
     }
@@ -92,7 +92,7 @@ pub fn merge<S: ::std::hash::BuildHasher + Default>(args: &HashMap<String, Opt, 
             commit(&args["commit"].value);
             checkout_pull_merge(args, &branch);
         } else if branch::branch_exists(&args["merge"].value) {
-            // checkout::checkout(&args["merge"].value);
+            checkout::checkout(&args["merge"].value);
             checkout_pull_merge(args, &branch);
         } else {
             let msg = format!(
