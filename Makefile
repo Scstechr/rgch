@@ -23,8 +23,10 @@ up:
 	cargo clippy --release;
 	cargo build --release;
 	./target/release/rgch -vp
-	rgch -c "version_up"
+	rgch -c "update version"
 	cargo publish
+	cargo install rgch
+
     
 
 update:
