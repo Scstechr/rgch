@@ -62,15 +62,18 @@ pub fn set_url(given: &str) -> String {
     url
 }
 
-pub fn erase_all(path: &str) {
-    let question = "Is it a file (no for a directory)".to_string();
-    if crate::misc::confirm(&question) {
-        let path = crate::misc::input("Enter path of a file");
-        let command = format!("git filter-branch --tree-filter \"rm -f {}\" HEAD", path);
-        println!("{}", command);
+pub fn erase_all(arg_path: &str) {
+    let path = if arg_path == "" {
+        arg_path.to_string()
     } else {
-        let path = crate::misc::input("Enter path of a directory");
-        let command = format!("git filter-branch --tree-filter \"rm -f -r {}\" HEAD", path);
-        println!("{}", command);
-    }
+        crate::misc::input("Enter path of a file/directory")
+    };
+    // if crate::misc::confirm(&question) {
+    //     let command = format!("git filter-branch --tree-filter \"rm -f {}\" HEAD", path);
+    //     println!("{}", command);
+    // } else {
+    //     let path = crate::misc::input("Enter path of a directory");
+    //     let command = format!("git filter-branch --tree-filter \"rm -f -r {}\" HEAD", path);
+    //     println!("{}", command);
+    // }
 }
