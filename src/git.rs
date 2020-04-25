@@ -63,27 +63,28 @@ pub fn set_url(given: &str) -> String {
 }
 
 pub fn erase_all(arg_path: &str) {
-    let path = if arg_path == "" {
+    let mut path = if arg_path == "" {
         crate::misc::input("Enter path of a file/directory")
     } else {
         arg_path.to_string()
     };
-    let path_end = path.clone().pop();
-    println!("{:#?}", path_end);
-
-    //     let end = path_copy.pop();
-    //     if end == "/" {
-    //         println!("Directory");
-    //     } else {
-    //         println!("File");
-    //     }
-
-    // if crate::misc::confirm(&question) {
-    //     let command = format!("git filter-branch --tree-filter \"rm -f {}\" HEAD", path);
-    //     println!("{}", command);
-    // } else {
-    //     let path = crate::misc::input("Enter path of a directory");
-    //     let command = format!("git filter-branch --tree-filter \"rm -f -r {}\" HEAD", path);
-    //     println!("{}", command);
-    // }
+    match path.pop() {
+        Some(s) => match s.to_string().as_str() {
+            "/" => {
+                let command = format!(
+                    "git filter-branch --tree-filter \"rm -f -r {}/\" HEAD",
+                    path
+                );
+                println!("{}", command);
+            }
+            _ => {
+                let command = format!(
+                    "git filter-branch --tree-filter \"rm -f {}{}\" HEAD",
+                    path, s
+                );
+                println!("{}", command);
+            }
+        },
+        _ => println!("Exit due to empty string"),
+    };
 }
