@@ -63,11 +63,14 @@ pub fn set_url(given: &str) -> String {
 }
 
 pub fn erase_all() {
-    let question = "Are you sure you want to do this".to_string();
+    let question = "Is it a file (no for a directory)".to_string();
     if crate::misc::confirm(&question) {
-        println!("git filter-branch --tree-filter \"rm -f [消したいファイルパス]\" HEAD");
-        println!("git filter-branch --tree-filter \"rm -f -r [消したいディレクトリパス] \" HEAD");
+        let path = crate::misc::input("Enter path of a file");
+        let command = format!("git filter-branch --tree-filter \"rm -f {}\" HEAD", path);
+        println!("{}", command);
     } else {
-        crate::misc::exit_msg(1);
+        let path = crate::misc::input("Enter path of a directory");
+        let command = format!("git filter-branch --tree-filter \"rm -f -r {}\" HEAD", path);
+        println!("{}", command);
     }
 }
