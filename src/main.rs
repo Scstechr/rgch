@@ -8,6 +8,7 @@ use rgch::{
         clone::clone,
         commit::{amend, check_raw_commit},
         diff::diff,
+        erase_all,
         init::init,
         log::log,
         ls_files::ls,
@@ -54,10 +55,11 @@ fn main() {
 
     set_git_dir(&args["gitdir"].value);
 
-    match (args["log"].flag, args["ls"].flag) {
-        (true, _) => log(),
-        (_, true) => ls(),
-        (_, _) => (),
+    match (args["log"].flag, args["ls"].flag, args["erase-all"].flag) {
+        (true, _, _) => log(),
+        (_, true, _) => ls(),
+        (_, _, true) => erase_all(&args["erase-all"].value),
+        (_, _, _) => (),
     }
 
     if args["save"].flag {

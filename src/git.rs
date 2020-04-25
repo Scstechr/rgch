@@ -19,10 +19,15 @@ pub const MOVE_DEL: &str = "\x1b[1F\x1b[K";
 
 use crate::ansi::{
     arrows::RET,
-    colors::{U, X},
+    colors::{U, X, Y},
     moves::pos_x,
     others::TAB,
 };
+use crate::misc::warning;
+// use std::{
+//     io::{stdin, stdout, Write},
+//     process::{exit, Command},
+// };
 use std::path::Path;
 
 pub fn git_path_check(path: &str) {
@@ -60,4 +65,43 @@ pub fn set_url(given: &str) -> String {
         v = url
     );
     url
+}
+
+pub fn erase_all(arg_path: &str) {
+    let mut path = if arg_path == "" {
+        crate::misc::input("Enter path of a file/directory")
+    } else {
+        arg_path.to_string()
+    };
+    match path.pop() {
+        Some(s) => match s.to_string().as_str() {
+            "/" => {
+                let command = format!(
+                    "git filter-branch --tree-filter \"rm -f -r {}/\" HEAD",
+                    path
+                );
+                let question = format!("Execute: {}", command);
+                if crate::misc::confirm(&question) {
+                    println!("{}", command);
+                } else {
+                    println!("{}>{}", Y, X);
+                    warning("Abort");
+                }
+            }
+            _ => {
+                let command = format!(
+                    "git filter-branch --tree-filter \"rm -f {}{}\" HEAD",
+                    path, s
+                );
+                let question = format!("Execute: {}", command);
+                if crate::misc::confirm(&question) {
+                    println!("{}", command);
+                } else {
+                    println!("{}>{}", Y, X);
+                    warning("Abort");
+                }
+            }
+        },
+        _ => println!("Exit due to empty string"),
+    };
 }
