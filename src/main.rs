@@ -58,7 +58,7 @@ fn main() {
     match (args["log"].flag, args["ls"].flag, args["erase-all"].flag) {
         (true, _, _) => log(),
         (_, true, _) => ls(),
-        (_, _, true) => erase_all(),
+        (_, _, true) => erase_all(&args["erase-all"].value),
         (_, _, _) => (),
     }
 

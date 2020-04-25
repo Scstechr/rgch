@@ -292,7 +292,7 @@ pub fn opt_set() -> Vec<Arg> {
     opts.push(Arg {
         short: "",
         long: "erase-all",
-        types: "flag",
+        types: "string",
         save: false,
         flag: false,
         category: "extras",

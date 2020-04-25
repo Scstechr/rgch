@@ -62,7 +62,7 @@ pub fn set_url(given: &str) -> String {
     url
 }
 
-pub fn erase_all() {
+pub fn erase_all(path: &str) {
     let question = "Is it a file (no for a directory)".to_string();
     if crate::misc::confirm(&question) {
         let path = crate::misc::input("Enter path of a file");
