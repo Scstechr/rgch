@@ -61,3 +61,8 @@ pub fn set_url(given: &str) -> String {
     );
     url
 }
+
+pub fn erase_all() {
+    println!("git filter-branch --tree-filter \"rm -f [消したいファイルパス]\" HEAD");
+    println!("git filter-branch --tree-filter \"rm -f -r [消したいディレクトリパス] \" HEAD");
+}
