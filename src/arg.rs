@@ -243,7 +243,7 @@ pub fn opt_set() -> Vec<Arg> {
         short: "v",
         long: "verbose",
         types: "flag",
-        save: true,
+        save: false,
         flag: false,
         category: "extras",
         value: "".to_string(),
@@ -288,6 +288,16 @@ pub fn opt_set() -> Vec<Arg> {
         category: "extras",
         value: "".to_string(),
         exp: "Only allow merge commit in master.",
+    });
+    opts.push(Arg {
+        short: "",
+        long: "erase-all",
+        types: "flag",
+        save: false,
+        flag: false,
+        category: "extras",
+        value: "".to_string(),
+        exp: "Erase all snapshots of given path.",
     });
     // println!("{:?}", opts);
     opts.push(Arg {
