@@ -24,6 +24,7 @@ use crate::ansi::{
     others::TAB,
 };
 use crate::misc::warning;
+use crate::proc::execute;
 // use std::{
 //     io::{stdin, stdout, Write},
 //     process::{exit, Command},
@@ -82,7 +83,7 @@ pub fn erase_all(arg_path: &str) {
                 );
                 let question = format!("Execute: {}", command);
                 if crate::misc::confirm(&question) {
-                    println!("{}", command);
+                    execute(&command);
                 } else {
                     println!("{}>{}", Y, X);
                     warning("Abort");
@@ -95,7 +96,7 @@ pub fn erase_all(arg_path: &str) {
                 );
                 let question = format!("Execute: {}", command);
                 if crate::misc::confirm(&question) {
-                    println!("{}", command);
+                    execute(&command);
                 } else {
                     println!("{}>{}", Y, X);
                     warning("Abort");
