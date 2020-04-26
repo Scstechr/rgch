@@ -88,9 +88,4 @@ pub fn erase_all(arg_path: &str) {
         println!("{}>{}", Y, X);
     }
     warning("Abort");
-    // println!("{}", Some(path).chars().next_back());
-    // match path.chars().next_back() {
-    //     _ => {
-    //     }
-    // };
 }
