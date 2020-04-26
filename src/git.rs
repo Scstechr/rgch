@@ -80,7 +80,7 @@ pub fn erase_all(arg_path: &str) {
         _ => format!("git filter-branch --tree-filter \"rm -f {}\" HEAD", path),
     };
     if command != "" {
-        let question = format!("Execute: `{}`", command);
+        let question = "Are you sure you want to execute".to_string();
         if crate::misc::confirm(&question) {
             execute(&command);
             return;
