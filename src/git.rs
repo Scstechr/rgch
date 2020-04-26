@@ -23,7 +23,6 @@ use crate::ansi::{
     moves::pos_x,
     others::TAB,
 };
-use crate::misc::warning;
 use crate::proc::execute;
 // use std::{
 //     io::{stdin, stdout, Write},
@@ -87,5 +86,5 @@ pub fn erase_all(arg_path: &str) {
         }
         println!("{}>{}", Y, X);
     }
-    warning("Abort");
+    crate::misc::abort();
 }

@@ -18,6 +18,12 @@ use termion::{
     raw::IntoRawMode,
 };
 
+pub fn abort() {
+    beep();
+    let string = format!("{r}{a}ABORT!{x}", r = R, a = ARS, x = X);
+    println!("{}", string);
+}
+
 pub fn beep() {
     Command::new("sh")
         .arg("-c")
