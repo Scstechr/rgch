@@ -69,34 +69,25 @@ pub fn set_url(given: &str) -> String {
 }
 
 pub fn erase_all(arg_path: &str) {
-    let mut path = if arg_path == "" {
+    let path = if arg_path == "" {
         crate::misc::input("Enter path of a file/directory")
     } else {
         arg_path.to_string()
     };
-    match path.chars().next_back() {
-        Some('/') => {
-            let command = format!("git filter-branch --tree-filter \"rm -f -r {}\" HEAD", path);
-            let question = format!("Execute: {}", command);
-            if crate::misc::confirm(&question) {
-                execute(&command);
-            } else {
-                println!("{}>{}", Y, X);
-                warning("Abort");
-            }
+    let command = match path.chars().next_back() {
+        Some('/') => format!("git filter-branch --tree-filter \"rm -f -r {}\" HEAD", path),
+        None => "".to_string(),
+        _ => format!("git filter-branch --tree-filter \"rm -f {}\" HEAD", path),
+    };
+    if command != "" {
+        let question = format!("Execute: `{}`", command);
+        if crate::misc::confirm(&question) {
+            execute(&command);
+            return;
         }
-        None => println!("Exit due to empty string"),
-        _ => {
-            let command = format!("git filter-branch --tree-filter \"rm -f {}\" HEAD", path);
-            let question = format!("Execute: {}", command);
-            if crate::misc::confirm(&question) {
-                execute(&command);
-            } else {
-                println!("{}>{}", Y, X);
-                warning("Abort");
-            }
-        }
+        println!("{}>{}", Y, X);
     }
+    warning("Abort");
     // println!("{}", Some(path).chars().next_back());
     // match path.chars().next_back() {
     //     _ => {
