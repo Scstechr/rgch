@@ -15,7 +15,6 @@ c:
 	./target/release/rgch -c;
 
 up:
-	rgch -c;
 	python update.py >| src/version.rs
 	cargo fmt --version;
 	cargo fmt;
@@ -25,7 +24,7 @@ up:
 	./target/release/rgch -vp
 	rgch -c "update version"
 	cargo publish
-	cargo install rgch
+	cargo install rgch --force
 
     
 
