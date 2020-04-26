@@ -73,7 +73,7 @@ dependencies = [
 
 [[package]]
 name = "rgch"
-version = "0.1.32"
+version = "0.1.33"
 dependencies = [
  "chrono 0.4.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
