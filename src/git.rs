@@ -74,35 +74,32 @@ pub fn erase_all(arg_path: &str) {
     } else {
         arg_path.to_string()
     };
-    match path.pop() {
-        Some(s) => match s.to_string().as_str() {
-            "/" => {
-                let command = format!(
-                    "git filter-branch --tree-filter \"rm -f -r {}/\" HEAD",
-                    path
-                );
-                let question = format!("Execute: {}", command);
-                if crate::misc::confirm(&question) {
-                    execute(&command);
-                } else {
-                    println!("{}>{}", Y, X);
-                    warning("Abort");
-                }
+    match path.chars().next_back() {
+        Some('/') => {
+            let command = format!("git filter-branch --tree-filter \"rm -f -r {}\" HEAD", path);
+            let question = format!("Execute: {}", command);
+            if crate::misc::confirm(&question) {
+                execute(&command);
+            } else {
+                println!("{}>{}", Y, X);
+                warning("Abort");
             }
-            _ => {
-                let command = format!(
-                    "git filter-branch --tree-filter \"rm -f {}{}\" HEAD",
-                    path, s
-                );
-                let question = format!("Execute: {}", command);
-                if crate::misc::confirm(&question) {
-                    execute(&command);
-                } else {
-                    println!("{}>{}", Y, X);
-                    warning("Abort");
-                }
+        }
+        None => println!("Exit due to empty string"),
+        _ => {
+            let command = format!("git filter-branch --tree-filter \"rm -f {}\" HEAD", path);
+            let question = format!("Execute: {}", command);
+            if crate::misc::confirm(&question) {
+                execute(&command);
+            } else {
+                println!("{}>{}", Y, X);
+                warning("Abort");
             }
-        },
-        _ => println!("Exit due to empty string"),
-    };
+        }
+    }
+    // println!("{}", Some(path).chars().next_back());
+    // match path.chars().next_back() {
+    //     _ => {
+    //     }
+    // };
 }
